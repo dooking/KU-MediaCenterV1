@@ -1,0 +1,26 @@
+{ % load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+    {% block css %}
+    {% endblock %}
+    <title>고려대학교 교육매체실</title>
+</head>
+<body>
+    <div class="base">
+        <div class="category">
+            <a href="{% url 'home' %}">
+                HOME
+            </a>
+            <a href="{% url 'introduce' %}">
+                소개페이지
+            </a>
+            <a href="{% url 'borrow' %}">
+                장비대여
+            </a>
+        </div>
+</body>
+</html>
