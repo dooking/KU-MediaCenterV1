@@ -1,0 +1,73 @@
+.mystyle {
+    display: none;
+}
+.step_box {
+    display: flex;
+    flex-direction: row;
+}
+.step {
+    width: 152.5px;
+    height: 30px;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#step1 {
+    background-color: brown;
+}
+#step2 {
+    background-color: gray;
+}
+.red_menu_box {
+    background-color: brown;
+    width: 375px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.red_menu_text {
+    color: white;
+
+}
+.white_menu_box {
+    margin-left: 30px;
+    background-color: white;
+    width: 375px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: blanchedalmond;
+    border-bottom: 0.3px solid black;
+}
+.white_menu_text {
+    color: black;
+}
+.cam_menu {
+    /* background-color: blue; */
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-left: 60px;
+}
+.cam_check {
+    border-bottom: 0.3px solid black;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* background-color: cadetblue; */
+}
+button {
+    width: 161px;
+    height: 50px;
+    border-radius: 25px;
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
+    background-image: linear-gradient(to bottom, #aa1a30, #8d091d);
+    border: none;
+    color: white;
+    margin-top: 20px;
+}

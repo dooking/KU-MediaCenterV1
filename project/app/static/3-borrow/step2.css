@@ -1,0 +1,42 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+.content_box {
+    margin-top: 30px;
+}
+.step_box {
+    display: flex;
+    flex-direction: row;
+}
+.step {
+    width: 152.5px;
+    height: 30px;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#step1 {
+    background-color: gray;
+}
+#step2 {
+    background-color: brown;
+}
+.choice {
+    display: flex;
+    align-items: center;
+    height: 20px;
+}
+button {
+    width: 161px;
+    height: 50px;
+    border-radius: 25px;
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
+    background-image: linear-gradient(to bottom, #aa1a30, #8d091d);
+    border: none;
+    color: white;
+    margin-top: 20px;
+}

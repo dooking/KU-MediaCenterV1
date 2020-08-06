@@ -21,6 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     #0-Admin
+    
     #1-Startpage
     path('',views.main, name="main"),
     
@@ -28,7 +29,9 @@ urlpatterns = [
     path('introduce/',views.introduce, name="introduce"),
     
     #3-Borrow
-    path('borrow/',views.borrow, name="borrow"),
+    path('borrow/',views.step1, name="borrow"),
+    path('borrow/step2',views.borrow_step2, name="borrow_step2"),
+    path('borrow/finish',views.borrow_finish, name="borrow_finish"),
 
     #registration
     #path('registration/signup',views.signup,name="signup"),
