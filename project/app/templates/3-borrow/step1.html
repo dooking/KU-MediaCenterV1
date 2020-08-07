@@ -37,63 +37,44 @@
                     <p class ="white_menu_text">▼</p>
                 </div>
                 <div>
+                    {% for dslr in totalDslr %}
                     <div class = "cam_menu">
                         <div class = "cam_check">
-                            <input type="radio" name = "cam" value = "Canon EOS-80D" onclick="radioHandler(this)">
-                            <p>Canon EOS-80D</p>
+                            <input type="radio" name = "cam" value = "{{dslr.name}}" onclick="radioHandler(this)">
+                            <p>{{dslr.name}}</p>
                         </div>
                         <div class = "black_line"></div>
-                        <div>여기 대수 그래프 들어감</div>
-                    </div>
-                    <div class = "cam_menu">
-                        <div class = "cam_check">
-                            <input type="radio" name = "cam" value = "Canon EOS-6D Mark II" onclick="radioHandler(this)">
-                            <p>Canon EOS-6D Mark II</p>
+                        <div class="graph">
+                            <div class="time">
+                                <div class="time-hour">
+                                    <div class="time-block">
+
+                                    </div>
+                                </div>
+                                <div class="time-hour">2</div>
+                                <div class="time-hour">3</div>
+                                <div class="time-hour">4</div>
+                            </div>
                         </div>
-                        <div class = "black_line"></div>
                     </div>
-                    <div class = "cam_menu">
-                        <div class = "cam_check">
-                            <input type="radio" name = "cam" value = "Canon EOS-550D" onclick="radioHandler(this)">
-                            <p>Canon EOS-550D</p>
-                        </div>
-                        <div class = "black_line"></div>
-                    </div>
+                    {% endfor %}
                 </div>
                 <div class = "white_menu_box" onclick="hide(this)">
                     <p class = "white_menu_text">Camcorder</p>
                     <p class ="white_menu_text">▼</p>
                 </div>
                 <div>
+                    {% for camcorder in totalCamcorder %}
                     <div class = "cam_menu">
                         <div class = "cam_check">
-                            <input type="radio" name = "cam" value = "SONY PXW-Z90" onclick="radioHandler(this)">
-                            <p>SONY PXW-Z90</p>
+                            <input type="radio" name = "cam" value = "{{camcorder.name}}" onclick="radioHandler(this)">
+                            <p>{{camcorder.name}}</p>
                         </div>
                         <div class = "black_line"></div>
-                        <div>여기 대수 그래프 들어감</div>
-                    </div>
-                    <div class = "cam_menu">
-                        <div class = "cam_check">
-                            <input type="radio" name = "cam" value = "SONY FDR-AX700" onclick="radioHandler(this)">
-                            <p>SONY FDR-AX700</p>
+                        <div class="graph">
                         </div>
-                        <div class = "black_line"></div>
                     </div>
-                    <div class = "cam_menu">
-                        <div class = "cam_check">
-                            <input type="radio" name = "cam" value = "SONY HXR-NX5" onclick="radioHandler(this)">
-                            <p>SONY HXR-NX5</p>
-                        </div>
-                        <div class = "black_line"></div>
-                    </div>
-                    <div class = "cam_menu">
-                        <div class = "cam_check">
-                            <input type="radio" name = "cam" value = "SONY HXR-NX70" onclick="radioHandler(this)">
-                            <p>SONY HXR-NX70</p>
-                        </div>
-                        <div class = "black_line"></div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>  
         </div>

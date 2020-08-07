@@ -52,6 +52,7 @@
     flex-direction: column;
     align-items: left;
     margin-left: 60px;
+    height: 150px;
 }
 .cam_check {
     border-bottom: 0.3px solid black;
@@ -70,4 +71,18 @@ button {
     border: none;
     color: white;
     margin-top: 20px;
+}
+.graph {
+    width: 80%;
+    height: 70%;
+    background-color: rgb(211, 208, 208);
+}
+.time {
+    display: flex;
+    flex-direction: column;
+}
+.time-block{
+    width: 50px;
+    height: 20px;
+    background-color: gray;
 }
