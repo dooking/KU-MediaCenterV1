@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% extends 'base.html' %}
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block css %}
     <link rel="stylesheet" href="{% static '3-borrow/step2.css' %}" type="text/css"/>
-    <title>step2</title>
+    {% endblock css %}
+    {% block title %} step 2 {% endblock title %}
 
 </head>
 <body>
+    {% block content %}
     <!-- 스텝 보여주는 부분 -->
     <div class = "step_box">
         <div class= "step" id ="step1">STEP 1</div>
@@ -70,5 +74,6 @@
         </div>
         <button type = "submit" onclick="alert('대여 완료')">대여하기</button>
     </form>
+    {% endblock content %}
 </body>
 </html>
