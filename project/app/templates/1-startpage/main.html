@@ -1,0 +1,33 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} 고려대학교 미디어센터{% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="{% static '1-startpage/main.css' %}">
+{% endblock css %}
+{% block content %}
+<div class="main_box">
+    <div class="card_box">
+        <div class="card_elements">
+            <div class="card_icon">
+                <img src="/app/static/images/enter_icon.png" alt="프로필 카드">
+            </div>
+            <div class="card_login">
+                <a href="">
+                    <img src="/app/static/images/login_button.png" alt="로그인/회원가입">
+                </a>
+                <p>고려대학교 메일로 가입 후 이용</p>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="{% url 'borrow' %}">
+    <div class="tool_borrow_box">
+        <div class="borrow_elements"> 
+
+        </div>
+    </div>
+</a>
+    
+
+{% endblock content %}
