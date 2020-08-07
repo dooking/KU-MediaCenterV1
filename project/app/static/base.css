@@ -1,17 +1,17 @@
 
 /* 부트스트랩 */
-a,
+/* a,
 a:hover,
 a:focus {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
-}
+} */
 
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
-
+/* 
 #sidebar {
     width: 250px;
     position: fixed;
@@ -97,7 +97,7 @@ a[aria-expanded="true"] {
     background: #6d7fcc;
 }
 
-/* 사이드바 안에 드롭다운 된 것의 글씨 */
+사이드바 안에 드롭다운 된 것의 글씨
 a[data-toggle="collapse"] {
     position: relative;
 }
@@ -109,7 +109,7 @@ a[data-toggle="collapse"] {
     right: 20px;
     transform: translateY(-50%);
 }
-/* 사이드바 안에 드롭다운 된 것의 바탕 */
+사이드바 안에 드롭다운 된 것의 바탕
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
@@ -137,12 +137,12 @@ a.article,
 a.article:hover {
     background: rgb(8, 0, 77) !important;
     color: #fff !important;
-}
+} */
 
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
-
+/* 
 #content {
     width: 100%;
     min-height: 100vh;
@@ -150,18 +150,20 @@ a.article:hover {
     position: absolute;
     top: 0;
     right: 0;
-}
+    z-index: -999;
+} */
 
 
 /* 수민 */
 *{
     font-family: 'Noto Sans KR', sans-serif; 
-}
-body{
-    width: 100%;
     margin: 0;
     box-sizing: border-box;
+}
+body{
+
     padding-top: 84px;
+    
 }
 .header{
     width: 100%;
@@ -175,24 +177,22 @@ body{
     display: flex;
     justify-content: center;
     align-content: center;
-
 }
 
 .header_flex{
     width: 84%;
     height: 84px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-end;
     padding-bottom: 14px;
+
 }
 
-.menu_icon_img{
+/* .menu_icon_img{
     width: 24px;
-}
-.logo_div{
-    margin-left: 22%;
-}
+} */
+
 .logo_img{
 
     width: 128px;

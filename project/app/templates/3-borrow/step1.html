@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% extends 'base.html' %}
     {% load static %}
+    {% block css %}
     <link rel="stylesheet" href="{% static '3-borrow/step1.css' %}" type="text/css"/>
+    {% endblock css %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>장비 대여하기</title>
+    {% block title %} 장비 대여하기 {% endblock title %}
     
 </head>
 <body>
+    {% block content %}
     <!-- 스텝 보여주는 부분 -->
     <div class = "step_box">
         <div class= "step" id ="step1">step1</div>
@@ -117,5 +121,6 @@
     <script type="text/javascript" src="{% static '3-borrow/step1.js' %}"></script>
     <script>
     </script>
+    {% endblock content %}
 </body>
 </html>

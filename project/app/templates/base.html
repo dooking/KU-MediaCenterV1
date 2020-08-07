@@ -16,15 +16,16 @@
     <link rel="stylesheet" href="../static/base.css">
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     {% block css %}
     {% endblock css %}
 </head>
 
 <body>
 
-    <div class="wrapper">
+    <!-- <div class="wrapper"> -->
         <!-- Sidebar  -->
-        <nav id="sidebar">
+        <!-- <nav id="sidebar">
             <div id="dismiss">
                 <i class="fas fa-arrow-left"></i>
             </div>
@@ -80,36 +81,37 @@
                     <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
                 </li>
             </ul>
-        </nav>
+        </nav> -->
 
         <!-- Page Content  -->
-        <div id="content">
-            <div class="header">
-                <div class="header_flex">
-                    <div class="menu_icon_div" id="sidebarCollapse" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <img class="menu_icon_img" src="../static/images/menu_icon.png" alt="메뉴 아이콘">
-                    </div>
-                    <div class="logo_div">
-                        <a  href="{% url 'main' %}"> 
-                            <img class="logo_img" src="../static/images/logo.png" alt="로고">
-                        </a>
-                    </div>
+        <!-- <div id="content"> -->
+        <div class="header">
+            <div class="header_flex">
+                <!-- <div class="menu_icon_div" id="sidebarCollapse" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <img class="menu_icon_img" src="../static/images/menu_icon.png" alt="메뉴 아이콘">
+                </div> -->
+                <div class="logo_div">
+                    <a  href="{% url 'main' %}"> 
+                        <img class="logo_img" src="../static/images/logo.png" alt="로고">
+                    </a>
                 </div>
             </div>
         </div>
+    
+        <!-- </div> -->
 
-    <div class="overlay"></div>
+    <!-- <div class="overlay"></div> -->
     {% block content %}
     {% endblock content %}
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script> -->
     <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script> -->
     <!-- jQuery Custom Scroller CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script> -->
+<!-- 
     <script type="text/javascript">
         $(document).ready(function () {
             $("#sidebar").mCustomScrollbar({
@@ -128,7 +130,7 @@
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
             });
         });
-    </script>
+    </script> -->
  
 </body>
 
