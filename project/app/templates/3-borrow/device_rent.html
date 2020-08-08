@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장비 대여하기</title>
+    <style>
+        .mystyle {
+            display: none;
+        }
+        .red_menu_box {
+            background-color: brown;
+            width: 375px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        .red_menu_text {
+            color: white;
+
+        }
+        .white_menu_box {
+            margin-left: 30px;
+            background-color: white;
+            width: 375px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            background-color: blanchedalmond;
+            border-bottom: 0.3px solid black;
+        }
+        .white_menu_text {
+            color: black;
+        }
+        .cam_menu {
+            /* background-color: blue; */
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            margin-left: 60px;
+        }
+        .cam_check {
+            border-bottom: 0.3px solid black;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            /* background-color: cadetblue; */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 스텝 보여주는 부분 -->
+    <div class = "step_box">
+        <div class= "step1">step1</div>
+        <div class= "step2">step2</div>
+    </div>
+    <!-- 전체 폼 시작 -->
+    <form>
+        <div>
+            <p>1. 예약 날짜 선택</p>
+            <input type="date" class="date" name="date">
+        </div>
+        <div>
+            <p>2. 대여 장비 선택</p>
+            <div class = "red_menu_box" onclick = "hide(this)">
+                <p class = "red_menu_text">카메라</p>
+                <p class ="red_menu_text">▼</p>
+            </div>
+            <div>
+                <div class = "white_menu_box" onclick="hide(this)">
+                    <p class = "white_menu_text">DSLR</p>
+                    <p class ="white_menu_text">▼</p>
+                </div>
+                <div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "canon_80D">
+                            <p>Canon EOS-80D</p>
+                        </div>
+                        <div class = "black_line"></div>
+                        <div>여기 대수 그래프 들어감</div>
+                    </div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "canon_6D_2">
+                            <p>Canon EOS-6D Mark II</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "canon_550D">
+                            <p>Canon EOS-550D</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                </div>
+                <div class = "white_menu_box" onclick="hide(this)">
+                    <p class = "white_menu_text">Camcorder</p>
+                    <p class ="white_menu_text">▼</p>
+                </div>
+                <div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "canon_80D">
+                            <p>SONY PXW-Z90</p>
+                        </div>
+                        <div class = "black_line"></div>
+                        <div>여기 대수 그래프 들어감</div>
+                    </div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "canon_6D_2">
+                            <p>SONY FDR-AX700</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "canon_550D">
+                            <p>SONY HXR-NX5</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "canon_550D">
+                            <p>SONY HXR-NX70</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                </div>
+            </div>  
+            <div class = "red_menu_box" onclick = "hide(this)">
+                <p class = "red_menu_text">카메라 보조 장비</p>
+                <p class ="red_menu_text">▼</p>
+            </div>
+            <div>
+                <div>
+                    <div class = "white_menu_box">
+                        <p class = "white_menu_text">짐벌(DJI RONIN-S)</p>
+                    </div>
+                    <div>
+                        <input type = "checkbox">
+                    </div>
+                </div>
+                <div class ="white_box">
+                    <div class = "white_menu_box">
+                        <p class = "white_menu_text">Tripod (SONY VCT-1170RM)</p>
+                    </div>
+                    <div>
+                        <input type = "checkbox" id = "tripod">
+                    </div>
+                </div>
+                <div class ="white_box">
+                    <div class = "white_menu_box">
+                        <p class = "white_menu_text">슬라이더 (Edelkrone Wing PRO)</p>
+                    </div>
+                    <div>
+                        <input type = "number" min="0" max="3" step="1" id = "slider">
+                    </div>
+                </div>
+                <div class ="white_box">
+                    <div class = "white_menu_box">
+                        <p class = "white_menu_text">Memory Card (SDXC 32/64GB)</p>
+                    </div>
+                    <div>
+                        <input type = "number" min="0" max="5" step="1" id = "memory">
+                    </div>
+                </div>
+            </div>
+            <div class = "red_menu_box" onclick = "hide(this)">
+                <p class = "red_menu_text">녹음 장비</p>
+                <p class ="red_menu_text">▼</p>
+            </div>
+            <div>
+                <div class = "white_menu_box" onclick="hide(this)">
+                    <p class = "white_menu_text">마이크</p>
+                    <p class ="white_menu_text">▼</p>
+                </div>
+                <div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="checkbox" value = "wireless">
+                            <p>Wireless Mic (SONY UWP-D11)</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="checkbox" value = "shotgun">
+                            <p>Camera-Mount Shotgun Mic (SHURE VP83)</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="checkbox" value = "boom">
+                            <p>Boom Mic (RODE NTG-2)</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                </div>
+                <div class = "white_menu_box" onclick="hide(this)">
+                    <p class = "white_menu_text">Recorder</p>
+                    <p class ="white_menu_text">▼</p>
+                </div>
+                <div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="checkbox" value = "recorder">
+                            <p>Audio Recorder (TASCAM DR-100mk3)</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                </div>
+            </div>
+            <div class = "red_menu_box" onclick = "hide(this)">
+                <p class = "red_menu_text">조명</p>
+                <p class ="red_menu_text">▼</p>
+            </div>
+            <div>
+                <div class = "cam_menu">
+                    <div class = "cam_check">
+                        <input type="checkbox" value = "recorder">
+                        <p>LED 조명 (DRACAST SilkRay Panel 400)</p>
+                    </div>
+                    <div class = "black_line"></div>
+                </div>
+            </div>   
+        </div>
+    </form>
+
+    <script>
+        function hide(thisisclicked) {
+        const hide = thisisclicked.nextElementSibling;
+        hide.classList.toggle("mystyle");
+        }
+    </script>
+</body>
+</html>

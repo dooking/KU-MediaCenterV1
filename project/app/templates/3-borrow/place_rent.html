@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>step2</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .content_box {
+            margin-top: 30px;
+        }
+        .step_box {
+            display: flex;
+            flex-direction: row;
+        }
+        .step {
+            width: 152.5px;
+            height: 30px;
+            color: white;
+            font-family: sans-serif;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #step1 {
+            background-color: brown;
+        }
+        #step2 {
+            background-color: gray;
+        }
+        .choice {
+            display: flex;
+            align-items: center;
+            height: 20px;
+        }
+        button {
+            width: 161px;
+            height: 50px;
+            border-radius: 25px;
+            box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
+            background-image: linear-gradient(to bottom, #aa1a30, #8d091d);
+            border: none;
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 스텝 보여주는 부분 -->
+    <div class = "step_box">
+        <div class= "step" id = "step1">STEP 1</div>
+        <div class= "step" id="step2">STEP 2</div>
+    </div>
+    <!-- 폼태그 시작 -->
+    <form>
+        <div>
+            <div class = "content_box">
+                <p>1. 대여 목록</p>
+                <div>
+                    <p>{{뭐쩌구저쩌구 앞 페이지 내역이 뜨겠지}}</p>
+                    <div> 검정 줄이 될거야 </div>
+                    <p>{{뭐쩌구저쩌구 앞 페이지 내역이 뜨겠지}}</p>
+                </div>
+            </div>
+            <div class = "content_box">
+                <p>2. 소속 선택</p>
+                <div class="choice">
+                    <input type="radio" name = "type" value="media"><p>미디어학부생</p>
+                </div>
+                <div class="choice"> 
+                    <input type="radio" name = "type" value="club"><p>매체실 산하 방송국</p>
+                </div>
+                <div class="choice">
+                    <input type="radio" name = "type" value= "mediaclass"><p>미디어학부 실습과목 수강생</p>
+                </div>
+            </div>
+            <div class = "content_box">
+                <p>3. 사용 목적 입력</p>
+                <input type="text" placeholder="ex) 실습 과목 이름, 작품명 등" size = "35">
+            </div>
+            <div class = "content_box">
+                <p>4. 제출 신분증 선택</p>
+                <div class="choice">
+                    <input type="radio" name = "auth"><p>주민등록증</p>
+                </div>
+                <div class="choice">
+                    <input type="radio" name = "auth"><p>학생증</p>
+                </div>
+                <div class="choice">
+                    <input type="radio" name = "auth"><p>운전면허증</p>
+                </div>
+                <div class="choice">
+                    <input type="radio" name = "auth"><p>여권</p>
+                </div>
+                <div class="choice">
+                    <input type="radio" name = "auth"><p>기타</p>
+                </div>
+            </div>
+            <div class = "content_box">
+                <p>5. 비고 입력 (출입카드 반납시간 입력 필수)</p>
+                <input type="text" placeholder="ex) 반납시간 및 기타 문의 사랑" size = "35">
+            </div>
+        </div>
+        <button type = "submit">대여하기</button>
+
+    </form>
+</body>
+</html>
