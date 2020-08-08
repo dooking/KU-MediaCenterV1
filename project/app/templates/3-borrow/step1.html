@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+    <link rel="stylesheet" href="{% static '3-borrow/step1.css' %}" type="text/css"/>
+    {% endblock css %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %} 장비 대여하기 {% endblock title %}
+    
+</head>
+<body>
+    {% block content %}
+    <!-- 스텝 보여주는 부분 -->
+    <div class = "step_box">
+        <div class= "step" id ="step1">step1</div>
+        <div class= "step" id ="step2">step2</div>
+    </div>
+    <!-- 전체 폼 시작 -->
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            <p>1. 예약 날짜 선택</p>
+            <input type="date" class="date" name="date">
+            <input type="submit" onclick="dataHandler(this)">
+        </div>
+    </form>
+    <form method="POST" action="{% url 'borrow_step2' %}">
+        {% csrf_token %}
+        <div>
+            <p>2. 대여 장비 선택</p>
+            <div class = "red_menu_box" onclick = "hide(this)">
+                <p class = "red_menu_text">카메라</p>
+                <p class ="red_menu_text">▼</p>
+            </div>
+            <div>
+                <div class = "white_menu_box" onclick="hide(this)">
+                    <p class = "white_menu_text">DSLR</p>
+                    <p class ="white_menu_text">▼</p>
+                </div>
+                <div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "Canon EOS-80D" onclick="radioHandler(this)">
+                            <p>Canon EOS-80D</p>
+                        </div>
+                        <div class = "black_line"></div>
+                        <div>여기 대수 그래프 들어감</div>
+                    </div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "Canon EOS-6D Mark II" onclick="radioHandler(this)">
+                            <p>Canon EOS-6D Mark II</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "Canon EOS-550D" onclick="radioHandler(this)">
+                            <p>Canon EOS-550D</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                </div>
+                <div class = "white_menu_box" onclick="hide(this)">
+                    <p class = "white_menu_text">Camcorder</p>
+                    <p class ="white_menu_text">▼</p>
+                </div>
+                <div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "SONY PXW-Z90" onclick="radioHandler(this)">
+                            <p>SONY PXW-Z90</p>
+                        </div>
+                        <div class = "black_line"></div>
+                        <div>여기 대수 그래프 들어감</div>
+                    </div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "SONY FDR-AX700" onclick="radioHandler(this)">
+                            <p>SONY FDR-AX700</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "SONY HXR-NX5" onclick="radioHandler(this)">
+                            <p>SONY HXR-NX5</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "SONY HXR-NX70" onclick="radioHandler(this)">
+                            <p>SONY HXR-NX70</p>
+                        </div>
+                        <div class = "black_line"></div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <div>
+            <p>3. 대여 목록</p>
+        </div>
+        <div class="here">
+            <div class="hihi">대여 목록이 없습니다</div>
+        </div>
+        <div>
+            <br>
+            <label>예약 일시</label>
+            <input type="time" name="fromTime" value="13:00"/>
+            <span>----></span>
+            <label>반납 일시</label>
+            <input type="time" name="toTime" value="16:00"/>
+        </div>
+        <input type="hidden" name="toDate" value={{selectDate}}>
+        <button type="submit">다음 단계</button>
+    </form>
+    <script type="text/javascript" src="{% static '3-borrow/step1.js' %}"></script>
+    <script>
+    </script>
+    {% endblock content %}
+</body>
+</html>
