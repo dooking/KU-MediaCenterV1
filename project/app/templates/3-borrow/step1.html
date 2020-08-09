@@ -48,14 +48,31 @@
                             <p>{{dslr.name}}</p>
                         </div>
                         <div class="graph">
-                            <div class="time">
-                                {% for hour in dslr.time %}
-                                <div class="time-hour">
-                                    {{hour}}
-                                    <input type="hidden" id="output" value={{hour}}>                                   
-                                    {{forloop.counter}}
+                            <div class = "chart">
+                                <div class = "standard">
+                                    <p id = "num">수량</p>
+                                    <p id = "time">시간</p>
                                 </div>
-                                {% endfor %}
+                                <div class = 'redbar'></div>
+                                <div class= 'charbody'>
+                                    <div class = 'dotline'></div>
+                                    <div class = 'bar_body'>
+                                        {% for stacks in dslr.time %}
+                                        <div class= 'stack' id = 's'>
+                                            {% for hour in dslr %}
+                                            <div class = "block" id="n"></div>
+                                            {% endfor %}
+                                            {% for hour in totalDslr %}
+                                            <div class= "block" id='b'></div>
+                                            {% endfor %}
+                                            <div class="time-hour">
+                                                <input type="hidden" id="output" value={{stacks}}>                                   
+                                                {{forloop.counter}}
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

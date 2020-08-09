@@ -1,6 +1,7 @@
-.mystyle {
-    display: none;
+body {
+    font-family: sans-serif;
 }
+
 .step_box {
     display: flex;
     flex-direction: row;
@@ -20,6 +21,27 @@
 }
 #step2 {
     background-color: gray;
+}
+.standard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding-bottom: 13px;
+    margin-right: 2px;
+}
+#num {
+    font-size: 13px;
+    margin: 0;
+    color: #707070;
+}
+#time {
+    font-size: 13px;
+    margin: 0;
+    color: brown;
+}
+.mystyle {
+    display: none;
 }
 .red_menu_box {
     background-color: brown;
@@ -52,7 +74,6 @@
     flex-direction: column;
     align-items: left;
     margin-left: 60px;
-    height: 150px;
 }
 .cam_check {
     border-bottom: 0.3px solid black;
@@ -61,58 +82,6 @@
     flex-direction: row;
     align-items: center;
     /* background-color: cadetblue; */
-}
-button {
-    width: 161px;
-    height: 50px;
-    border-radius: 25px;
-    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
-    background-image: linear-gradient(to bottom, #aa1a30, #8d091d);
-    border: none;
-    color: white;
-    margin-top: 20px;
-}
-.graph {
-    width: 80%;
-    height: 70%;
-}
-.time {
-    display: flex;
-}
-.time-hour{
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
-}
-.time-block{
-    align-items: center;
-    text-align: center;
-    display: flex;
-    width: 10px;
-    height: 10px;
-    background-color: gray;
-    justify-content: center;
-}
-.standard {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end;
-    padding-bottom: 13px;
-    margin-right: 2px;
-}
-#num {
-    font-size: 13px;
-    margin: 0;
-    color: #707070;
-}
-#time {
-    font-size: 13px;
-    margin: 0;
-    color: brown;
 }
 .chart {
     display: flex;
