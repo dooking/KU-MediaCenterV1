@@ -73,7 +73,6 @@ button {
     margin-top: 20px;
 }
 .graph {
-    width: 80%;
     height: 70%;
     background-color: rgb(211, 208, 208);
 }
@@ -84,9 +83,9 @@ button {
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 .time-block{
     align-items: center;
@@ -96,4 +95,14 @@ button {
     height: 10px;
     background-color: gray;
     justify-content: center;
+    margin-top:10px;
+}
+.flex{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+#circle{
+    border-radius: 50%;
+    border: 2px black solid;
 }
