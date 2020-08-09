@@ -43,17 +43,15 @@
                             <input type="radio" name = "cam" value = "{{dslr.name}}" onclick="radioHandler(this)">
                             <p>{{dslr.name}}</p>
                         </div>
-                        <div class = "black_line"></div>
                         <div class="graph">
                             <div class="time">
+                                {% for hour in dslr.time %}
                                 <div class="time-hour">
-                                    <div class="time-block">
-
-                                    </div>
+                                    {{hour}}
+                                    <input type="hidden" id="output" value={{hour}}>                                   
+                                    {{forloop.counter}}
                                 </div>
-                                <div class="time-hour">2</div>
-                                <div class="time-hour">3</div>
-                                <div class="time-hour">4</div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -70,7 +68,6 @@
                             <input type="radio" name = "cam" value = "{{camcorder.name}}" onclick="radioHandler(this)">
                             <p>{{camcorder.name}}</p>
                         </div>
-                        <div class = "black_line"></div>
                         <div class="graph">
                         </div>
                     </div>
@@ -97,6 +94,12 @@
     </form>
     <script type="text/javascript" src="{% static '3-borrow/step1.js' %}"></script>
     <script>
+            //let blockCount = document.getElementById('blockCount')
+            let blockCount = document.getElementById('output')
+            console.log(blockCount) 
+            const newDiv = document.createElement('div')
+            newDiv.setAttribute("class","time-block")
+            blockCount.appendChild(newDiv);
     </script>
 </body>
 </html>

@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import json
+
 # 0 - Adming
 # 1 - startpage
 def main(request):

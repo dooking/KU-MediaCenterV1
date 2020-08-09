@@ -79,10 +79,21 @@ button {
 }
 .time {
     display: flex;
+}
+.time-hour{
+    text-align: center;
+    display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
 }
 .time-block{
-    width: 50px;
-    height: 20px;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    width: 10px;
+    height: 10px;
     background-color: gray;
+    justify-content: center;
 }
