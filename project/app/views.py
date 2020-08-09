@@ -52,17 +52,24 @@ def makeDict(Ename,selectDate):
     equipList = Equipment.objects.filter(isExist=True,equipmentName=Ename)
     dictEquip["name"] = Ename
     dictEquip["count"] = len(equipList)
-    dictEquip["time"] = findTime(Ename,selectDate,len(equipList))
+    dictEquip["time1"], dictEquip["time2"] = findTime(Ename,selectDate,len(equipList))
     return dictEquip
 
 def findTime(Ename,Eto,Ecount):
-    ourTime = [Ecount for i in range(24)]
+    todayTime = [Ecount for i in range(24)]
+    tomorrowTime = [Ecount for i in range(24)]
     nowhi = EquipmentBorrow.objects.filter(toDate=Eto)
     for i in nowhi:
         if(i.equipment.equipmentName == Ename):
-            for j in range(i.toDateTime,i.fromDateTime+1):
-                ourTime[j] -= 1
-    return ourTime
+            print("hi")
+            for j in range(i.fromDateTime,i.toDateTime+1):
+                todayTime[j] -= 1
+    nowhi = EquipmentBorrow.objects.filter(toDate=str(int(Eto)+1))
+    for i in nowhi:
+        if(i.equipment.equipmentName == Ename):
+            for j in range(i.fromDateTime,i.toDateTime+1):
+                tomorrowTime[j] -= 1
+    return todayTime[9:18],tomorrowTime[9:18]
 
 def borrow_step2(request):
     if(request.method =="POST"):

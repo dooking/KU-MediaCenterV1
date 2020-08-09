@@ -49,11 +49,23 @@
                         </div>
                         <div class="graph">
                             <div class="time">
-                                {% for hour in dslr.time %}
+                                
+                                <div class="flex">
+                                    <span>현황</span>
+                                   <span>시간</span>
+                                </div>
+                                {% for hour in dslr.time1 %}
                                 <div class="time-hour">
-                                    {{hour}}
-                                    <input type="hidden" id="output" value={{hour}}>                                   
-                                    {{forloop.counter}}
+                                    <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
+                                    </div>
+                                    {{forloop.counter|add:"8"}}
+                                </div>
+                                {% endfor %}
+                                {% for hour in dslr.time2 %}
+                                <div class="time-hour">
+                                    <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
+                                    </div>
+                                    {{forloop.counter|add:"8"}}
                                 </div>
                                 {% endfor %}
                             </div>
@@ -73,6 +85,25 @@
                             <p>{{camcorder.name}}</p>
                         </div>
                         <div class="graph">
+                            <div class="time">
+                                
+                                <div class="flex">
+                                    <span>현황</span>
+                                   <span>시간</span>
+                                </div>
+                                {% for hour in camcorder.time1 %}
+                                <div class="time-hour">
+                                    <div id="circle">{{hour}}</div>
+                                    <div>{{forloop.counter|add:"8"}}</div>
+                                </div>
+                                {% endfor %}
+                                {% for hour in camcorder.time2 %}
+                                <div class="time-hour">
+                                    <div id="circle"> {{hour}}</div>
+                                    <div>{{forloop.counter|add:"8"}}</div>
+                                </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                     {% endfor %}
@@ -98,13 +129,21 @@
     </form>
     <script type="text/javascript" src="{% static '3-borrow/step1.js' %}"></script>
     <script>
-            //let blockCount = document.getElementById('blockCount')
-            let blockCount = document.getElementById('output')
-            console.log(blockCount) 
-            const newDiv = document.createElement('div')
-            newDiv.setAttribute("class","time-block")
-            blockCount.appendChild(newDiv);
+        for (let index=0; index<18; index++){
+            let blockCount = document.getElementsByClassName(String(index))
+            for (let i=0; i<blockCount.length; i++)
+            {
+                console.log(blockCount[i].id)
+                for (let j=0; j<blockCount[i].id; j++){
+                    console.log(j)
+                    const newDiv = document.createElement('div')
+                    newDiv.setAttribute("class","time-block")
+                    blockCount[i].appendChild(newDiv);
+                }
+            }
+        }
     </script>
+
     {% endblock content %}
 </body>
 </html>
