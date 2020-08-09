@@ -1,100 +1,49 @@
-.mystyle {
-    display: none;
+
+.wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+form {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.first_form {
+    padding-left: 3px;
+}
+.step-sub {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    color: #8d091d;
 }
 .step_box {
+    width: 100%;
+    height: 50px;
     display: flex;
     flex-direction: row;
 }
 .step {
-    width: 152.5px;
-    height: 30px;
+    width: 50%;
+    height: 100%;
     color: white;
     font-family: sans-serif;
     font-weight: 600;
+    font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 }
 #step1 {
-    background-color: brown;
+    background-color: #8d091d;
 }
 #step2 {
     background-color: gray;
-}
-.red_menu_box {
-    background-color: brown;
-    width: 375px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-.red_menu_text {
-    color: white;
-
-}
-.white_menu_box {
-    margin-left: 30px;
-    background-color: white;
-    width: 375px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    background-color: blanchedalmond;
-    border-bottom: 0.3px solid black;
-}
-.white_menu_text {
-    color: black;
-}
-.cam_menu {
-    /* background-color: blue; */
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    margin-left: 60px;
-    height: 150px;
-}
-.cam_check {
-    border-bottom: 0.3px solid black;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    /* background-color: cadetblue; */
-}
-button {
-    width: 161px;
-    height: 50px;
-    border-radius: 25px;
-    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
-    background-image: linear-gradient(to bottom, #aa1a30, #8d091d);
-    border: none;
-    color: white;
-    margin-top: 20px;
-}
-.graph {
-    width: 80%;
-    height: 70%;
-}
-.time {
-    display: flex;
-}
-.time-hour{
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
-}
-.time-block{
-    align-items: center;
-    text-align: center;
-    display: flex;
-    width: 10px;
-    height: 10px;
-    background-color: gray;
-    justify-content: center;
 }
 .standard {
     display: flex;
@@ -102,7 +51,7 @@ button {
     align-items: flex-end;
     justify-content: flex-end;
     padding-bottom: 13px;
-    margin-right: 2px;
+    padding-right: 2px;
 }
 #num {
     font-size: 13px;
@@ -112,28 +61,119 @@ button {
 #time {
     font-size: 13px;
     margin: 0;
-    color: brown;
+    color:  #8d091d;
+}
+.mystyle {
+    display: none;
+}
+.red_menu_box {
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    background-color: #8d091d;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 35px;
+}
+.red_menu_text {
+    color: white;
+    margin: 0;
+}
+.white_menu_box {
+    background-color: white;
+    display: flex;
+    width: 100%;
+    height: 46px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    background-color: #eeeeee;
+    padding: 0px 35px;
+}
+.white_menu_text {
+    color: black;
+    margin: 0;
+}
+.cam_box {
+    padding-top: 10px;
+    width: 100%;
+}
+.cam_menu {
+    /* background-color: blue; */
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+.cam_check {   
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* background-color: cadetblue; */
+}
+.cam_check p {
+    margin: 0 10px;
+}
+.graph {
+    border-top: 0.3px solid black;
+    margin-bottom: 10px;
 }
 .chart {
+
     display: flex;
     flex-direction: row;
 }
 .redbar {
-    background-color: brown;
+    background-color: #8d091d;
     width: 2px;
     height: 100px;
-    margin-right: 2px;
+    padding-right: 2px;
 }
-.block {
+.time-block {
     width: 18px;
     height: 8px;
     border-radius: 2px;
     border: solid 0.5px #707070;
     background-color: #dfdfdf;
 }
+.time-hour {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-size: 11px;
+    padding: 0.5px;
+}
+.day {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.hour_num {
+    font-size: 11px;
+    /* background-color: aqua;  */
+    word-spacing: 6px; 
+    padding-top: 2px;  
+}
+.day_divide {
+    width: 1px;
+    border-left: dotted 1px #707070;
+}
+.stack {
+    display: flex;
+    flex-direction: row;
+
+}
 .bar_body {
     display: flex;
     flex-direction: row;
+    width: 80%;
+    white-space: nowrap;
+    overflow-x: scroll;
 }
 .dotline {
     height: 1px;
@@ -148,6 +188,10 @@ button {
     height: 5px;
     opacity: 0;
 }
+.blank {
+    height: 30px;
+    opacity: 0;
+}
 .grayline {
     height: 1px;
     color: #707070;
@@ -155,4 +199,53 @@ button {
 .timeline p {
     font-size: 14px;
     margin-top: 2px;
+}
+.flex{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+#circle{
+    border-radius: 50%;
+    border: 2px black solid;
+}
+.button_box {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 50px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+button {
+    width: 155px;
+    height: 50px;
+    border-radius: 25px;
+    border: none;
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
+    background-image: linear-gradient(to bottom, #aa1a30, #8d091d);
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 0px;
+}
+.rev_time {
+    margin: 5px;
+}
+.set_time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+
+}
+.hihi {
+    padding-left: 20px;
 }
