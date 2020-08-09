@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .chart {
+            background-color: aliceblue;
+            display: flex;
+            flex-direction: row;
+        }
+        .redbar {
+            background-color: red;
+            width: 3px;
+        }
+        .grayline {
+            background-color: gray;
+            height: 1.5px;
+        }
+        .block {
+            width: 18px;
+            height: 8px;
+            border-radius: 2px;
+            border: solid 0.5px #707070;
+            background-color: #dfdfdf;
+        }
+    </style>
+</head>
+<body>
+    <div class = "chart">
+        <div class = "standard">
+            <p id = "num">수량</p>
+            <p id = "time">시간</p>
+        </div>
+        <div class = 'redbar'></div>
+        <div class= 'charbody'>
+            <div class = 'bar_body'>
+                <div class= 'stack'>
+
+                </div>
+            </div>
+            <div class = 'grayline'></div>
+            <div class = time_num>
+                <p> {현재 시간부터 24시간까지 보여주기}</p>
+            </div>
+        </div>
+    </div>
+    <script>
+           for(var i = 0; i < 8; i++) {
+          var divBlock = document.createElement("div");                
+          divBlock.className = "block";
+          mainContainer.appendChild(stack);       
+      }
+    </script>
+</body>
+</html>
