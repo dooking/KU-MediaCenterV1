@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import json
+
 # 0 - Adming
 # 1 - startpage
 def main(request):
@@ -25,26 +26,24 @@ def step1(request):
     totalDslr = []
     dslr = Equipment.objects.filter(isExist=True,equipType="DSLR").values('equipmentName').distinct()
     totalDslr = findName(dslr,nowDate)
-    totalZim = []
-    zim = Equipment.objects.filter(isExist=True,equipType="Zim").values('equipmentName').distinct()
-    totalZim = findName(zim,nowDate)
-    print(totalDslr,totalZim)
+    totalCamcorder = []
+    camcorder = Equipment.objects.filter(isExist=True,equipType="Camcorder").values('equipmentName').distinct()
+    totalCamcorder = findName(camcorder,nowDate)
     if (request.method == "POST"):
         print(request.POST)
         selectDate = ''.join(request.POST['date']).replace("-","")
-        totalDslr = []
         dslr = Equipment.objects.filter(isExist=True,equipType="DSLR").values('equipmentName').distinct()
         totalDslr = findName(dslr,selectDate)
-        totalZim = []
-        zim = Equipment.objects.filter(isExist=True,equipType="Zim").values('equipmentName').distinct()
-        totalZim = findName(zim,selectDate)
-        return render(request, '3-borrow/step1.html',{"totalDslr":totalDslr,"totalZim":totalZim,"selectDate":selectDate})
-    
-    return render(request, '3-borrow/step1.html',{"totalDslr":totalDslr,"totalZim":totalZim,"selectDate": nowDate})
+        camcorder = Equipment.objects.filter(isExist=True,equipType="Camcorder").values('equipmentName').distinct()
+        totalCamcorder = findName(camcorder,nowDate)
+        return render(request, '3-borrow/step1.html',{"totalDslr":totalDslr,"totalCamcorder":totalCamcorder,"selectDate":selectDate})
+    print(totalDslr)
+    return render(request, '3-borrow/step1.html',{"totalDslr":totalDslr,"totalCamcorder":totalCamcorder,"selectDate": nowDate})
 
 def findName(equiments,selectDate):
     totalEquip = []
     for equiment in equiments:
+        print(equiment)
         totalEquip.append(makeDict((equiment['equipmentName']),selectDate))
     return totalEquip
 
