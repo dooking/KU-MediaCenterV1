@@ -141,8 +141,9 @@ form {
 }
 .time-hour {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: flex-end;
+    align-items: flex-end;
     font-size: 11px;
     padding: 0.5px;
 }
@@ -166,6 +167,7 @@ form {
 .stack {
     display: flex;
     flex-direction: row;
+
 
 }
 .bar_body {

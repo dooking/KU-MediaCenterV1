@@ -3,14 +3,14 @@ function hide(thisisclicked) {
     hide.classList.toggle("mystyle");
     }
 
-function blockHandler(this){
-    for(let i =0; i<7; i++) {
-        const chart = document.querySelector(".chart")
-        const newStack = document.createElement("div")
-        newStack.setAttribute("class", "stack")
-        barBody.appendChild(newStack)
-    }
-}
+// function blockHandler(this){
+//     for(let i =0; i<7; i++) {
+//         const chart = document.querySelector(".chart")
+//         const newStack = document.createElement("div")
+//         newStack.setAttribute("class", "stack")
+//         barBody.appendChild(newStack)
+//     }
+// }
 
 function radioHandler(cb){
     const check = document.querySelector(".hihi")
