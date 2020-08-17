@@ -18,62 +18,67 @@
         <div class= "step" id ="step1">STEP 1</div>
         <div class= "step" id ="step2">STEP 2</div>
     </div>
-    <!-- 폼태그 시작 -->
-    <form method="POST" action="{% url 'borrow_finish' %}">
-        {% csrf_token %}
-        <div>
-            <div class = "content_box">
-                <p>1. 대여 목록</p>
-                <div>
-                    <input type="hidden" name="camera" value="{{camera}}">
-                    <input type="hidden" name="fromTime" value="{{fromTime}}">
-                    <input type="hidden" name="toTime" value="{{toTime}}">
-                    <input type="hidden" name="toDate" value="{{toDate}}">
-                    <p>{{toDate}} {{fromTime}} ~ {{toDate}} {{toTime}}</p>
-                    <p>{{camera}}</p>
+        <!-- 폼태그 시작 -->
+    <div class="wrapper">
+        <form method="POST" action="{% url 'borrow_finish' %}">
+            {% csrf_token %}
+            <div>
+                <div class = "content_box">
+                    <p class = "step-sub">1. 대여 목록</p>
+                    <div>
+                        <input type="hidden" name="camera" value="{{camera}}">
+                        <input type="hidden" name="fromTime" value="{{fromTime}}">
+                        <input type="hidden" name="toTime" value="{{toTime}}">
+                        <input type="hidden" name="toDate" value="{{toDate}}">
+                        <p>{{toDate}} {{fromTime}} ~ {{toDate}} {{toTime}}</p>
+                        <p>{{camera}}</p>
+                    </div>
+                </div>
+                <div class = "content_box">
+                    <p class = "step-sub">2. 소속 선택</p>
+                    <div class="choice">
+                        <input type="radio" name = "group" value="미디어학부생"><p>미디어학부생</p>
+                    </div>
+                    <div class="choice"> 
+                        <input type="radio" name = "group" value="매체실 산하 방송국"><p>매체실 산하 방송국</p>
+                    </div>
+                    <div class="choice">
+                        <input type="radio" name = "group" value= "미디어학부 실습과목 수강생"><p>미디어학부 실습과목 수강생</p>
+                    </div>
+                </div>
+                <div class = "content_box">
+                    <p class = "step-sub">3. 사용 목적 입력</p>
+                    <input type="text" name="purpose" placeholder="ex) 실습 과목 이름, 작품명 등" size = "35">
+                </div>
+                <div class = "content_box">
+                    <p class = "step-sub">4. 제출 신분증 선택</p>
+                    <div class="choice">
+                        <input type="radio" name = "auth" value="주민등록증"><p>주민등록증</p>
+                    </div>
+                    <div class="choice">
+                        <input type="radio" name = "auth" value="학생증"><p>학생증</p>
+                    </div>
+                    <div class="choice">
+                        <input type="radio" name = "auth" value="운전면허증"><p>운전면허증</p>
+                    </div>
+                    <div class="choice">
+                        <input type="radio" name = "auth" value="여권"><p>여권</p>
+                    </div>
+                    <div class="choice">
+                        <input type="radio" name = "auth" value="기타"><p>기타</p>
+                    </div>
+                </div>
+                <div class = "content_box">
+                    <p class = "step-sub">5. 비고 입력</p>
+                    <p class = "step-sub-sub" >(출입카드 반납시간 입력 필수)</p>
+                    <input type="text" placeholder="ex)" name="remark" 반납시간 및 기타 문의 사랑" size = "35">
                 </div>
             </div>
-            <div class = "content_box">
-                <p>2. 소속 선택</p>
-                <div class="choice">
-                    <input type="radio" name = "group" value="미디어학부생"><p>미디어학부생</p>
-                </div>
-                <div class="choice"> 
-                    <input type="radio" name = "group" value="매체실 산하 방송국"><p>매체실 산하 방송국</p>
-                </div>
-                <div class="choice">
-                    <input type="radio" name = "group" value= "미디어학부 실습과목 수강생"><p>미디어학부 실습과목 수강생</p>
-                </div>
+            <div class = "button_box">
+            <button type = "submit" onclick="alert('대여 완료')">대여하기</button>
             </div>
-            <div class = "content_box">
-                <p>3. 사용 목적 입력</p>
-                <input type="text" name="purpose" placeholder="ex) 실습 과목 이름, 작품명 등" size = "35">
-            </div>
-            <div class = "content_box">
-                <p>4. 제출 신분증 선택</p>
-                <div class="choice">
-                    <input type="radio" name = "auth" value="주민등록증"><p>주민등록증</p>
-                </div>
-                <div class="choice">
-                    <input type="radio" name = "auth" value="학생증"><p>학생증</p>
-                </div>
-                <div class="choice">
-                    <input type="radio" name = "auth" value="운전면허증"><p>운전면허증</p>
-                </div>
-                <div class="choice">
-                    <input type="radio" name = "auth" value="여권"><p>여권</p>
-                </div>
-                <div class="choice">
-                    <input type="radio" name = "auth" value="기타"><p>기타</p>
-                </div>
-            </div>
-            <div class = "content_box">
-                <p>5. 비고 입력 (출입카드 반납시간 입력 필수)</p>
-                <input type="text" placeholder="ex)" name="remark" 반납시간 및 기타 문의 사랑" size = "35">
-            </div>
-        </div>
-        <button type = "submit" onclick="alert('대여 완료')">대여하기</button>
-    </form>
+        </form>
+    </div>
     {% endblock content %}
 </body>
 </html>
