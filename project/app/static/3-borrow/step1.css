@@ -120,6 +120,7 @@ form {
 .graph {
     border-top: 0.3px solid black;
     margin-bottom: 10px;
+
 }
 .chart {
 
@@ -219,7 +220,6 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 button {
     width: 155px;
