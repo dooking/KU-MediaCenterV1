@@ -20,6 +20,7 @@ from app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    path('adminpage/', include('adminpage.urls')),
     # 0-Admin
 
     # 1-Startpage
@@ -34,8 +35,4 @@ urlpatterns = [
     path('borrow/finish', views.borrow_finish, name="borrow_finish"),
 
     path('accounts/', include('allauth.urls')),
-    # registration
-    # path('registration/signup',views.signup,name="signup"),
-    # path('registration/login',views.login,name="login"),
-    # path('registration/logout',views.logout,name="logout"),
 ]
