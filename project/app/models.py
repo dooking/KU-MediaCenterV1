@@ -12,37 +12,43 @@ class Profile(models.Model):
 class Equipment(models.Model):
     equipmentName = models.CharField(max_length=50)
     serialNumber = models.CharField(max_length=50)
-    equipType = models.CharField(max_length=50)
+    equipType = models.CharField(max_length=50) 
+    equipSemiType = models.CharField(max_length=50, blank=True,default = "") 
+    # 고장여부
     isExist = models.BooleanField(default = True)
+    #대여가능 0 대여중 1 연체 2
+    borrowState = models.IntegerField(default=0)
+    
     def __str__(self):
         return self.equipmentName
 
+class EquipmentBorrow(models.Model):
+    uesr = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='Euser')
+    #장비 -> String처리
+    equipment = models.CharField(max_length=200)
+    toDate = models.CharField(max_length=50)
+    toDateTime = models.IntegerField()
+    fromDate = models.CharField(max_length=50)
+    fromDateTime = models.IntegerField()
+    realDate = models.CharField(max_length=50, default=0)
+    realDateTime = models.IntegerField(default=0)
+    group = models.CharField(max_length=50, default = "")
+    purpose = models.CharField(max_length=50,default = "")
+    auth = models.CharField(max_length=50, default = "")
+    remark = models.CharField(max_length=50, default = "")
+    #대여가능 0 대여중 1 연체 2
+    borrowState = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.equipment.equipmentName
+
+#------------------수정전-------------------------------------
 class Studio(models.Model):
     studioName = models.CharField(max_length=50)
     studioType = models.CharField(max_length=50)
     isExist = models.BooleanField(default = True)
     def __str__(self):
         return self.studioName
-
-class EquipmentBorrow(models.Model):
-    equipment = models.ForeignKey(
-        Equipment, on_delete=models.CASCADE, related_name='Eborrow')
-    toDate = models.CharField(max_length=50)
-    toDateTime = models.IntegerField(max_length=50)
-    fromDate = models.CharField(max_length=50)
-    fromDateTime = models.IntegerField(max_length=50)
-    realDate = models.CharField(max_length=50, default=0)
-    realDateTime = models.IntegerField(max_length=50, default=0)
-    group = models.CharField(max_length=50, default = "")
-    purpose = models.CharField(max_length=50,default = "")
-    auth = models.CharField(max_length=50, default = "")
-    remark = models.CharField(max_length=50, default = "")
-    willBorrow = models.CharField(max_length=50, default = False)
-    Borrow = models.CharField(max_length=50, default = False)
-    Borrowed = models.CharField(max_length=50, default = False)
-
-    def __str__(self):
-        return self.equipment.equipmentName
 
 class StudioBorrow(models.Model):
     studio = models.ForeignKey(
