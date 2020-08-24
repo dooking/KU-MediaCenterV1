@@ -28,40 +28,54 @@ def introduce(request):
 
 @csrf_exempt
 def step1(request):
-    nowDate = datetime.datetime.now().strftime('%Y-%m-%d').replace("-", "")
-    totalDslr = []
-    dslr = Equipment.objects.filter(
-        isExist=True, equipType="DSLR").values('equipmentName').distinct()
-    totalDslr = findName(dslr, nowDate)
-    totalCamcorder = []
-    camcorder = Equipment.objects.filter(
-        isExist=True, equipType="Camcorder").values('equipmentName').distinct()
-    totalCamcorder = findName(camcorder, nowDate)
+    nowDate = datetime.datetime.now().strftime('%Y-%m-%d').replace("-","")
+    camera = Equipment.objects.filter(equipType="camera",isExist=True).values('equipSemiType').distinct()
+    subCamera =  Equipment.objects.filter(equipType="subcamera",isExist=True).values('equipType').distinct()
+    record =  Equipment.objects.filter(equipType="record",isExist=True).values('equipType').distinct()
+    light =  Equipment.objects.filter(equipType="light",isExist=True).values('equipType').distinct()
+    etc =  Equipment.objects.filter(equipType="etc",isExist=True).values('equipType').distinct()
+    cameraObject = makeDictionary(camera,nowDate,"카메라",True)
+    subCameraObject = makeDictionary(subCamera,nowDate,"촬영보조장비",False)
+    recordObject = makeDictionary(record,nowDate,"녹음장비",False)
+    lightObject = makeDictionary(light,nowDate,"조명장비",False)    
+    etcObject = makeDictionary(etc,nowDate,"기타장비",False)
     if (request.method == "POST"):
-        print(request.POST)
-        selectDate = ''.join(request.POST['date']).replace("-", "")
-        dslr = Equipment.objects.filter(
-            isExist=True, equipType="DSLR").values('equipmentName').distinct()
-        totalDslr = findName(dslr, selectDate)
-        camcorder = Equipment.objects.filter(
-            isExist=True, equipType="Camcorder").values('equipmentName').distinct()
-        totalCamcorder = findName(camcorder, nowDate)
-        return render(request, '3-borrow/step1.html', {"totalDslr": totalDslr, "totalCamcorder": totalCamcorder, "selectDate": selectDate})
-    print(totalDslr)
-    return render(request, '3-borrow/step1.html', {"totalDslr": totalDslr, "totalCamcorder": totalCamcorder, "selectDate": nowDate})
+        selectDate = ''.join(request.POST['date']).replace("-","")
+        cameraObject = makeDictionary(camera,selectDate,"카메라",True)
+        subCameraObject = makeDictionary(subCamera,selectDate,"촬영보조장비",False)
+        recordObject = makeDictionary(record,selectDate,"녹음장비",False)
+        lightObject = makeDictionary(light,selectDate,"조명장비",False)    
+        etcObject = makeDictionary(etc,selectDate,"기타장비",False)
+        return render(request, '3-borrow/step1.html',{"cameraObject":cameraObject,"subCameraObject":subCameraObject,"recordObject":recordObject,"lightObject":lightObject,"etcObject":etcObject,"selectDate": selectDate,"calendar" :''.join(request.POST['date'])})
+    ob = cameraObject +subCameraObject +recordObject+ lightObject+ etcObject
+    print(cameraObject)
+    for i in ob: 
+        print("😀",i)
+    return render(request, '3-borrow/step1.html',{"cameraObject":cameraObject,"subCameraObject":subCameraObject,"recordObject":recordObject,"lightObject":lightObject,"etcObject":etcObject,"selectDate": nowDate, "calendar" : datetime.datetime.now().strftime('%Y-%m-%d')})
 
+def makeDictionary(lists,selectDate,title,isCamera):
+    resultObject = []
+    if(isCamera):
+        for semiType in lists:
+            equipTypeList = Equipment.objects.filter(equipSemiType=semiType['equipSemiType']).values('equipmentName').distinct()
+            resultObject.append(findName(equipTypeList,semiType['equipSemiType'],selectDate,title))
+    else:
+        for equipType in lists:
+            equipTypeList = Equipment.objects.filter(equipType=equipType['equipType']).values('equipmentName').distinct()
+            resultObject.append(findName(equipTypeList,equipType['equipType'],selectDate,title))
+    return resultObject
 
-def findName(equiments, selectDate):
+def findName(equiments,semiType,selectDate,title):
     totalEquip = []
     for equiment in equiments:
-        print(equiment)
-        totalEquip.append(makeDict((equiment['equipmentName']), selectDate))
+        totalEquip.append(makeDict((equiment['equipmentName']),semiType,selectDate,title))
     return totalEquip
 
-
-def makeDict(Ename, selectDate):
+def makeDict(Ename,semiType,selectDate,title):
     dictEquip = {}
-    equipList = Equipment.objects.filter(isExist=True, equipmentName=Ename)
+    equipList = Equipment.objects.filter(isExist=True,equipmentName=Ename)
+    dictEquip["title"] = title
+    dictEquip["type"] = semiType
     dictEquip["name"] = Ename
     dictEquip["count"] = len(equipList)
     dictEquip["time1"], dictEquip["time2"] = findTime(
@@ -75,8 +89,7 @@ def findTime(Ename, Eto, Ecount):
     nowhi = EquipmentBorrow.objects.filter(toDate=Eto)
     for i in nowhi:
         if(i.equipment.equipmentName == Ename):
-            print("hi")
-            for j in range(i.fromDateTime, i.toDateTime+1):
+            for j in range(i.fromDateTime,i.toDateTime+1):
                 todayTime[j] -= 1
     nowhi = EquipmentBorrow.objects.filter(toDate=str(int(Eto)+1))
     for i in nowhi:
