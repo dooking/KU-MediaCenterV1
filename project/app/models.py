@@ -9,9 +9,9 @@ class Profile(models.Model):
     name = models.CharField(max_length=20, null=True)
     state = models.CharField(max_length=20, null=True)
     major = models.CharField(max_length=50, null=True)
-    penalty = models.IntegerField(max_length=10, null=True)
+    penalty = models.IntegerField(null=True)
     # 관리자인 경우 2, 근장인 경우 1, 학생인 경우 0
-    isAuth = models.IntegerField(max_length=10, null=True)
+    isAuth = models.IntegerField(null=True)
 
     def __str__(self):
         return self.name+'/'+self.major
@@ -50,7 +50,7 @@ class EquipmentBorrow(models.Model):
     borrowState = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.equipment.equipmentName
+        return self.equipment
 
 
 class Studio(models.Model):
