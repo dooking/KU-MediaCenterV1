@@ -61,7 +61,6 @@ class Studio(models.Model):
     def __str__(self):
         return self.studioName
 
-
 class StudioBorrow(models.Model):
     studio = models.ForeignKey(
         Studio, on_delete=models.CASCADE, related_name='Sborrow')

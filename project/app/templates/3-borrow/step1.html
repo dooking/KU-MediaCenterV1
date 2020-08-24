@@ -24,7 +24,7 @@
         {% csrf_token %}
         <div class ="first_form">
             <p class = "step-sub">1. 예약 날짜 선택</p>
-            <input type="date" class="date" name="date">
+            <input type="date" class="date" name="date" value="{{calendar}}">
             <input type="submit" onclick="dataHandler(this)">
         </div>
     </form>
