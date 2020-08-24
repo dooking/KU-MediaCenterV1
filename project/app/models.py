@@ -32,7 +32,7 @@ class Equipment(models.Model):
 
 
 class EquipmentBorrow(models.Model):
-    uesr = models.ForeignKey(
+    username = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='Euser')
     # 장비 -> String처리
     equipment = models.CharField(max_length=200)
@@ -50,7 +50,7 @@ class EquipmentBorrow(models.Model):
     borrowState = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.equipment.equipmentName
+        return self.equipment
 
 
 class Studio(models.Model):

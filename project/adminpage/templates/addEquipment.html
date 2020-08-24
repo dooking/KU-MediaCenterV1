@@ -6,16 +6,37 @@
     <title>Document</title>
   </head>
   <body>
+    {% if msg %}
+    <script type="text/javascript">
+      alert(msg);
+    </script>
+    {% endif %}
     <form method="post">
       {% csrf_token %}
-      <input type="text" placeholder="장비 이름" id="equipmentName" />
-      <input type="text" placeholder="장비 serial 번호" id="serialNumber" />
+      <input
+        type="text"
+        placeholder="장비 이름"
+        id="equipmentName"
+        name="equipmentName"
+      />
+      <input
+        type="text"
+        placeholder="장비 serial 번호"
+        id="serialNumber"
+        name="serialNumber"
+      />
       <input
         type="text"
         placeholder="장비 type (셀렉트 박스로 바꿀거임)"
         id="equipType"
+        name="equipType"
       />
-      <input type="text" placeholder="장비 하위 type" id="equipSemiType" />
+      <input
+        type="text"
+        placeholder="장비 하위 type"
+        id="equipSemiType"
+        name="equipSemiType"
+      />
 
       <button type="submit">제품 등록하기</button>
     </form>
@@ -29,7 +50,6 @@
     {% load static %}
     <script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'qrcode.js' %}"></script>
-
-    <script type="text/javascript" src="{% static 'makeQR.js'}"></script>
+    <script type="text/javascript" src="{% static 'makeQR.js' %}"></script>
   </body>
 </html>

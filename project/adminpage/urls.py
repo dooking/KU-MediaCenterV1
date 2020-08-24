@@ -7,7 +7,10 @@ from adminpage import views
 urlpatterns = [
     path('main', views.main, name='main'),
     path('total', views.total, name='total'),
+
     path('equipment', views.equipment, name='equipment'),
     path('addequipment', views.addEquipment, name='addEquipment'),
+    # path('deleteequipment/<int: equipment_pk>',
+    #      views.deleteEquipment, name="deleteEquipment"),
     path('qrcheck', views.qrcheck, name='qrcheck')
 ]

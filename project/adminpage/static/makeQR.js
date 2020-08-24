@@ -16,7 +16,7 @@ function makeCode() {
   }
   const newEquipment = `${equipmentName.value}^${serialNumber.value}^${equipType.value}^${equipSemiType.value}`;
 
-  let qrcode = new QRCode(document.getElementById("qrcode"), {
+  new QRCode(document.getElementById("qrcode"), {
     text: newEquipment,
     width: 100,
     height: 100,
