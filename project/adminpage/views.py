@@ -41,10 +41,10 @@ def addEquipment(request):
                 borrowState=0
             )
             msg = '정상적으로 제품을 등록하였습니다.'
-            return redirect('addEquipment', {"msg": msg})
+            return render(request, 'addEquipment.html', {"msg": msg})
         else:
             error = '이미 존재하는 serial number 입니다.'
-            return redirect('addEquipment', {"msg": error})
+            return render(request, 'addEquipment.html', {"msg": error})
     return render(request, "addequipment.html")
 
 
