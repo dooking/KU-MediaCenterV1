@@ -8,11 +8,28 @@
   <body>
     <form method="post">
       {% csrf_token %}
-      <input type="text" placeholder="" />
-      <input type="text" placeholder="" />
-      <input type="text" placeholder="" />
-      <input type="text" placeholder="" />
-      <button type="submit"
+      <input type="text" placeholder="장비 이름" id="equipmentName" />
+      <input type="text" placeholder="장비 serial 번호" id="serialNumber" />
+      <input
+        type="text"
+        placeholder="장비 type (셀렉트 박스로 바꿀거임)"
+        id="equipType"
+      />
+      <input type="text" placeholder="장비 하위 type" id="equipSemiType" />
+
+      <button type="submit">제품 등록하기</button>
     </form>
+
+    <button id="makeQRcode" onclick="makeCode()">제품 qrcode 생성하기</button>
+    <div
+      id="qrcode"
+      style="width: 100px; height: 100px; margin-top: 15px;"
+    ></div>
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'qrcode.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'makeQR.js'}"></script>
   </body>
 </html>
