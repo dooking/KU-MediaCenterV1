@@ -22,5 +22,8 @@ urlpatterns = [
          views.repairEquipment, name="repairEquipment"),
 
     # 장비 대여 예약 확인 및 관리
-    path('qrcheck', views.qrcheck, name='qrcheck')
+    path('qrcheck/borrow/<int:post_pk>',
+         views.qrcheckBrrow, name='qrcheckBrrow'),
+    path('qrcheck/return/<int:post_pk>',
+         views.qrcheckReturn, name='qrcheckReturn'),
 ]

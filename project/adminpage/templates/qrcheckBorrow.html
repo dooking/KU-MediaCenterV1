@@ -1,6 +1,11 @@
 {% block content %}
 <body>
 <main>
+	<div>
+		<h1>대여 리스트</h1>
+		<p id= "list">{{currentEquipment.equipment}}</p>
+		<div id="newlist"></div>
+	</div>
 	<div id="test">
 		<h1>QR 코드 리더</h1>
 		<div id="output">
@@ -10,6 +15,7 @@
     		<div id="outputLayer">
                 <form method="POST" id='postFrom' style="display:flex; flex-direction: column;">
 					{% csrf_token %}
+					<input type="text" name='equipments' id="equipments">
                     <button type="submit">대여 승인하기</button>
                 </form>
     		</div>
@@ -41,7 +47,21 @@
 	const serialNumber = document.getElementById('equipmentSerialNumber')
 	const type = document.getElementById('equipmentType')
 	const semiType = document.getElementById('equipmentSemiType')
-	const postFrom = document.getElementById("postFrom");
+	const outputLayer = document.getElementById("outputLayer");
+	const equipments = document.getElementById('equipments')
+
+	const list = document.getElementById('list')
+	
+	function init(){
+		const htmllist = document.getElementById('newlist')
+
+		const newlists = list.innerText.slice(1,-1).replace(/'/g,'').replace(/ /g,'').split(',')
+		for(let newlist of newlists){
+			let item = document.createElement('p')
+			item.innerText = newlist+ '개'
+			htmllist.appendChild(item)
+		}
+	}
 
 	document.addEventListener("DOMContentLoaded", function() {
 		var video = document.createElement("video");		
@@ -98,7 +118,7 @@
 					type.innerText = result[2]
 					semiType.innerText = result[3]
 					// return을 써서 함수를 빠져나가면 QR코드 프로그램이 종료된다.
-					return;
+					//return;
 				}
 				// QR코드 인식에 실패한 경우 
 				else {
@@ -113,20 +133,26 @@
 
 	function addEquipmentToForm(){
 		if(name.innerText.length>0 && serialNumber.innerText.length>0 && type.innerText.length>0 && semiType.innerText.length>0){
-			let item = document.createElement('input')
-			const newEquipment = `${name.innerText}^${serialNumber.innerText}^${type.innerText}^${semiType.innerText}`
-			item.value = newEquipment
-			item.name = 'add'
+			let item = document.createElement('p')
+			const newEquipment = `${name.innerText} ${serialNumber.innerText} ${type.innerText} ${semiType.innerText}`
+			const result = `${name.innerText}^${serialNumber.innerText}^${type.innerText}^${semiType.innerText}`
+			item.innerText = newEquipment
 
-			postFrom.appendChild(item)
+			outputLayer.appendChild(item)
+			if(equipments.value.length === 0){
+				equipments.value = result
+			}else{
+				equipments.value = equipments.value +'@@'+ result
+			}
 
 			name.innerText = ''
 			serialNumber.innerText = ''
 			type.innerText = ''
 			semiType.innerText = ''
-			
+
 		}
 	}
+	init()
 </script>
 </body>
 </html>

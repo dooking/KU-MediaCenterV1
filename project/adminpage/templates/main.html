@@ -18,9 +18,6 @@
       <a href="{% url 'total' %}">
         <button>전체 대여 목록</button>
       </a>
-      <a href="{% url 'qrcheck' %}">
-        <button>장비 QRcode 인식</button>
-      </a>
       <a href="{% url 'equipment' %}">
         <button>장비 관리</button>
       </a>
@@ -47,6 +44,29 @@
         {% if state0s %} {% for state0 in state0s %}
         <div>
           <p>대충 예약 내용 보여준다는 내용</p>
+          <a href="{% url 'qrcheckBrrow' state0.pk %}"
+            ><button>QRcode check 대여 승인하기</button></a
+          >
+        </div>
+        {% endfor%} {% endif %}
+      </div>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 10%;
+          flex-direction: column;
+        "
+      >
+        <p>대여중</p>
+        {% if state1s %} {% for state1 in state1s %}
+        <div>
+          <p>대충 예약 내용 보여준다는 내용</p>
+          <a href="{% url 'qrcheckReturn' state1.pk %}"
+            ><button>QRcode check 반납하기</button></a
+          >
         </div>
         {% endfor%} {% endif %}
       </div>
@@ -59,18 +79,12 @@
           height: 10%;
         "
       >
-        <p>대여중</p>
-      </div>
-      <div
-        style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          height: 10%;
-        "
-      >
         <p>연체 목록</p>
+        {% if state2s %} {% for state2 in state2s %}
+        <div>
+          <p>대충 예약 내용 보여준다는 내용</p>
+        </div>
+        {% endfor%} {% endif %}
       </div>
     </div>
   </body>

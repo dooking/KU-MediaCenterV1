@@ -36,8 +36,22 @@ def equipment(request):
     return render(request, "equipment.html", {"equipments": equipments})
 
 
-def qrcheck(request):
-    return render(request, "qrcheck.html")
+def qrcheckBrrow(request, post_pk):
+    currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
+    if request.method == "POST":
+        currentEquipment.update(
+            equipment=request.POST['equipments'], borrowState=1)
+        return redirect('main')
+    return render(request, "qrcheckBorrow.html", {'currentEquipment': currentEquipment[0]})
+
+
+def qrcheckReturn(request, post_pk):
+    currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
+    if request.method == "POST":
+        currentEquipment.update(
+            equipment=request.POST['equipments'], borrowState=1)
+        return redirect('main')
+    return render(request, "qrcheckReturn.html", {'currentEquipment': currentEquipment[0]})
 
 
 def addEquipment(request):
