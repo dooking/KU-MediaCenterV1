@@ -24,11 +24,11 @@
         {% csrf_token %}
         <div class ="first_form">
             <p class = "step-sub">1. 예약 날짜 선택</p>
-            <input type="date" class="date" name="date" value="{{calendar}}">
-            <input type="submit" onclick="dataHandler(this)">
+            <input type="date" class="date" name="date" value="{{calendar}}" min="{{now}}">
+            <input type="submit" value="확인">
         </div>
     </form>
-    <form method="POST" action="{% url 'borrow_step2' %}">
+    <form method="POST" name = "step1" action="{% url 'borrow_step2' %}">
         {% csrf_token %}
         <div>
             <p class = 'step-sub'>2. 대여 장비 선택</p>
@@ -37,183 +37,148 @@
                 <p class ="red_menu_text">▼</p>
             </div>
             <div>
-                <div class = "white_menu_box" onclick="hide(this)">
-                    <p class = "white_menu_text">DSLR</p>
-                    <p class ="white_menu_text">▼</p>
-                </div>
+                {% for cameraObject in cameraObjects %}
+                    <div>
+                        <div class = "white_menu_box" onclick="hide(this)">
+                            <p class ="white_menu_text">{{cameraObject.type}}</p>
+                            <p class ="white_menu_text">▼</p>
+                        </div>
+                        <div class = "cam_box">
+                            {% for camera in cameraObject.info%}
+                                <div class = "cam_menu">
+                                    <div class = "cam_check">
+                                        <input type="radio" id="camera" value = "{{camera.name}}" onclick="radioHandler(this)">
+                                        <p>{{camera.name}}</p>
+                                    </div>
+                                    <div class="graph">
+                                        <div class = "chart">
+                                            <div class = "standard">
+                                                <p id = "num">수량</p>
+                                                <p id = "time">시간</p>
+                                            </div>
+                                            <div class = 'redbar'></div>
+                                            <div class = 'bar_body'>
+                                                <div class = 'day'>
+                                                    <div class ='stack'>
+                                                        {% for hour in camera.time1 %}
+                                                        <div class="time-hour">
+                                                            <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
+                                                            </div>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    <div class = 'hour_num'>
+                                                        <p>9 10 11 12 13 14 15 16 17</p>
+                                                    </div>
+                                                </div>
+                                                <div class = "day_divide"></div>
+                                                <div class = 'day'>
+                                                    <div class = "stack">
+                                                        {% for hour in camera.time2 %}
+                                                        <div class="time-hour">
+                                                            <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
+                                                            </div>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    <div class = "hour_num">
+                                                        <p>9 10 11 12 13 14 15 16 17</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% for otherObject in otherObjects %}
+                <div class = "red_menu_box" onclick = "hide(this)">
+                    <p class = "red_menu_text">{{otherObject.type}}</p>
+                    <p class ="red_menu_text">▼</p>
+                </div>    
                 <div class = "cam_box">
-                    {% for dslr in totalDslr %}
-                    <div class = "cam_menu">
-                        <div class = "cam_check">
-                            <input type="radio" name = "cam" value = "{{dslr.name}}" onclick="radioHandler(this)">
-                            <p>{{dslr.name}}</p>
-                        </div>
-                        <div class="graph">
-                            <div class = "chart">
-                               <div class = "standard">
-                                    <p id = "num">수량</p>
-                                    <p id = "time">시간</p>
-                                </div>
-                                <div class = 'redbar'></div>
-                                <div class = 'bar_body'>
-                                    <div class = 'day'>
-                                        <div class ='stack'>
-                                            {% for hour in dslr.time1 %}
-                                            <div class="time-hour">
-                                                <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
-                                                </div>
-                                            </div>
-                                            {% endfor %}
-                                        </div>
-                                        <div class = 'hour_num'>
-                                            <p>9 10 11 12 13 14 15 16 17</p>
-                                        </div>
+                    {% for equipment in otherObject.info %}
+                        <div class = "cam_menu">
+                            <div class = "cam_check">
+                                <input type="checkbox" value = "{{equipment.name}}"/>
+                                <p>{{equipment.name}}</p>
+                                <input type="number" id="{{equipment.name}}" name="" value="0" min="0" max="5" step="1" onchange="numberHandler(this)"/>
+
+                            </div>
+                            <div class="graph">
+                                <div class = "chart">
+                                    <div class = "standard">
+                                        <p id = "num">수량</p>
+                                        <p id = "time">시간</p>
                                     </div>
-                                    <div class = "day_divide"></div>
-                                    <div class = 'day'>
-                                        <div class = "stack">
-                                            {% for hour in dslr.time2 %}
-                                            <div class="time-hour">
-                                                <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
+                                    <div class = 'redbar'></div>
+                                    <div class = 'bar_body'>
+                                        <div class = 'day'>
+                                            <div class ='stack'>
+                                                {% for hour in equipment.time1 %}
+                                                <div class="time-hour">
+                                                    <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
+                                                    </div>
                                                 </div>
+                                                {% endfor %}
                                             </div>
-                                            {% endfor %}
+                                            <div class = 'hour_num'>
+                                                <p>9 10 11 12 13 14 15 16 17</p>
+                                            </div>
                                         </div>
-                                        <div class = "hour_num">
-                                            <p>9 10 11 12 13 14 15 16 17</p>
+                                        <div class = "day_divide"></div>
+                                        <div class = 'day'>
+                                            <div class = "stack">
+                                                {% for hour in equipment.time2 %}
+                                                <div class="time-hour">
+                                                    <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class = "hour_num">
+                                                <p>9 10 11 12 13 14 15 16 17</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     {% endfor %}
                 </div>
-                <div class = "blank"></div>
-                <div class = "white_menu_box" onclick="hide(this)">
-                    <p class = "white_menu_text">Camcorder</p>
-                    <p class ="white_menu_text">▼</p>
-                </div>
-                <div class = "cam_box">
-                    {% for dslr in totalCamcorder %}
-                    <div class = "cam_menu">
-                        <div class = "cam_check">
-                            <input type="radio" name = "cam" value = "{{dslr.name}}" onclick="radioHandler(this)">
-                            <p>{{dslr.name}}</p>
-                        </div>
-                        <div class="graph">
-                            <div class = "chart">
-                               <div class = "standard">
-                                    <p id = "num">수량</p>
-                                    <p id = "time">시간</p>
-                                </div>
-                                <div class = 'redbar'></div>
-                                <div class = 'bar_body'>
-                                    <div class = 'day'>
-                                        <div class ='stack'>
-                                            {% for hour in dslr.time1 %}
-                                            <div class="time-hour">
-                                                <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
-                                                </div>
-                                            </div>
-                                            {% endfor %}
-                                        </div>
-                                        <div class = 'hour_num'>
-                                            <p>9 10 11 12 13 14 15 16 17</p>
-                                        </div>
-                                    </div>
-                                    <div class = "day_divide"></div>
-                                    <div class = 'day'>
-                                        <div class = "stack">
-                                            {% for hour in dslr.time2 %}
-                                            <div class="time-hour">
-                                                <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
-                                                </div>
-                                            </div>
-                                            {% endfor %}
-                                        </div>
-                                        <div class = "hour_num">
-                                            <p>9 10 11 12 13 14 15 16 17</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                <!-- <div class = "cam_box">
-                    {% for camcorder in totalCamcorder %}
-                    <div class = "cam_menu">
-                        <div class = "cam_check">
-                            <input type="radio" name = "cam" value = "{{camcorder.name}}" onclick="radioHandler(this)">
-                            <p>{{camcorder.name}}</p>
-                        </div>
-                        <div class="graph">
-                            <div class="time">
-                                
-                                <div class="flex">
-                                    <span>현황</span>
-                                   <span>시간</span>
-                                </div>
-                                {% for hour in camcorder.time1 %}
-                                <div class="time-hour">
-                                    <div id="circle">{{hour}}</div>
-                                    <div>{{forloop.counter|add:"8"}}</div>
-                                </div>
-                                {% endfor %}
-                                {% for hour in camcorder.time2 %}
-                                <div class="time-hour">
-                                    <div id="circle"> {{hour}}</div>
-                                    <div>{{forloop.counter|add:"8"}}</div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div> -->
-            </div>  
+            {% endfor %}
         </div>
+
+
+
         <div>
             <p class = "step-sub">3. 대여 목록</p>
         </div>
-        <div class="here">
-            <div class="hihi">대여 목록이 없습니다</div>
+        <div class="borrow_list">
         </div>
         <div class = "set_time">
             <div class = 'rev_time'>
                 <label>예약 일시</label>
-                <input type="time" name="fromTime" value="13:00"/>
+                <input type="date" id="fromDate" name="fromDate" value="{{calendar}}" readonly/>
+                <input type="time" id="fromTime" name="fromTime" value="13:00" min="09:00" max="17:00" step="3600" required/>
             </div>
             <div class = 'rev_time'>
                 <label>반납 일시</label>
-                <input type="time" name="toTime" value="16:00"/>
+                <input type="date" id="toDate" name="toDate" value="{{calendar}}" min="{{calendar}}" max="{{nextDay}}" required/>
+                <input type="time" id="toTime" name="toTime" value="16:00" min="09:00" max="17:00" required/>
             </div>
         </div>
-        <input type="hidden" name="toDate" value={{selectDate}}>
+        <input type="hidden" id="resultBorrow" name="resultBorrow" value="">
         <div class = "button_box">
-            <button type="submit">다음 단계</button>
+            <input type="button" onclick="buttonHandler(this)" value="다음 단계">
         </div>
     </form>       
     </div>
     <script type="text/javascript" src="{% static '3-borrow/step1.js' %}"></script>
-    <script>
-        for (let index=0; index<18; index++){
-            let blockCount = document.getElementsByClassName(String(index))
-            for (let i=0; i<blockCount.length; i++)
-            {
-                console.log(blockCount[i].id)
-                for (let j=0; j<blockCount[i].id; j++){
-                    console.log(j)
-                    const newDiv = document.createElement('div')
-                    newDiv.setAttribute("class","time-block")
-                    blockCount[i].appendChild(newDiv);
-                }
-            }
-        }
-    </script>
-
     {% endblock content %}
 </body>
 </html>

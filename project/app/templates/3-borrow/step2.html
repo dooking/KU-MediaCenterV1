@@ -26,46 +26,49 @@
                 <div class = "content_box">
                     <p class = "step-sub">1. 대여 목록</p>
                     <div>
-                        <input type="hidden" name="camera" value="{{camera}}">
+                        <input type="hidden" name="borrowList" value="{{borrowLists}}">
                         <input type="hidden" name="fromTime" value="{{fromTime}}">
                         <input type="hidden" name="toTime" value="{{toTime}}">
+                        <input type="hidden" name="fromDate" value="{{fromDate}}">
                         <input type="hidden" name="toDate" value="{{toDate}}">
-                        <p>{{toDate}} {{fromTime}} ~ {{toDate}} {{toTime}}</p>
-                        <p>{{camera}}</p>
+                        <p>{{fromDate}} {{fromTime}} ~ {{toDate}} {{toTime}}</p>
+                        {% for borrowList in borrowLists %}
+                            <li>{{borrowList}}대</li>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class = "content_box">
                     <p class = "step-sub">2. 소속 선택</p>
                     <div class="choice">
-                        <input type="radio" name = "group" value="미디어학부생"><p>미디어학부생</p>
+                        <input type="radio" name = "group" value="미디어학부생" required><p>미디어학부생</p>
                     </div>
                     <div class="choice"> 
-                        <input type="radio" name = "group" value="매체실 산하 방송국"><p>매체실 산하 방송국</p>
+                        <input type="radio" name = "group" value="매체실 산하 방송국" required><p>매체실 산하 방송국</p>
                     </div>
                     <div class="choice">
-                        <input type="radio" name = "group" value= "미디어학부 실습과목 수강생"><p>미디어학부 실습과목 수강생</p>
+                        <input type="radio" name = "group" value= "미디어학부 실습과목 수강생" required><p>미디어학부 실습과목 수강생</p>
                     </div>
                 </div>
                 <div class = "content_box">
                     <p class = "step-sub">3. 사용 목적 입력</p>
-                    <input type="text" name="purpose" placeholder="ex) 실습 과목 이름, 작품명 등" size = "35">
+                    <input type="text" name="purpose" placeholder="ex) 실습 과목 이름, 작품명 등" required size = "35">
                 </div>
                 <div class = "content_box">
                     <p class = "step-sub">4. 제출 신분증 선택</p>
                     <div class="choice">
-                        <input type="radio" name = "auth" value="주민등록증"><p>주민등록증</p>
+                        <input type="radio" name = "auth" value="주민등록증" required><p>주민등록증</p>
                     </div>
                     <div class="choice">
-                        <input type="radio" name = "auth" value="학생증"><p>학생증</p>
+                        <input type="radio" name = "auth" value="학생증" required><p>학생증</p>
                     </div>
                     <div class="choice">
-                        <input type="radio" name = "auth" value="운전면허증"><p>운전면허증</p>
+                        <input type="radio" name = "auth" value="운전면허증" required><p>운전면허증</p>
                     </div>
                     <div class="choice">
-                        <input type="radio" name = "auth" value="여권"><p>여권</p>
+                        <input type="radio" name = "auth" value="여권" required><p>여권</p>
                     </div>
                     <div class="choice">
-                        <input type="radio" name = "auth" value="기타"><p>기타</p>
+                        <input type="radio" name = "auth" value="기타" required><p>기타</p>
                     </div>
                 </div>
                 <div class = "content_box">
