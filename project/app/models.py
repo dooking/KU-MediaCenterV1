@@ -52,6 +52,7 @@ class EquipmentBorrow(models.Model):
     def __str__(self):
         return f'username={self.username},equipment={self.equipment},fromDate={self.fromDate},fromDateTime={self.fromDateTime},toDate={self.toDate},toDateTime={self.toDateTime},realDate={self.realDate},realDateTime={self.realDateTime},group={self.group},purpose={self.purpose},auth={self.auth},remark={self.remark},borrowState={self.borrowState}'
 
+
 class Studio(models.Model):
     studioName = models.CharField(max_length=50)
     studioType = models.CharField(max_length=50)
