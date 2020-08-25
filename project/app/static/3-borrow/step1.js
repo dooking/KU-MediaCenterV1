@@ -4,6 +4,7 @@ const toDate = document.querySelector("#toDate")
 const fromDate = document.querySelector("#fromDate")
 let prevTime;
 let nextTime;
+let tempList = new Map()
 fromTime.addEventListener('change',(event)=>{
     let sTime = (event.target.value).split(":")
     event.target.value=`${sTime[0]}:00`
@@ -58,51 +59,66 @@ function radioHandler(cb){
     }
     if(check){
         borrowList[index].textContent = cb.value +" "+" 1개"
+        tempList.set(cb.id,cb.value)
     }
     else{
         addItem.setAttribute("class","camera")
         addItem.textContent = cb.value +" "+"1개"
         borrowClass.appendChild(addItem)
+        tempList.set(cb.id,cb.value)
     }
 }
 function numberHandler(cb){
-    if(cb.value > 5){
-        alert("장비는 최대 5개까지 대여가 가능합니다.")
-        cb.value = 5
-    }
-    const borrowClass = document.querySelector(".borrow_list")
-    const borrowList = document.querySelectorAll("li")
-    const addItem = document.createElement('li')
-    let check = false
-    let index = 0
-    for(let i=0; i<borrowList.length; i++){
-        if(borrowList[i].className === `${cb.id}`){
-            check = true
-            index = i
-            break;
+    if(cb.value != ""){
+        if(cb.value > 5){
+            alert("장비는 최대 5개까지 대여가 가능합니다.")
+            cb.value = 5
         }
-    }
-    // 해당 값이 이미 있을 때
-    if(check){
-        borrowList[index].textContent = cb.id +" "+cb.value +"개"
-    }
-    else{
-        addItem.setAttribute("class",`${cb.id}`)
-        addItem.textContent = cb.id +" "+cb.value +"개"
-        borrowClass.appendChild(addItem)
+        const borrowClass = document.querySelector(".borrow_list")
+        const borrowList = document.querySelectorAll("li")
+        const addItem = document.createElement('li')
+        let check = false
+        let index = 0
+        for(let i=0; i<borrowList.length; i++){
+            if(borrowList[i].className === `${cb.id}`){
+                check = true
+                index = i
+                break;
+            }
+        }
+        if(cb.value == 0){
+            borrowClass.removeChild(borrowList[index])
+            tempList.delete(cb.id)
+        }
+        else{
+            // 해당 값이 이미 있을 때
+            if(check){
+                borrowList[index].textContent = cb.id +" "+cb.value +"개"
+                tempList.set(cb.id,cb.value)
+            }
+            else{
+                addItem.setAttribute("class",`${cb.id}`)
+                addItem.textContent = cb.id +" "+cb.value +"개"
+                borrowClass.appendChild(addItem)
+                tempList.set(cb.id,cb.value)
+            }
+        }
     }
 }
 
 function buttonHandler(cb){
-    const borrowList = document.querySelectorAll("li")
     const resultBorrow = document.getElementById("resultBorrow")
     let resultBorrowString = ""
-    for(let i=0; i<borrowList.length; i++){
-        resultBorrowString += borrowList[i].textContent+"@"
+    for(let [key,value] of tempList.entries()){
+        if(key == "camera"){
+            resultBorrowString += value +" : "+1+"//"
+        }
+        else{
+            resultBorrowString += key +" : "+value+"//"
+        }
     }
     resultBorrow.value = resultBorrowString
     document.step1.submit()
-    console.log(resultBorrow.value)
 }
 
 //time block

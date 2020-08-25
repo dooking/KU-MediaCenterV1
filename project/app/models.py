@@ -36,10 +36,10 @@ class EquipmentBorrow(models.Model):
         Profile, on_delete=models.CASCADE, related_name='Euser')
     # 장비 -> String처리
     equipment = models.CharField(max_length=200)
-    toDate = models.CharField(max_length=50)
-    toDateTime = models.IntegerField()
     fromDate = models.CharField(max_length=50)
     fromDateTime = models.IntegerField()
+    toDate = models.CharField(max_length=50)
+    toDateTime = models.IntegerField()
     realDate = models.CharField(max_length=50, default=0)
     realDateTime = models.IntegerField(default=0)
     group = models.CharField(max_length=50, default="")
@@ -50,8 +50,7 @@ class EquipmentBorrow(models.Model):
     borrowState = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.equipment
-
+        return f'username={self.username},equipment={self.equipment},fromDate={self.fromDate},fromDateTime={self.fromDateTime},toDate={self.toDate},toDateTime={self.toDateTime},realDate={self.realDate},realDateTime={self.realDateTime},group={self.group},purpose={self.purpose},auth={self.auth},remark={self.remark},borrowState={self.borrowState}'
 
 class Studio(models.Model):
     studioName = models.CharField(max_length=50)
