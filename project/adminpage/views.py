@@ -13,7 +13,13 @@ from app.models import Equipment, EquipmentBorrow
 def main(request):
     # 대여 목록의 state를 0,1,2로 구분해놨고, 이를 필터링해주고 랜더링 해주면 됨
     # 각각의 cell에 update해주는 창 하나 만들기 확인 누르면 다시 랜더링 되는걸로
-    return render(request, "main.html")
+    state0 = EquipmentBorrow.objects.filter(borrowState=0)
+    state1 = EquipmentBorrow.objects.filter(borrowState=1)
+    state2 = EquipmentBorrow.objects.filter(borrowState=2)
+
+    return render(request, "main.html", {
+        "state0s": state0, "state1s": state1, "state2s": state2
+    })
 
 
 def total(request):
