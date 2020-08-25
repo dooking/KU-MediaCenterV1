@@ -63,7 +63,6 @@ def findName(equiments,semiType,selectDate):
     for equiment in equiments:
         totalEquip.append(makeDict((equiment['equipmentName']),semiType,selectDate))
     result = {"type":semiType,"info":totalEquip}
-    
     return result
 
 def makeDict(Ename,semiType,selectDate):
@@ -79,24 +78,37 @@ def makeDict(Ename,semiType,selectDate):
 def findTime(Ename, Eto, Ecount):
     todayTime = [Ecount for i in range(24)]
     tomorrowTime = [Ecount for i in range(24)]
-    nowhi = EquipmentBorrow.objects.filter(toDate=Eto)
-    for i in nowhi:
-        if(i.equipment.equipmentName == Ename):
-            for j in range(i.fromDateTime,i.toDateTime+1):
-                todayTime[j] -= 1
-    nowhi = EquipmentBorrow.objects.filter(toDate=str(int(Eto)+1))
-    for i in nowhi:
-        if(i.equipment.equipmentName == Ename):
-            for j in range(i.fromDateTime, i.toDateTime+1):
-                tomorrowTime[j] -= 1
+    borrowLists = EquipmentBorrow.objects.filter(fromDate=Eto)
+    for borrowList in borrowLists:
+        for equipList in borrowList.equipment.replace("[","").replace("]","").replace("'","").split(","):
+            [equip,count] = equipList.split(":")
+            equip = equip.strip()
+            count = count.strip()
+            if(equip == Ename):
+                for j in range(borrowList.fromDateTime,borrowList.toDateTime+2):
+                    todayTime[j] -= int(count)
+    borrowLists = EquipmentBorrow.objects.filter(fromDate=str(int(Eto)+1))
+    for borrowList in borrowLists:
+        for equipList in borrowList.equipment.replace("[","").replace("]","").replace("'","").split(","):
+            [equip,count] = equipList.split(":")
+            equip = equip.strip()
+            count = count.strip()
+            if(equip == Ename):
+                for j in range(borrowList.fromDateTime,borrowList.toDateTime+2):
+                    todayTime[j] -= int(count)
+    # nowhi = EquipmentBorrow.objects.filter(toDate=str(int(Eto)+1))
+    # for i in nowhi:
+    #     if(i.equipment.equipmentName == Ename):
+    #         for j in range(i.fromDateTime, i.toDateTime+1):
+    #             tomorrowTime[j] -= 1
     return todayTime[9:18], tomorrowTime[9:18]
 
 
 def borrow_step2(request):
+    print(request.POST)
     if(request.method == "POST"):
-        borrowList = "".join(request.POST['resultBorrow']).split("@")
+        borrowList = "".join(request.POST['resultBorrow']).split("//")
         borrowList.pop()
-        print(request.POST)
         fromTime = "".join(request.POST['fromTime'])
         toTime = "".join(request.POST['toTime'])
         fromDate = "".join(request.POST['fromDate'])
@@ -105,13 +117,14 @@ def borrow_step2(request):
 
 
 def borrow_finish(request):
+    print(request.POST)
     if(request.method == "POST"):
         EquipmentBorrow.objects.create(
             username = Profile.objects.get(username=request.user),
             equipment="".join(request.POST['borrowList']),
-            toDate="".join(request.POST['toDate']),
+            toDate="".join(request.POST['toDate']).replace("-",""),
             toDateTime=int(("".join(request.POST['toTime']))[:2]),
-            fromDate="".join(request.POST['fromDate']),
+            fromDate="".join(request.POST['fromDate']).replace("-",""),
             fromDateTime=int(("".join(request.POST['fromTime']))[:2]),
             group="".join(request.POST['group']),
             purpose="".join(request.POST['purpose']),
