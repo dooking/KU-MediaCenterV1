@@ -6,6 +6,36 @@
     <title>Document</title>
   </head>
   <body>
+    {% for equipment in equipments %}
+    <div>
+      <p>{{equipment.equipmentName}}</p>
+      <p>{{equipment.serialNumber}}</p>
+      <p>{{equipment.equipType}}</p>
+      <p>{{equipment.equipSemiType}}</p>
+      {% if equipment.borrowState == 0 and equipment.isExist == True %}
+      <p>대여가능</p>
+      {% elif equipment.borrowState == 1 %}
+      <p>대여중</p>
+      {% else %}
+      <p>고장남</p>
+      {% endif %} {% if equipment.isExist == True %}
+      <a href="{% url 'brokenEquipment' equipment.pk %}">
+        <button>고장 났으면 체크</button>
+      </a>
+      {% else %}
+      <a href="{% url 'repairEquipment' equipment.pk %}">
+        <button>고쳤으면 체크</button>
+      </a>
+      {% endif %}
+      <a href="{% url 'deleteEquipment' equipment.pk %}">
+        <button>장비 삭제</button>
+      </a>
+    </div>
+    {% endfor %}
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
     <a href="{% url 'addEquipment' %}">
       <button>장비 추가하기</button>
     </a>

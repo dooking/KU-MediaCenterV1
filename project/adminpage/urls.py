@@ -5,12 +5,22 @@ from adminpage import views
 
 # TODO:url 손보기  including 되는거라 ㅇㅇ
 urlpatterns = [
+    # main
     path('main', views.main, name='main'),
+
+    # 대여목록 전체
     path('total', views.total, name='total'),
 
+    # 장비 추가 및 삭제
     path('equipment', views.equipment, name='equipment'),
     path('addequipment', views.addEquipment, name='addEquipment'),
-    # path('deleteequipment/<int: equipment_pk>',
-    #      views.deleteEquipment, name="deleteEquipment"),
+    path('deleteequipment/<int:equipment_pk>',
+         views.deleteEquipment, name="deleteEquipment"),
+    path('brokenEquipment/<int:equipment_pk>',
+         views.brokenEquipment, name="brokenEquipment"),
+    path('repairEquipment/<int:equipment_pk>',
+         views.repairEquipment, name="repairEquipment"),
+
+    # 장비 대여 예약 확인 및 관리
     path('qrcheck', views.qrcheck, name='qrcheck')
 ]

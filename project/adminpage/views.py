@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from app.models import Equipment
+from app.models import Equipment, EquipmentBorrow
 
 # Create your views here.
 
@@ -11,15 +11,23 @@ from app.models import Equipment
 
 
 def main(request):
+    # 대여 목록의 state를 0,1,2로 구분해놨고, 이를 필터링해주고 랜더링 해주면 됨
+    # 각각의 cell에 update해주는 창 하나 만들기 확인 누르면 다시 랜더링 되는걸로
     return render(request, "main.html")
 
 
 def total(request):
+    # 모든 대여내역 다 보여주면 됨
     return render(request, "total.html")
 
 
 def equipment(request):
-    return render(request, "equipment.html")
+    # 장비 목록 다 보여주면 됨
+    # 장비 추가는 따로 탭을 만들거고
+    # 장비 삭제 및 사용 불가 처리는 여기서 할 수 있도록
+    # 함수는 따로 뺴야됨
+    equipments = Equipment.objects.all()
+    return render(request, "equipment.html", {"equipments": equipments})
 
 
 def qrcheck(request):
@@ -37,7 +45,7 @@ def addEquipment(request):
                 serialNumber=request.POST['serialNumber'],
                 equipType=request.POST['equipType'],
                 equipSemiType=request.POST['equipSemiType'],
-                isExist=False,
+                isExist=True,
                 borrowState=0
             )
             msg = '정상적으로 제품을 등록하였습니다.'
@@ -49,6 +57,16 @@ def addEquipment(request):
 
 
 def deleteEquipment(request, equipment_pk):
-    deleteEquipment = Equipment.objects.filter(pk=equipment_pk)
+    deleteEquipment = Equipment.objects.get(pk=equipment_pk)
     deleteEquipment.delete()
+    return redirect('equipment')
+
+
+def brokenEquipment(request, equipment_pk):
+    Equipment.objects.filter(pk=equipment_pk).update(isExist=False)
+    return redirect('equipment')
+
+
+def repairEquipment(request, equipment_pk):
+    Equipment.objects.filter(pk=equipment_pk).update(isExist=True)
     return redirect('equipment')
