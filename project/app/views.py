@@ -97,29 +97,54 @@ def makeDict(Ename, semiType, selectDate):
 def findTime(Ename, Eto, Ecount):
     todayTime = [Ecount for i in range(24)]
     tomorrowTime = [Ecount for i in range(24)]
-    borrowLists = EquipmentBorrow.objects.filter(fromDate=Eto)
-    for borrowList in borrowLists:
+    # 오늘 현황 (오늘 반납할 사람 + 빌리는 사람)
+    todayReturn = EquipmentBorrow.objects.filter(toDate=str(int(Eto)-1))
+    todayBorrow = EquipmentBorrow.objects.filter(fromDate=Eto)
+    for borrowList in todayReturn:
         for equipList in borrowList.equipment.replace("[", "").replace("]", "").replace("'", "").split(","):
             [equip, count] = equipList.split(":")
             equip = equip.strip()
             count = count.strip()
             if(equip == Ename):
-                for j in range(borrowList.fromDateTime, borrowList.toDateTime+2):
+                for j in range(borrowList.toDateTime+2):
                     todayTime[j] -= int(count)
-    borrowLists = EquipmentBorrow.objects.filter(fromDate=str(int(Eto)+1))
-    for borrowList in borrowLists:
+    for borrowList in todayBorrow:
         for equipList in borrowList.equipment.replace("[", "").replace("]", "").replace("'", "").split(","):
             [equip, count] = equipList.split(":")
             equip = equip.strip()
             count = count.strip()
             if(equip == Ename):
-                for j in range(borrowList.fromDateTime, borrowList.toDateTime+2):
-                    todayTime[j] -= int(count)
+                if(int(borrowList.fromDate) < int(borrowList.toDate)):
+                    for j in range(borrowList.toDateTime+2):
+                        tomorrowTime[j] -= int(count)
+                else:
+                    for j in range(borrowList.fromDateTime,borrowList.toDateTime+2):
+                        todayTime[j] -= int(count)
+    # 내일 현황 (내일 반납할 사람 + 빌리는 사람)
+    tomorrowBorrow = EquipmentBorrow.objects.filter(fromDate=str(int(Eto)+1))
+    for borrowList in tomorrowBorrow:
+        for equipList in borrowList.equipment.replace("[", "").replace("]", "").replace("'", "").split(","):
+            [equip, count] = equipList.split(":")
+            equip = equip.strip()
+            count = count.strip()
+            if(equip == Ename):
+                if(borrowList.fromDate == borrowList.toDate):
+                    for j in range(borrowList.fromDateTime, borrowList.toDateTime+2):
+                        tomorrowTime[j] -= int(count)
+    # for borrowList in borrowLists:
+    #     for equipList in borrowList.equipment.replace("[", "").replace("]", "").replace("'", "").split(","):
+    #         [equip, count] = equipList.split(":")
+    #         equip = equip.strip()
+    #         count = count.strip()
+    #         if(equip == Ename):
+    #             for j in range(borrowList.fromDateTime, borrowList.toDateTime+2):
+    #                 todayTime[j] -= int(count)
     # nowhi = EquipmentBorrow.objects.filter(toDate=str(int(Eto)+1))
     # for i in nowhi:
     #     if(i.equipment.equipmentName == Ename):
     #         for j in range(i.fromDateTime, i.toDateTime+1):
     #             tomorrowTime[j] -= 1
+    print(todayTime)
     return todayTime[9:18], tomorrowTime[9:18]
 
 
