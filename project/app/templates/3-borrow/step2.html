@@ -20,7 +20,7 @@
     </div>
         <!-- 폼태그 시작 -->
     <div class="wrapper">
-        <form method="POST" action="{% url 'borrow_finish' %}">
+        <form method="POST" name="step2" action="{% url 'borrow_finish' %}" onsubmit="checkAll();">
             {% csrf_token %}
             <div>
                 <div class = "content_box">
@@ -50,11 +50,15 @@
                     </div>
                 </div>
                 <div class = "content_box">
-                    <p class = "step-sub">3. 사용 목적 입력</p>
+                    <p class = "step-sub">3. 핸드폰 번호 입력</p>
+                    <input type="tel" name="phone" placeholder="ex) 010-1234-5678" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required>
+                </div>
+                <div class = "content_box">
+                    <p class = "step-sub">4. 사용 목적 입력</p>
                     <input type="text" name="purpose" placeholder="ex) 실습 과목 이름, 작품명 등" required size = "35">
                 </div>
                 <div class = "content_box">
-                    <p class = "step-sub">4. 제출 신분증 선택</p>
+                    <p class = "step-sub">5. 제출 신분증 선택</p>
                     <div class="choice">
                         <input type="radio" name = "auth" value="주민등록증" required><p>주민등록증</p>
                     </div>
@@ -72,16 +76,17 @@
                     </div>
                 </div>
                 <div class = "content_box">
-                    <p class = "step-sub">5. 비고 입력</p>
+                    <p class = "step-sub">6. 비고 입력</p>
                     <p class = "step-sub-sub" >(출입카드 반납시간 입력 필수)</p>
                     <input type="text" placeholder="ex)" name="remark" 반납시간 및 기타 문의 사랑" size = "35">
                 </div>
             </div>
             <div class = "button_box">
-            <button type = "submit" onclick="alert('대여 완료')">대여하기</button>
+            <button type = "submit">대여하기</button>
             </div>
         </form>
     </div>
+    <script type="text/javascript" src="{% static '3-borrow/step2.js' %}"></script>
     {% endblock content %}
 </body>
 </html>
