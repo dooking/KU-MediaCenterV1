@@ -1,14 +1,9 @@
-
-{% extends 'base.html' %}
-{% load static %}
-{% block title %} 고려대학교 미디어센터{% endblock title %}
-{% block css %}
-<link rel="stylesheet" href="{% static '1-startpage/main.css' %}">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-{% endblock css %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block title %} 고려대학교
+미디어센터{% endblock title %} {% block css %}
+<link rel="stylesheet" href="{% static '1-startpage/main.css' %}" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+{% endblock css %} {% block content %}
 <div id="wrapper">
-
         <div class="main_div">
             <div class="card_box">
                 <div class="card_elements">
@@ -31,18 +26,17 @@
                     <div class="enter_icon_div">
                         <img class="enter_icon" src="{% static 'images/enter_icon.png' %}" alt="enter_icon">
                     </div>
-                    <div class="login_div">
-                        <a href="">
-                            <button class="login_button">로그인</button>
-                        </a>
-                        <p>고려대학교 메일로 로그인 후 이용</p>
+                   <div class="login_div">
+                      {%load socialaccount%} {% providers_media_js%}
+                      <a href="{% provider_login_url 'google' %}">
+                        <button class="login_button">학교 메일로 로그인</button>
+                      </a>
                     </div>
                     {% endif %}
                 </div>
             </div>
-
-
     </div>
+  
     <div class="menu_boxes">
         <a href="{% url 'borrow' %}">
             <div class="menu_box">
@@ -93,13 +87,12 @@
             </div>
         </a>  
     </div>
+  
     <div class="footer_box">
         <p>장비대여실 위치 : 고려대학교 미디어관 지하1층 B103A호 </p>
         <p>운영시간 : 월-금 9:30 ~ 17:30 / 점심시간 : 12:00 ~ 13:00</p>
         <p>☎ 02 3290 1524</p>
-    </div>
-        
+    </div>    
 </div>
-
 
 {% endblock content %}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+    <link rel="stylesheet" href="{% static '3-borrow/step1.css' %}" type="text/css"/>
+    {% endblock css %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %} 장비 대여하기 {% endblock title %}
+    
+</head>
+<body>
+    {% block content %}
+    <!-- 스텝 보여주는 부분 -->
+    <div class = "step_box">
+        <div class= "step" id ="step1">step1</div>
+        <div class= "step" id ="step2">step2</div>
+    </div>
+    <!-- 전체 폼 시작 -->
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            <p>1. 예약 날짜 선택</p>
+            <input type="date" class="date" name="date">
+            <input type="submit" onclick="dataHandler(this)">
+        </div>
+    </form>
+    <form method="POST" action="{% url 'borrow_step2' %}">
+        {% csrf_token %}
+        <div>
+            <p>2. 대여 장비 선택</p>
+            <div class = "red_menu_box" onclick = "hide(this)">
+                <p class = "red_menu_text">카메라</p>
+                <p class ="red_menu_text">▼</p>
+            </div>
+            <div>
+                <div class = "white_menu_box" onclick="hide(this)">
+                    <p class = "white_menu_text">DSLR</p>
+                    <p class ="white_menu_text">▼</p>
+                </div>
+                <div>
+                    {% for dslr in totalDslr %}
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "{{dslr.name}}" onclick="radioHandler(this)">
+                            <p>{{dslr.name}}</p>
+                        </div>
+                        <div class="graph">
+                            <div class = "chart">
+                                <div class = "standard">
+                                    <p id = "num">수량</p>
+                                    <p id = "time">시간</p>
+                                </div>
+                                <div class = 'redbar'></div>
+                                <div class= 'charbody'>
+                                    <div class = 'dotline'></div>
+                                    <div class = 'bar_body'>
+                                        {% for stacks in dslr.time %}
+                                        <div class= 'stack' id = 's'>
+                                            {% for hour in dslr %}
+                                            <div class = "block" id="n"></div>
+                                            {% endfor %}
+                                            {% for hour in totalDslr %}
+                                            <div class= "block" id='b'></div>
+                                            {% endfor %}
+                                            <div class="time-hour">
+                                                <input type="hidden" id="output" value={{stacks}}>                                   
+                                                {{forloop.counter}}
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class = "white_menu_box" onclick="hide(this)">
+                    <p class = "white_menu_text">Camcorder</p>
+                    <p class ="white_menu_text">▼</p>
+                </div>
+                <div>
+                    {% for camcorder in totalCamcorder %}
+                    <div class = "cam_menu">
+                        <div class = "cam_check">
+                            <input type="radio" name = "cam" value = "{{camcorder.name}}" onclick="radioHandler(this)">
+                            <p>{{camcorder.name}}</p>
+                        </div>
+                        <div class="graph">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>  
+        </div>
+        <div>
+            <p>3. 대여 목록</p>
+        </div>
+        <div class="here">
+            <div class="hihi">대여 목록이 없습니다</div>
+        </div>
+        <div>
+            <br>
+            <label>예약 일시</label>
+            <input type="time" name="fromTime" value="13:00"/>
+            <span>----></span>
+            <label>반납 일시</label>
+            <input type="time" name="toTime" value="16:00"/>
+        </div>
+        <input type="hidden" name="toDate" value={{selectDate}}>
+        <button type="submit">다음 단계</button>
+    </form>
+    <script type="text/javascript" src="{% static '3-borrow/step1.js' %}"></script>
+    <script>
+            //let blockCount = document.getElementById('blockCount')
+            let blockCount = document.getElementById('output')
+            const newDiv = document.createElement('div')
+            newDiv.setAttribute("class","time-block")
+            blockCount.appendChild(newDiv);
+    </script>
+    {% endblock content %}
+</body>
+</html>
