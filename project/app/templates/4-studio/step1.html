@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+    <link rel="stylesheet" href="{% static '4-studio/step1.css' %}" type="text/css"/>
+    {% endblock css %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %} 장비 대여하기 {% endblock title %}
+
+</head>
+<body>
+    {% block content %}
+    <!-- 스텝 보여주는 부분 -->
+    <div class = "step_box">
+        <div class= "step" id ="step1">STEP 1</div>
+        <div class= "step" id ="step2">STEP 2</div>
+    </div>
+    <!-- 전체 폼 시작 -->
+    <div class = "wrapper">
+    <form method="POST" name="sDate">
+        {% csrf_token %}
+        <div class ="first_form">
+            <p class = "step-sub">1. 예약 날짜 선택</p>
+            <input type="date" name="selectDate" id="selectDate" value="{{calendar}}" min="{{now}}">
+        </div>
+    </form>
+    <form method="POST" name = "step1" action="{% url 'borrow_step2' %}" onsubmit="return checkAll();">
+        {% csrf_token %}
+        <div>
+            <p class = 'step-sub'>2. 스튜디오 선택</p>
+        </div>
+
+        <div>
+            <p class = "step-sub">3. 선택 목록</p>
+        </div>
+        <div class="borrow_list">
+        </div>
+        <div class = "set_time">
+            <div class = 'rev_time'>
+                <label>예약 일시</label>
+                <input type="date" id="fromDate" name="fromDate" value="{{calendar}}" readonly/>
+                <input type="time" id="fromTime" name="fromTime" value="13:00" min="09:00" max="17:00" step="3600" required/>
+            </div>
+            <div class = 'rev_time'>
+                <label>반납 일시</label>
+                <input type="date" id="toDate" name="toDate" value="{{calendar}}" min="{{calendar}}" max="{{nextDay}}" required/>
+                <input type="time" id="toTime" name="toTime" value="16:00" min="09:00" max="17:00" required/>
+            </div>
+        </div>
+        <input type="hidden" id="resultBorrow" name="resultBorrow" value="">
+        <div class = "button_box">
+            <button type="submit">다음 단계</button>
+        </div>
+    </form>       
+    </div>
+    {% endblock content %}
+</body>
+</html>
