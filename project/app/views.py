@@ -27,7 +27,7 @@ def introduce(request):
 
 
 @csrf_exempt
-def step1(request):
+def borrow_step1(request):
     nowDate = datetime.datetime.now().strftime('%Y-%m-%d').replace("-", "")
     nextDay = (datetime.datetime.now() +
                datetime.timedelta(1)).strftime('%Y-%m-%d')
@@ -46,9 +46,7 @@ def step1(request):
             day))+datetime.timedelta(1)).strftime('%Y-%m-%d')
         #cameraObject = makeDictionary(camera, selectDate)
         otherObject = makeDictionary(camera, selectDate) + makeDictionary(subCamera, selectDate) + makeDictionary(record, selectDate) + makeDictionary(light, selectDate) + makeDictionary(etc, selectDate)
-        print(otherObject)
         return render(request, '3-borrow/step1.html', {"otherObjects": otherObject, "selectDate": selectDate, "calendar": ''.join(request.POST['selectDate']), "now": datetime.datetime.now().strftime('%Y-%m-%d'), "nextDay": nextDay})
-    print(otherObject)
     return render(request, '3-borrow/step1.html', {"otherObjects": otherObject, "selectDate": nowDate, "calendar": datetime.datetime.now().strftime('%Y-%m-%d'), "now": datetime.datetime.now().strftime('%Y-%m-%d'), "nextDay": nextDay})
 
 
@@ -171,7 +169,8 @@ def borrow_finish(request):
             borrowState=0
         )
         return redirect('main')
-# 로그인 권한 필요시
-# @login_required(login_url='/registration/login')
 
-# registration
+
+def studio_step1(request):
+     return render(request, '4-studio/step1.html')
+
