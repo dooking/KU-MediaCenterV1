@@ -26,7 +26,7 @@ class Equipment(models.Model):
     isExist = models.BooleanField(default=True)
     # 대여가능 0 대여중 1 연체 2
     borrowState = models.IntegerField(default=0)
-
+    remark =  models.CharField(max_length=50, default="", blank=True)
     def __str__(self):
         return self.equipmentName
 
@@ -43,10 +43,11 @@ class EquipmentBorrow(models.Model):
     realDate = models.CharField(max_length=50, default=0)
     realDateTime = models.IntegerField(default=0)
     group = models.CharField(max_length=50, default="")
+    phone = models.CharField(max_length=50, default="")
     purpose = models.CharField(max_length=50, default="")
     auth = models.CharField(max_length=50, default="")
     remark = models.CharField(max_length=50, default="")
-    # 대여가능 0 대여중 1 연체 2
+    # 대여가능 0 신청중 1 대여중 1 연체 2
     borrowState = models.IntegerField(default=0)
 
     def __str__(self):

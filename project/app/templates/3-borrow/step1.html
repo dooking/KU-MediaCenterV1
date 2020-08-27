@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %} 장비 대여하기 {% endblock title %}
-    
+
 </head>
 <body>
     {% block content %}
@@ -20,80 +20,17 @@
     </div>
     <!-- 전체 폼 시작 -->
     <div class = "wrapper">
-    <form method="POST">
+    <form method="POST" name="sDate">
         {% csrf_token %}
         <div class ="first_form">
             <p class = "step-sub">1. 예약 날짜 선택</p>
-            <input type="date" class="date" name="date" value="{{calendar}}" min="{{now}}">
-            <input type="submit" value="확인">
+            <input type="date" name="selectDate" id="selectDate" value="{{calendar}}" min="{{now}}">
         </div>
     </form>
-    <form method="POST" name = "step1" action="{% url 'borrow_step2' %}">
+    <form method="POST" name = "step1" action="{% url 'borrow_step2' %}" onsubmit="return checkAll();">
         {% csrf_token %}
         <div>
             <p class = 'step-sub'>2. 대여 장비 선택</p>
-            <div class = "red_menu_box" onclick = "hide(this)">
-                <p class = "red_menu_text">카메라</p>
-                <p class ="red_menu_text">▼</p>
-            </div>
-            <div>
-                {% for cameraObject in cameraObjects %}
-                    <div>
-                        <div class = "white_menu_box" onclick="hide(this)">
-                            <p class ="white_menu_text">{{cameraObject.type}}</p>
-                            <p class ="white_menu_text">▼</p>
-                        </div>
-                        <div class = "cam_box">
-                            {% for camera in cameraObject.info%}
-                                <div class = "cam_menu">
-                                    <div class = "cam_check">
-                                        <input type="radio" id="camera" value = "{{camera.name}}" onclick="radioHandler(this)">
-                                        <p>{{camera.name}}</p>
-                                    </div>
-                                    <div class="graph">
-                                        <div class = "chart">
-                                            <div class = "standard">
-                                                <p id = "num">수량</p>
-                                                <p id = "time">시간</p>
-                                            </div>
-                                            <div class = 'redbar'></div>
-                                            <div class = 'bar_body'>
-                                                <div class = 'day'>
-                                                    <div class ='stack'>
-                                                        {% for hour in camera.time1 %}
-                                                        <div class="time-hour">
-                                                            <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
-                                                            </div>
-                                                        </div>
-                                                        {% endfor %}
-                                                    </div>
-                                                    <div class = 'hour_num'>
-                                                        <p>9 10 11 12 13 14 15 16 17</p>
-                                                    </div>
-                                                </div>
-                                                <div class = "day_divide"></div>
-                                                <div class = 'day'>
-                                                    <div class = "stack">
-                                                        {% for hour in camera.time2 %}
-                                                        <div class="time-hour">
-                                                            <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
-                                                            </div>
-                                                        </div>
-                                                        {% endfor %}
-                                                    </div>
-                                                    <div class = "hour_num">
-                                                        <p>9 10 11 12 13 14 15 16 17</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
 
             {% for otherObject in otherObjects %}
                 <div class = "red_menu_box" onclick = "hide(this)">
@@ -104,10 +41,24 @@
                     {% for equipment in otherObject.info %}
                         <div class = "cam_menu">
                             <div class = "cam_check">
-                                <input type="checkbox" value = "{{equipment.name}}"/>
-                                <p>{{equipment.name}}</p>
-                                <input type="number" id="{{equipment.name}}" name="" value="0" min="0" max="5" step="1" onchange="numberHandler(this)"/>
-
+                                <input type="hidden" class="equipmentName" value="{{equipment.name}}">
+                                <input type="hidden" class="equipmentCount" value="{{equipment.time1}}">
+                                <input type="hidden" class="equipmentCount2" value="{{equipment.time2}}">
+                                {% if otherObject.type == "카메라" %}
+                                    <input type="radio" name="camera" id="camera" value = "{{equipment.name}}" onclick="radioHandler(this)">
+                                    <p>{{equipment.name}}</p>
+                                {% elif otherObject.type == "기타 부속" %}
+                                    <input type="checkbox" id="etc" value = "{{equipment.name}}" onclick="return false;"/>
+                                    <p>{{equipment.name}}</p>
+                                    <select name="countEquipment" id="{{equipment.name}}" onchange="numberHandler(this)">
+                                        <option value="0">0개</option>
+                                        <option value="1">1개</option>
+                                        <option value="2">2개</option>
+                                    </select>
+                                {% else %}
+                                    <input type="checkbox" id="{{equipment.name}}" value="{{equipment.name}}" onclick="checkHandler(this)"/>
+                                    <p>{{equipment.name}}</p>
+                                {% endif %}
                             </div>
                             <div class="graph">
                                 <div class = "chart">
@@ -153,8 +104,6 @@
             {% endfor %}
         </div>
 
-
-
         <div>
             <p class = "step-sub">3. 대여 목록</p>
         </div>
@@ -174,7 +123,7 @@
         </div>
         <input type="hidden" id="resultBorrow" name="resultBorrow" value="">
         <div class = "button_box">
-            <input type="button" onclick="buttonHandler(this)" value="다음 단계">
+            <button type="submit">다음 단계</button>
         </div>
     </form>       
     </div>

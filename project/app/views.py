@@ -31,47 +31,39 @@ def step1(request):
     nowDate = datetime.datetime.now().strftime('%Y-%m-%d').replace("-", "")
     nextDay = (datetime.datetime.now() +
                datetime.timedelta(1)).strftime('%Y-%m-%d')
-    camera = Equipment.objects.filter(
-        equipType="camera", isExist=True).values('equipSemiType').distinct()
-    subCamera = Equipment.objects.filter(
-        equipType="subcamera", isExist=True).values('equipType').distinct()
-    record = Equipment.objects.filter(
-        equipType="record", isExist=True).values('equipType').distinct()
-    light = Equipment.objects.filter(
-        equipType="light", isExist=True).values('equipType').distinct()
-    etc = Equipment.objects.filter(
-        equipType="etc", isExist=True).values('equipType').distinct()
-    cameraObject = makeDictionary(camera, nowDate, True)
-    otherObject = makeDictionary(subCamera, nowDate, False) + makeDictionary(record, nowDate,
-                                                                             False) + makeDictionary(light, nowDate, False) + makeDictionary(etc, nowDate, False)
+    camera = Equipment.objects.filter(equipType="카메라", isExist=True).values('equipType').distinct()
+    subCamera = Equipment.objects.filter(equipType="카메라 보조 장치", isExist=True).values('equipType').distinct()
+    record = Equipment.objects.filter(equipType="녹음 장비", isExist=True).values('equipType').distinct()
+    light = Equipment.objects.filter(equipType="조명", isExist=True).values('equipType').distinct()
+    etc = Equipment.objects.filter(equipType="기타 부속", isExist=True).values('equipType').distinct()
+    #cameraObject = makeDictionary(camera, nowDate)
+    otherObject = makeDictionary(camera, nowDate) +makeDictionary(subCamera, nowDate) + makeDictionary(record, nowDate) + makeDictionary(light, nowDate) + makeDictionary(etc, nowDate)
 
     if (request.method == "POST"):
-        selectDate = ''.join(request.POST['date']).replace("-", "")
-        year, month, day = ''.join(request.POST['date']).split("-")
+        selectDate = ''.join(request.POST['selectDate']).replace("-", "")
+        year, month, day = ''.join(request.POST['selectDate']).split("-")
         nextDay = (datetime.datetime(int(year), int(month), int(
             day))+datetime.timedelta(1)).strftime('%Y-%m-%d')
-        cameraObject = makeDictionary(camera, selectDate, True)
-        otherObject = makeDictionary(subCamera, selectDate, False) + makeDictionary(record, selectDate,
-                                                                                    False) + makeDictionary(light, selectDate, False) + makeDictionary(etc, selectDate, False)
-        return render(request, '3-borrow/step1.html', {"cameraObjects": cameraObject, "otherObjects": otherObject, "selectDate": selectDate, "calendar": ''.join(request.POST['date']), "now": datetime.datetime.now().strftime('%Y-%m-%d'), "nextDay": nextDay})
+        #cameraObject = makeDictionary(camera, selectDate)
+        otherObject = makeDictionary(camera, selectDate) + makeDictionary(subCamera, selectDate) + makeDictionary(record, selectDate) + makeDictionary(light, selectDate) + makeDictionary(etc, selectDate)
+        print(otherObject)
+        return render(request, '3-borrow/step1.html', {"otherObjects": otherObject, "selectDate": selectDate, "calendar": ''.join(request.POST['selectDate']), "now": datetime.datetime.now().strftime('%Y-%m-%d'), "nextDay": nextDay})
+    print(otherObject)
+    return render(request, '3-borrow/step1.html', {"otherObjects": otherObject, "selectDate": nowDate, "calendar": datetime.datetime.now().strftime('%Y-%m-%d'), "now": datetime.datetime.now().strftime('%Y-%m-%d'), "nextDay": nextDay})
 
-    return render(request, '3-borrow/step1.html', {"cameraObjects": cameraObject, "otherObjects": otherObject, "selectDate": nowDate, "calendar": datetime.datetime.now().strftime('%Y-%m-%d'), "now": datetime.datetime.now().strftime('%Y-%m-%d'), "nextDay": nextDay})
 
-
-def makeDictionary(lists, selectDate, isCamera):
+def makeDictionary(lists, selectDate):
     resultObject = []
-    if(isCamera):
-        for semiType in lists:
-            equipTypeList = Equipment.objects.filter(
-                equipSemiType=semiType['equipSemiType']).values('equipmentName').distinct()
-            resultObject.append(
-                findName(equipTypeList, semiType['equipSemiType'], selectDate))
-    else:
-        for equipType in lists:
-            equipTypeList = Equipment.objects.filter(
-                equipType=equipType['equipType']).values('equipmentName').distinct()
-            resultObject.append(
-                findName(equipTypeList, equipType['equipType'], selectDate))
+    # if(isCamera):
+    #     for semiType in lists:
+    #         equipTypeList = Equipment.objects.filter(
+    #             equipSemiType=semiType['equipSemiType']).values('equipmentName').distinct()
+    #         resultObject.append(
+    #             findName(equipTypeList, semiType['equipSemiType'], selectDate))
+    # else:
+    for equipType in lists:
+        equipTypeList = Equipment.objects.filter(equipType=equipType['equipType']).values('equipmentName').distinct()
+        resultObject.append(findName(equipTypeList, equipType['equipType'], selectDate))
     return resultObject
 
 
@@ -98,7 +90,7 @@ def findTime(Ename, Eto, Ecount):
     todayTime = [Ecount for i in range(24)]
     tomorrowTime = [Ecount for i in range(24)]
     # 오늘 현황 (오늘 반납할 사람 + 빌리는 사람)
-    todayReturn = EquipmentBorrow.objects.filter(toDate=str(int(Eto)-1))
+    todayReturn = EquipmentBorrow.objects.filter(fromDate=str(int(Eto)-1),toDate=Eto)
     todayBorrow = EquipmentBorrow.objects.filter(fromDate=Eto)
     for borrowList in todayReturn:
         for equipList in borrowList.equipment.replace("[", "").replace("]", "").replace("'", "").split(","):
@@ -117,10 +109,12 @@ def findTime(Ename, Eto, Ecount):
                 if(int(borrowList.fromDate) < int(borrowList.toDate)):
                     for j in range(borrowList.toDateTime+2):
                         tomorrowTime[j] -= int(count)
+                    for j in range(borrowList.fromDateTime,24,1):
+                        todayTime[j] -= int(count)
                 else:
                     for j in range(borrowList.fromDateTime,borrowList.toDateTime+2):
                         todayTime[j] -= int(count)
-    # 내일 현황 (내일 반납할 사람 + 빌리는 사람)
+    # 내일 현황 (내일기준 반납할 사람 + 빌리는 사람)
     tomorrowBorrow = EquipmentBorrow.objects.filter(fromDate=str(int(Eto)+1))
     for borrowList in tomorrowBorrow:
         for equipList in borrowList.equipment.replace("[", "").replace("]", "").replace("'", "").split(","):
@@ -144,7 +138,6 @@ def findTime(Ename, Eto, Ecount):
     #     if(i.equipment.equipmentName == Ename):
     #         for j in range(i.fromDateTime, i.toDateTime+1):
     #             tomorrowTime[j] -= 1
-    print(todayTime)
     return todayTime[9:18], tomorrowTime[9:18]
 
 
@@ -171,6 +164,7 @@ def borrow_finish(request):
             fromDate="".join(request.POST['fromDate']).replace("-", ""),
             fromDateTime=int(("".join(request.POST['fromTime']))[:2]),
             group="".join(request.POST['group']),
+            phone="".join(request.POST['phone']),
             purpose="".join(request.POST['purpose']),
             auth="".join(request.POST['auth']),
             remark="".join(request.POST['remark']),
