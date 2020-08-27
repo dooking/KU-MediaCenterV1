@@ -4,23 +4,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 {% endblock css %} {% block content %}
 <div id="wrapper">
-  <div class="main_box">
-    <div class="card_box">
-      <div class="card_elements">
-        <div class="enter_icon_div">
-          <img
-            class="enter_icon"
-            src="../../static/images/enter_icon.png"
-            alt="프로필 카드"
-          />
-        </div>
-        <div class="login_div">
-          {%load socialaccount%} {% providers_media_js%}
-          <a href="{% provider_login_url 'google' %}">
-            <button class="login_button">학교 메일로 로그인</button>
-          </a>
-        </div>
-      </div>
+        <div class="main_div">
+            <div class="card_box">
+                <div class="card_elements">
+                    {% if user.is_authenticated %}
+                    <div class="profile_icon_div">
+                        <img class="profile_icon" src="{% static '1-startpage/images/profile_icon.png' %}" alt="프로필 아이콘">
+                    </div>
+                    <div class="profile_div">
+                        <div class="upper_profile_div">
+                            <span class="user_name"> {{ user.Name }} </span>
+                            <a class="logout_button" href="">
+                                로그아웃
+                            </a>
+                        </div>
+                        <div class="lower_profile_div">
+                        <span class="profile_info">{{ user.profile.info }}</p>
+                        </div> 
+                    </div>
+                    {% else %}
+                    <div class="enter_icon_div">
+                        <img class="enter_icon" src="{% static 'images/enter_icon.png' %}" alt="enter_icon">
+                    </div>
+                   <div class="login_div">
+                      {%load socialaccount%} {% providers_media_js%}
+                      <a href="{% provider_login_url 'google' %}">
+                        <button class="login_button">학교 메일로 로그인</button>
+                      </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
     </div>
   </div>
   <div class="menu_boxes">
@@ -102,6 +116,7 @@
     <p>운영시간 : 월-금 9:30 ~ 17:30 / 점심시간 : 12:00 ~ 13:00</p>
     <p>☎ 02 3290 1524</p>
   </div>
+
 </div>
 
 {% endblock content %}
