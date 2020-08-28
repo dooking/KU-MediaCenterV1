@@ -8,7 +8,7 @@
     {% endblock css %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block title %} 장비 대여하기 {% endblock title %}
+    {% block title %} 스튜디오 예약하기 {% endblock title %}
 
 </head>
 <body>
@@ -27,12 +27,76 @@
             <input type="date" name="selectDate" id="selectDate" value="{{calendar}}" min="{{now}}">
         </div>
     </form>
-    <form method="POST" name = "step1" action="{% url 'borrow_step2' %}" onsubmit="return checkAll();">
+    <form method="POST" name = "step1" action="{% url 'studio_step2' %}" onsubmit="return checkAll()">
         {% csrf_token %}
         <div>
             <p class = 'step-sub'>2. 스튜디오 선택</p>
+            {% for otherObject in otherObjects %}
+                <div class = "red_menu_box" >
+                    {% if otherObject.type != "편집실" %}
+                        <input type="checkbox" id="{{otherObject.type}}" value="{{otherObject.type}}" onclick="checkHandler(this)"/>
+                    {% endif %}
+                    <p class ="red_menu_text">{{otherObject.type}}</p>
+                    <p class ="red_menu_text" onclick = "hide(this)">▼</p>
+                </div>    
+                <div class = "cam_box">
+                    {% for studioInfo in otherObject.info %}
+                        <div class = "cam_menu">
+                            <div class = "cam_check">
+                                <input type="hidden" class="studioCount" value="{{studioInfo.time1}}">
+                                <input type="hidden" class="studioCount2" value="{{studioInfo.time2}}">
+                                {% if otherObject.type == "편집실" %}
+                                    <input type="radio" name="edit" id="edit" value = "{{otherObject.type}} {{studioInfo.name}}" onclick="radioHandler(this)">
+                                    <input type="hidden" class="studioName" value="{{otherObject.type}} {{studioInfo.name}}">
+                                    <p>{{studioInfo.name}}</p>
+                                {% else %}
+                                    <input type="hidden" class="studioName" value="{{studioInfo.name}}">
+                                {% endif %}
+                            </div>
+                            <div class="graph">
+                                <div class = "chart">
+                                    <div class = "standard">
+                                        <p id = "num">수량</p>
+                                        <p id = "time">시간</p>
+                                    </div>
+                                    <div class = 'redbar'></div>
+                                    <div class = 'bar_body'>
+                                        <div class = 'day'>
+                                            <div class ='stack'>
+                                                {% for hour in studioInfo.time1 %}
+                                                <div class="time-hour">
+                                                    <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class = 'hour_num'>
+                                                <p>0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24</p>
+                                            </div>
+                                        </div>
+                                        <div class = "day_divide"></div>
+                                        <div class = 'day'>
+                                            <div class = "stack">
+                                                {% for hour in studioInfo.time2 %}
+                                                <div class="time-hour">
+                                                    <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class = "hour_num">
+                                                <p>0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
         </div>
-
+            
         <div>
             <p class = "step-sub">3. 선택 목록</p>
         </div>
@@ -42,12 +106,12 @@
             <div class = 'rev_time'>
                 <label>예약 일시</label>
                 <input type="date" id="fromDate" name="fromDate" value="{{calendar}}" readonly/>
-                <input type="time" id="fromTime" name="fromTime" value="13:00" min="09:00" max="17:00" step="3600" required/>
+                <input type="time" id="fromTime" name="fromTime" value="13:00" step="3600" required/>
             </div>
             <div class = 'rev_time'>
                 <label>반납 일시</label>
                 <input type="date" id="toDate" name="toDate" value="{{calendar}}" min="{{calendar}}" max="{{nextDay}}" required/>
-                <input type="time" id="toTime" name="toTime" value="16:00" min="09:00" max="17:00" required/>
+                <input type="time" id="toTime" name="toTime" value="16:00" required/>
             </div>
         </div>
         <input type="hidden" id="resultBorrow" name="resultBorrow" value="">
@@ -56,6 +120,7 @@
         </div>
     </form>       
     </div>
+    <script type="text/javascript" src="{% static '4-studio/step1.js' %}"></script>
     {% endblock content %}
 </body>
 </html>
