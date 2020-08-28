@@ -39,6 +39,7 @@ urlpatterns = [
     path('mypage/', views.mypage, name="mypage"),
 
     path('accounts/', include('allauth.urls')),
+    path('error/', views.error, name="error"),
 
     
 ]

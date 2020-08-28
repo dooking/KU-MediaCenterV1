@@ -290,3 +290,6 @@ def studio_finish(request):
 
 def mypage(request):
     return render(request, '3-borrow/mypage.html')
+
+def error(request):
+    return render(request, 'error.html')
