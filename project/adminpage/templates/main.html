@@ -1,91 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>adminpage main</title>
-  </head>
-  <body>
-    <div
-      style="
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-      "
-    >
-      <a href="{% url 'total' %}">
-        <button>전체 대여 목록</button>
-      </a>
-      <a href="{% url 'equipment' %}">
-        <button>장비 관리</button>
-      </a>
-    </div>
-    <div
-      style="
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-      "
-    >
-      <div
-        style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          height: 10%;
-        "
-      >
-        <p>예약 목록</p>
-        {% if state0s %} {% for state0 in state0s %}
-        <div>
-          <p>대충 예약 내용 보여준다는 내용</p>
-          <a href="{% url 'qrcheckBrrow' state0.pk %}"
-            ><button>QRcode check 대여 승인하기</button></a
-          >
-        </div>
-        {% endfor%} {% endif %}
+{% extends 'admin_base.html' %} 
+{% load static %} 
+{% block title %} 관리자 페이지 {% endblock title %} 
+{% block css %}
+<link rel="stylesheet" href="{% static 'admin_main.css' %}" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+{% endblock css %} 
+{% block content %}
+<div id="wrapper">
+  <div class="main_div">
+      <div class = "current_list" id = "current_list1">
+        <p class = "current_list_p">대여 예정</p>
+          {% if state0s %} {% for state0 in state0s %}
+            <div class="current_list_card">
+              <p>{{state0.username}}</p>
+              <p>대여: {{state0.fromDate}}일 {{state0.fromDateTime}}시</p>
+              <p>반납: {{state0.toDate}}일 {{state0.toDateTime}}시</p>
+              <a class="detail">세부 사항</a>
+              <a href="{% url 'qrcheckBrrow' state0.pk %}">
+                <button class = 'check1'>대여 확인</button>
+                </a>
+            </div>
+          {% endfor%} {% endif %}
       </div>
-      <div
-        style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          height: 10%;
-          flex-direction: column;
-        "
-      >
-        <p>대여중</p>
-        {% if state1s %} {% for state1 in state1s %}
-        <div>
-          <p>대충 예약 내용 보여준다는 내용</p>
-          <a href="{% url 'qrcheckReturn' state1.pk %}"
-            ><button>QRcode check 반납하기</button></a
-          >
-        </div>
-        {% endfor%} {% endif %}
+      <div class = "current_list" id = "current_list2">
+        <p class = "current_list_p">반납 예정</p>
+          {% if state1s %} {% for state1 in state1s %}
+            <div class="current_list_card">
+              <p>{{state1.username}}</p>
+              <p>대여: {{state1.fromDate}}일 {{state1.fromDateTime}}시</p>
+              <p>반납: {{state1.toDate}}일 {{state1.toDateTime}}시</p>
+              <a class="detail">세부 사항</a>
+              <a href="{% url 'qrcheckReturn' state1.pk %}">
+                <button class = 'check2'>반납 확인</button>
+              </a>
+            </div>
+          {% endfor%} {% endif %}
       </div>
-      <div
-        style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          height: 10%;
-        "
-      >
-        <p>연체 목록</p>
-        {% if state2s %} {% for state2 in state2s %}
-        <div>
-          <p>대충 예약 내용 보여준다는 내용</p>
-        </div>
-        {% endfor%} {% endif %}
+      <div class = "current_list" id = "current_list3">
+        <p class = "current_list_p">연체 내역</p>
+          {% if state2s %} {% for state2 in state2s %}
+          <div class="current_list_card">
+            <p>{{state1.username}}</p>
+            <p>대여: {{state2.fromDate}}일 {{state2.fromDateTime}}시</p>
+            <p>반납: {{state2.toDate}}일 {{state2.toDateTime}}시</p>
+            <a class="detail">세부 사항</a>
+            <p>연체 처리 어케할깡ㅜㅜ</p>
+          </div>
+          {% endfor%} {% endif %}
       </div>
-    </div>
-  </body>
-</html>
+  </div>  
+</div>
+{% endblock content %} 
+
