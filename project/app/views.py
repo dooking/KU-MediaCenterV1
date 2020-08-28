@@ -100,6 +100,7 @@ def findTime(Ename, Eto, Ecount):
                     todayTime[j] -= int(count)
     for borrowList in todayBorrow:
         for equipList in borrowList.equipment.replace("[", "").replace("]", "").replace("'", "").split(","):
+            print(Ename, equipList)
             [equip, count] = equipList.split(":")
             equip = equip.strip()
             count = count.strip()

@@ -12,6 +12,7 @@
   justify-content: center;
 }
 
+/*  프로필 카드  */
 
 .card_box{
   width: 100%;
@@ -31,8 +32,32 @@
   display: flex;
   /* flex-wrap: wrap; */
   align-items: center;
-  flex-direction: row;
+  align-content: space-around;
+  flex-direction: column;
   justify-content: center;
+}
+
+/*  로그인 됨 */
+.upper_profile_div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: #4f4f4f solid 1px ;
+  padding-bottom: 10px;
+  width: 81%;
+}
+.profile_icon{
+  width: 60px;
+}
+
+.profile_div{
+  margin-left: 33px;
+}
+.profile_name_div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
 }
 .user_name{
   font-size: 20px;
@@ -43,13 +68,60 @@
   letter-spacing: 0.6px;
   color: #2a2a2a;
 }
-.profile_info{
+
+.logout_button{
+  font-size: 12px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-align: left;
+  color: #707070;
+  border-bottom: #4f4f4f solid 1px; 
+
+}
+.profile_major{
   font-size: 12px;
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: normal;
   color: #8d091d;
 }
+
+.profile_info{
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  
+}
+
+.mypage_button{
+  font-size: 15px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4f4f4f;
+  border-bottom: #4f4f4f solid 1px; 
+}
+.profile_penalty{
+  font-size: 15px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4f4f4f;
+}
+
+
+/* 로그인 안 됨 */
 .enter_icon{
   width: 67px;  
 }
@@ -90,7 +162,9 @@ p{
 
 
 
+
 /* 메뉴 탭 */
+
 .menu_boxes{
   width: 100%;
   min-width: 320px;
