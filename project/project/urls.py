@@ -38,4 +38,6 @@ urlpatterns = [
     path('studio/finish', views.studio_finish, name="studio_finish"),
 
     path('accounts/', include('allauth.urls')),
+
+    path('mypage/', views.mypage, name="mypage"),
 ]

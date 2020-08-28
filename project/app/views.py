@@ -169,7 +169,7 @@ def borrow_finish(request):
             remark="".join(request.POST['remark']),
             borrowState=0
         )
-        return redirect('main')
+        return redirect('3-borrow/mypage.html')
 
 
 def studio_step1(request): 
@@ -286,4 +286,7 @@ def studio_finish(request):
             remark="".join(request.POST['remark']),
             studioState=0
         )
-        return redirect('main')
+        return redirect('3-borrow/mypage.html')
+
+def mypage(request):
+    return render(request, '3-borrow/mypage.html')
