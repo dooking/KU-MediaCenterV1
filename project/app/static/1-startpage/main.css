@@ -43,7 +43,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: #4f4f4f solid 1px ;
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   width: 81%;
 }
 .profile_icon{
@@ -90,7 +90,7 @@
 }
 
 .profile_info{
-  margin-top: 10px;
+  margin-top: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -107,8 +107,9 @@
   letter-spacing: normal;
   text-align: left;
   color: #4f4f4f;
-  border-bottom: #4f4f4f solid 1px; 
+  /* border-bottom: #4f4f4f solid 1px;  */
 }
+
 .profile_penalty{
   font-size: 15px;
   font-weight: 500;
