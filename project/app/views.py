@@ -31,13 +31,19 @@ def borrow_step1(request):
     nowDate = datetime.datetime.now().strftime('%Y-%m-%d').replace("-", "")
     nextDay = (datetime.datetime.now() +
                datetime.timedelta(1)).strftime('%Y-%m-%d')
-    camera = Equipment.objects.filter(equipType="카메라", isExist=True).values('equipType').distinct()
-    subCamera = Equipment.objects.filter(equipType="카메라 보조 장치", isExist=True).values('equipType').distinct()
-    record = Equipment.objects.filter(equipType="녹음 장비", isExist=True).values('equipType').distinct()
-    light = Equipment.objects.filter(equipType="조명", isExist=True).values('equipType').distinct()
-    etc = Equipment.objects.filter(equipType="기타 부속", isExist=True).values('equipType').distinct()
+    camera = Equipment.objects.filter(
+        equipType="카메라", isExist=True).values('equipType').distinct()
+    subCamera = Equipment.objects.filter(
+        equipType="카메라 보조 장치", isExist=True).values('equipType').distinct()
+    record = Equipment.objects.filter(
+        equipType="녹음 장비", isExist=True).values('equipType').distinct()
+    light = Equipment.objects.filter(
+        equipType="조명", isExist=True).values('equipType').distinct()
+    etc = Equipment.objects.filter(
+        equipType="기타 부속", isExist=True).values('equipType').distinct()
     #cameraObject = makeDictionary(camera, nowDate)
-    otherObject = makeDictionary(camera, nowDate) +makeDictionary(subCamera, nowDate) + makeDictionary(record, nowDate) + makeDictionary(light, nowDate) + makeDictionary(etc, nowDate)
+    otherObject = makeDictionary(camera, nowDate) + makeDictionary(subCamera, nowDate) + makeDictionary(
+        record, nowDate) + makeDictionary(light, nowDate) + makeDictionary(etc, nowDate)
 
     if (request.method == "POST"):
         selectDate = ''.join(request.POST['selectDate']).replace("-", "")
@@ -45,7 +51,8 @@ def borrow_step1(request):
         nextDay = (datetime.datetime(int(year), int(month), int(
             day))+datetime.timedelta(1)).strftime('%Y-%m-%d')
         #cameraObject = makeDictionary(camera, selectDate)
-        otherObject = makeDictionary(camera, selectDate) + makeDictionary(subCamera, selectDate) + makeDictionary(record, selectDate) + makeDictionary(light, selectDate) + makeDictionary(etc, selectDate)
+        otherObject = makeDictionary(camera, selectDate) + makeDictionary(subCamera, selectDate) + makeDictionary(
+            record, selectDate) + makeDictionary(light, selectDate) + makeDictionary(etc, selectDate)
         return render(request, '3-borrow/step1.html', {"otherObjects": otherObject, "selectDate": selectDate, "calendar": ''.join(request.POST['selectDate']), "now": datetime.datetime.now().strftime('%Y-%m-%d'), "nextDay": nextDay})
     return render(request, '3-borrow/step1.html', {"otherObjects": otherObject, "selectDate": nowDate, "calendar": datetime.datetime.now().strftime('%Y-%m-%d'), "now": datetime.datetime.now().strftime('%Y-%m-%d'), "nextDay": nextDay})
 
@@ -60,8 +67,10 @@ def makeDictionary(lists, selectDate):
     #             findName(equipTypeList, semiType['equipSemiType'], selectDate))
     # else:
     for equipType in lists:
-        equipTypeList = Equipment.objects.filter(equipType=equipType['equipType']).values('equipmentName').distinct()
-        resultObject.append(findName(equipTypeList, equipType['equipType'], selectDate))
+        equipTypeList = Equipment.objects.filter(
+            equipType=equipType['equipType']).values('equipmentName').distinct()
+        resultObject.append(
+            findName(equipTypeList, equipType['equipType'], selectDate))
     return resultObject
 
 
@@ -88,7 +97,8 @@ def findTime(Ename, Eto, Ecount):
     todayTime = [Ecount for i in range(24)]
     tomorrowTime = [Ecount for i in range(24)]
     # 오늘 현황 (오늘 반납할 사람 + 빌리는 사람)
-    todayReturn = EquipmentBorrow.objects.filter(fromDate=str(int(Eto)-1),toDate=Eto)
+    todayReturn = EquipmentBorrow.objects.filter(
+        fromDate=str(int(Eto)-1), toDate=Eto)
     todayBorrow = EquipmentBorrow.objects.filter(fromDate=Eto)
     for borrowList in todayReturn:
         for equipList in borrowList.equipment.replace("[", "").replace("]", "").replace("'", "").split(","):
@@ -108,10 +118,10 @@ def findTime(Ename, Eto, Ecount):
                 if(int(borrowList.fromDate) < int(borrowList.toDate)):
                     for j in range(borrowList.toDateTime+2):
                         tomorrowTime[j] -= int(count)
-                    for j in range(borrowList.fromDateTime,24,1):
+                    for j in range(borrowList.fromDateTime, 24, 1):
                         todayTime[j] -= int(count)
                 else:
-                    for j in range(borrowList.fromDateTime,borrowList.toDateTime+2):
+                    for j in range(borrowList.fromDateTime, borrowList.toDateTime+2):
                         todayTime[j] -= int(count)
     # 내일 현황 (내일기준 반납할 사람 + 빌리는 사람)
     tomorrowBorrow = EquipmentBorrow.objects.filter(fromDate=str(int(Eto)+1))
@@ -169,36 +179,46 @@ def borrow_finish(request):
             remark="".join(request.POST['remark']),
             borrowState=0
         )
-        return redirect('3-borrow/mypage.html')
+        return redirect('mypage')
 
 
-def studio_step1(request): 
+def studio_step1(request):
     nowDate = datetime.datetime.now().strftime('%Y-%m-%d').replace("-", "")
-    nextDay = (datetime.datetime.now() +datetime.timedelta(1)).strftime('%Y-%m-%d')
-    editorialSudio = Studio.objects.filter(studioType="편집실", isExist=True).values('studioType').distinct()
-    soundStudio = Studio.objects.filter(studioType="사운드 스튜디오", isExist=True).values('studioType').distinct()
-    sbsStudio = Studio.objects.filter(studioType="SBS 스튜디오", isExist=True).values('studioType').distinct()
-    otherObject = makeStudio(editorialSudio, nowDate) +makeStudio(soundStudio, nowDate) + makeStudio(sbsStudio, nowDate)
+    nextDay = (datetime.datetime.now() +
+               datetime.timedelta(1)).strftime('%Y-%m-%d')
+    editorialSudio = Studio.objects.filter(
+        studioType="편집실", isExist=True).values('studioType').distinct()
+    soundStudio = Studio.objects.filter(
+        studioType="사운드 스튜디오", isExist=True).values('studioType').distinct()
+    sbsStudio = Studio.objects.filter(
+        studioType="SBS 스튜디오", isExist=True).values('studioType').distinct()
+    otherObject = makeStudio(editorialSudio, nowDate) + \
+        makeStudio(soundStudio, nowDate) + makeStudio(sbsStudio, nowDate)
 
     if (request.method == "POST"):
         selectDate = ''.join(request.POST['selectDate']).replace("-", "")
         year, month, day = ''.join(request.POST['selectDate']).split("-")
-        nextDay = (datetime.datetime(int(year), int(month), int(day))+datetime.timedelta(1)).strftime('%Y-%m-%d')
-        otherObject = makeStudio(editorialSudio, selectDate) +makeStudio(soundStudio, selectDate) + makeStudio(sbsStudio, selectDate)
+        nextDay = (datetime.datetime(int(year), int(month), int(
+            day))+datetime.timedelta(1)).strftime('%Y-%m-%d')
+        otherObject = makeStudio(editorialSudio, selectDate) + makeStudio(
+            soundStudio, selectDate) + makeStudio(sbsStudio, selectDate)
         return render(request, '4-studio/step1.html', {"otherObjects": otherObject, "selectDate": selectDate, "calendar": ''.join(request.POST['selectDate']), "now": datetime.datetime.now().strftime('%Y-%m-%d'), "nextDay": nextDay})
     print(otherObject)
     return render(request, '4-studio/step1.html', {"otherObjects": otherObject, "selectDate": nowDate, "calendar": datetime.datetime.now().strftime('%Y-%m-%d'), "now": datetime.datetime.now().strftime('%Y-%m-%d'), "nextDay": nextDay})
 
+
 def makeStudio(lists, selectDate):
     resultObject = []
     for studioType in lists:
-        studioTypeList = Studio.objects.filter(studioType=studioType['studioType']).values('studioName').distinct()
-        resultObject.append(findStudioName(studioTypeList, studioType['studioType'], selectDate))
+        studioTypeList = Studio.objects.filter(
+            studioType=studioType['studioType']).values('studioName').distinct()
+        resultObject.append(findStudioName(
+            studioTypeList, studioType['studioType'], selectDate))
     return resultObject
 
 
 def findStudioName(studios, semiType, selectDate):
-    totalStudio= []
+    totalStudio = []
     for studio in studios:
         totalStudio.append(
             makeStudioDict((studio['studioName']), semiType, selectDate))
@@ -220,7 +240,8 @@ def findStudioTime(Ename, Eto, Ecount):
     todayTime = [Ecount for i in range(24)]
     tomorrowTime = [Ecount for i in range(24)]
     # 오늘 현황 (오늘 반납할 사람 + 빌리는 사람)
-    todayReturn = StudioBorrow.objects.filter(fromDate=str(int(Eto)-1),toDate=Eto)
+    todayReturn = StudioBorrow.objects.filter(
+        fromDate=str(int(Eto)-1), toDate=Eto)
     todayBorrow = StudioBorrow.objects.filter(fromDate=Eto)
     print(Ename)
     for borrowList in todayReturn:
@@ -238,10 +259,10 @@ def findStudioTime(Ename, Eto, Ecount):
                 if(int(borrowList.fromDate) < int(borrowList.toDate)):
                     for j in range(borrowList.toDateTime+2):
                         tomorrowTime[j] -= 1
-                    for j in range(borrowList.fromDateTime,24,1):
+                    for j in range(borrowList.fromDateTime, 24, 1):
                         todayTime[j] -= 1
                 else:
-                    for j in range(borrowList.fromDateTime,borrowList.toDateTime+2):
+                    for j in range(borrowList.fromDateTime, borrowList.toDateTime+2):
                         todayTime[j] -= 1
     # 내일 현황 (내일기준 반납할 사람 + 빌리는 사람)
     tomorrowBorrow = StudioBorrow.objects.filter(fromDate=str(int(Eto)+1))
@@ -256,6 +277,7 @@ def findStudioTime(Ename, Eto, Ecount):
     print(todayTime)
     print(tomorrowTime)
     return todayTime, tomorrowTime
+
 
 def studio_step2(request):
     print(request.POST)
@@ -286,10 +308,12 @@ def studio_finish(request):
             remark="".join(request.POST['remark']),
             studioState=0
         )
-        return redirect('3-borrow/mypage.html')
+        return redirect('mypage')
+
 
 def mypage(request):
     return render(request, '3-borrow/mypage.html')
+
 
 def error(request):
     return render(request, 'error.html')
