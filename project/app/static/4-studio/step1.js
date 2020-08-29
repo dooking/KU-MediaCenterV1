@@ -121,7 +121,7 @@ function checkAll(){
         resultBorrowString += key +"//"
         // 재고가 있는지 확인 (당일 반납 + 내일 반납)
         if(!checkStock(key,value)){
-            alert(`${key}의 재고가 존재하지 않습니다`)
+            alert(`${key}의 예약이 존재합니다`)
             return false
         }
     }
@@ -154,8 +154,9 @@ function checkStock(key,value){
 }
 
 //time block
-for (let index=0; index<48; index++){
+for (let index=0; index<50; index++){
     let blockCount = document.getElementsByClassName(String(index))
+    console.log("index :",index,blockCount.length)
     for (let i=0; i<blockCount.length; i++)
     {
         for (let j=0; j<blockCount[i].id; j++){

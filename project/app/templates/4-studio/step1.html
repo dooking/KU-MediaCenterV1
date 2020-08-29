@@ -65,7 +65,7 @@
                                             <div class ='stack'>
                                                 {% for hour in studioInfo.time1 %}
                                                 <div class="time-hour">
-                                                    <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
+                                                    <div class="{{forloop.counter}}" id={{hour}}>
                                                     </div>
                                                 </div>
                                                 {% endfor %}
@@ -79,7 +79,7 @@
                                             <div class = "stack">
                                                 {% for hour in studioInfo.time2 %}
                                                 <div class="time-hour">
-                                                    <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
+                                                    <div class="{{forloop.counter}}" id={{hour}}>
                                                     </div>
                                                 </div>
                                                 {% endfor %}

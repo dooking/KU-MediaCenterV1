@@ -199,8 +199,9 @@ function checkStock(key,value,isCamera){
     return check
 }
 //time block
-for (let index=0; index<18; index++){
+for (let index=9; index<18; index++){
     let blockCount = document.getElementsByClassName(String(index))
+    console.log("index : ",index,blockCount)
     for (let i=0; i<blockCount.length; i++)
     {
         for (let j=0; j<blockCount[i].id; j++){

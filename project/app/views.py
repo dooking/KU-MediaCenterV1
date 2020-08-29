@@ -217,44 +217,42 @@ def makeStudioDict(Ename, semiType, selectDate):
 
 
 def findStudioTime(Ename, Eto, Ecount):
-    todayTime = [Ecount for i in range(24)]
-    tomorrowTime = [Ecount for i in range(24)]
+    todayTime = [Ecount for i in range(25)]
+    tomorrowTime = [Ecount for i in range(25)]
     # 오늘 현황 (오늘 반납할 사람 + 빌리는 사람)
     todayReturn = StudioBorrow.objects.filter(fromDate=str(int(Eto)-1),toDate=Eto)
     todayBorrow = StudioBorrow.objects.filter(fromDate=Eto)
-    print(Ename)
+    # 어제 빌림 -> 오늘 반납
     for borrowList in todayReturn:
-        print("여기?")
         for equipList in borrowList.studio.replace("[", "").replace("]", "").replace("'", "").split(","):
             equipList = equipList.strip()
             if(equipList == Ename):
                 for j in range(borrowList.toDateTime+2):
                     todayTime[j] -= 1
+    # 오늘 빌림
     for borrowList in todayBorrow:
-        print("저기?")
         for equipList in borrowList.studio.replace("[", "").replace("]", "").replace("'", "").split(","):
             equipList = equipList.strip()
             if(equipList == Ename):
+                # 내일 반납
                 if(int(borrowList.fromDate) < int(borrowList.toDate)):
                     for j in range(borrowList.toDateTime+2):
                         tomorrowTime[j] -= 1
-                    for j in range(borrowList.fromDateTime,24,1):
+                    for j in range(borrowList.fromDateTime,25,1):
                         todayTime[j] -= 1
+                # 오늘 반납
                 else:
                     for j in range(borrowList.fromDateTime,borrowList.toDateTime+2):
                         todayTime[j] -= 1
-    # 내일 현황 (내일기준 반납할 사람 + 빌리는 사람)
+    # 내일 현황 (내일기준 빌리는사람)
     tomorrowBorrow = StudioBorrow.objects.filter(fromDate=str(int(Eto)+1))
     for borrowList in tomorrowBorrow:
-        print("바기")
         for equipList in borrowList.studio.replace("[", "").replace("]", "").replace("'", "").split(","):
             equipList = equipList.strip()
             if(equipList == Ename):
                 if(borrowList.fromDate == borrowList.toDate):
                     for j in range(borrowList.fromDateTime, borrowList.toDateTime+2):
                         tomorrowTime[j] -= 1
-    print(todayTime)
-    print(tomorrowTime)
     return todayTime, tomorrowTime
 
 def studio_step2(request):
