@@ -1,6 +1,7 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from .models import Profile
+from .models import Profile, EquipmentBorrow
+from adminpage.models import CalendarEvent
 from django.contrib.auth.models import User
 
 
@@ -24,3 +25,9 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     if instance.first_name:
         instance.profile.save()
+
+
+@ receiver(post_save, sender=EquipmentBorrow)
+def create_calendar_event(sender, instance, created, **kwargs):
+    if created:
+        print(instance)

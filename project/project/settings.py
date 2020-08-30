@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'app',
     'adminpage',
 
+    'fullcalendar',
+
     # allauth
     "django.contrib.sites",
     "allauth",

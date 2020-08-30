@@ -26,4 +26,8 @@ urlpatterns = [
          views.qrcheckBrrow, name='qrcheckBrrow'),
     path('qrcheck/return/<int:post_pk>',
          views.qrcheckReturn, name='qrcheckReturn'),
+
+    # calendar
+    path('calendar', views.calendar, name='calendar'),
+    path('all_events/', views.all_events, name='all_events'),
 ]

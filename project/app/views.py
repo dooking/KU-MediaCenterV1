@@ -51,8 +51,7 @@ def borrow_step1(request):
         nextDay = (datetime.datetime(int(year), int(month), int(
             day))+datetime.timedelta(1)).strftime('%Y-%m-%d')
         #cameraObject = makeDictionary(camera, selectDate)
-        otherObject = makeDictionary(camera, selectDate) + makeDictionary(subCamera, selectDate) + makeDictionary(
-            record, selectDate) + makeDictionary(light, selectDate) + makeDictionary(etc, selectDate)
+        otherObject = makeDictionary(camera, selectDate) + makeDictionary(subCamera, selectDate) + makeDictionary(record, selectDate) + makeDictionary(light, selectDate) + makeDictionary(etc, selectDate)
         return render(request, '3-borrow/step1.html', {"otherObjects": otherObject, "selectDate": selectDate, "calendar": ''.join(request.POST['selectDate']), "now": datetime.datetime.now().strftime('%Y-%m-%d'), "nextDay": nextDay})
     return render(request, '3-borrow/step1.html', {"otherObjects": otherObject, "selectDate": nowDate, "calendar": datetime.datetime.now().strftime('%Y-%m-%d'), "now": datetime.datetime.now().strftime('%Y-%m-%d'), "nextDay": nextDay})
 
