@@ -15,19 +15,24 @@ from .models import CalendarEvent
 from project.util import events_to_json, calendar_options
 from django.core import serializers
 
-OPTIONS = """{  timeFormat: "H:mm",
+OPTIONS = """{  timeFormat: "HH",
+                columnHeaderText: function(date) {
+                    let weekList = ["일", "월", "화", "수", "목", "금", "토"];
+                    return weekList[date.getDay()];
+                },
                 header: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay',
                 },
-                allDaySlot: false,
+                
+                allDaySlot: true,
                 firstDay: 0,
                 weekMode: 'liquid',
                 slotMinutes: 15,
                 defaultEventMinutes: 30,
-                minTime: 8,
-                maxTime: 20,
+                minTime: 0,
+                maxTime: 24,
                 editable: false,
                 dayClick: function(date, allDay, jsEvent, view) {
                     if (allDay) {
@@ -41,6 +46,8 @@ OPTIONS = """{  timeFormat: "H:mm",
                         $('#calendar').fullCalendar('changeView', 'agendaDay')
                     }
                 },
+                
+                
             }"""
 
 
