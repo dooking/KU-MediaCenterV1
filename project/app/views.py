@@ -26,51 +26,53 @@ def introduce(request):
 
 @csrf_exempt
 def borrow_step1(request):
-    now = datetime.datetime.now()
-    nowDate = now.strftime('%Y-%m-%d').replace("-", "")
-    nextDay = (now +
-               datetime.timedelta(1)).strftime('%Y-%m-%d')
-    year,month,day = now.strftime('%Y-%m-%d').split("-")
-    camera = Equipment.objects.filter(
-        equipType="카메라", isExist=True).values('equipType').distinct()
-    subCamera = Equipment.objects.filter(
-        equipType="카메라 보조 장치", isExist=True).values('equipType').distinct()
-    record = Equipment.objects.filter(
-        equipType="녹음 장비", isExist=True).values('equipType').distinct()
-    light = Equipment.objects.filter(
-        equipType="조명", isExist=True).values('equipType').distinct()
-    etc = Equipment.objects.filter(
-        equipType="기타 부속", isExist=True).values('equipType').distinct()
-    #cameraObject = makeDictionary(camera, nowDate)
-    otherObject = ResultObject(camera, nowDate, True) + ResultObject(subCamera, nowDate, True) + ResultObject(
-        record, nowDate, True) + ResultObject(light, nowDate, True) + ResultObject(etc, nowDate, True)
+    try:
+        now = datetime.datetime.now()
+        nowDate = now.strftime('%Y-%m-%d').replace("-", "")
+        nextDay = (now +
+                datetime.timedelta(1)).strftime('%Y-%m-%d')
+        year,month,day = now.strftime('%Y-%m-%d').split("-")
+        camera = Equipment.objects.filter(
+            equipType="카메라", isExist=True).values('equipType').distinct()
+        subCamera = Equipment.objects.filter(
+            equipType="카메라 보조 장치", isExist=True).values('equipType').distinct()
+        record = Equipment.objects.filter(
+            equipType="녹음 장비", isExist=True).values('equipType').distinct()
+        light = Equipment.objects.filter(
+            equipType="조명", isExist=True).values('equipType').distinct()
+        etc = Equipment.objects.filter(
+            equipType="기타 부속", isExist=True).values('equipType').distinct()
+        #cameraObject = makeDictionary(camera, nowDate)
+        otherObject = ResultObject(camera, nowDate, True) + ResultObject(subCamera, nowDate, True) + ResultObject(
+            record, nowDate, True) + ResultObject(light, nowDate, True) + ResultObject(etc, nowDate, True)
 
-    if (request.method == "POST"):
-        selectDate = ''.join(request.POST['selectDate']).replace("-", "")
-        year, month, day = ''.join(request.POST['selectDate']).split("-")
-        nextDay = (datetime.datetime(int(year), int(month), int(
-            day))+datetime.timedelta(1)).strftime('%Y-%m-%d')
-        #cameraObject = makeDictionary(camera, selectDate)
-        otherObject = ResultObject(camera, selectDate, True) + ResultObject(subCamera, selectDate, True) + ResultObject(
-            record, selectDate, True) + ResultObject(light, selectDate, True) + ResultObject(etc, selectDate, True)
+        if (request.method == "POST"):
+            selectDate = ''.join(request.POST['selectDate']).replace("-", "")
+            year, month, day = ''.join(request.POST['selectDate']).split("-")
+            nextDay = (datetime.datetime(int(year), int(month), int(
+                day))+datetime.timedelta(1)).strftime('%Y-%m-%d')
+            #cameraObject = makeDictionary(camera, selectDate)
+            otherObject = ResultObject(camera, selectDate, True) + ResultObject(subCamera, selectDate, True) + ResultObject(
+                record, selectDate, True) + ResultObject(light, selectDate, True) + ResultObject(etc, selectDate, True)
+            return render(request, '3-borrow/step1.html', {"otherObjects": otherObject, "year":year,"month":month,"day":day,"calendar": year+"-"+month+"-"+day, "nextDay": nextDay})
         return render(request, '3-borrow/step1.html', {"otherObjects": otherObject, "year":year,"month":month,"day":day,"calendar": year+"-"+month+"-"+day, "nextDay": nextDay})
-    return render(request, '3-borrow/step1.html', {"otherObjects": otherObject, "year":year,"month":month,"day":day,"calendar": year+"-"+month+"-"+day, "nextDay": nextDay})
-
+    except:
+        return redirect('error')
 
 def borrow_step2(request):
-    print(request.POST)
     if(request.method == "POST"):
-        borrowList = "".join(request.POST['resultBorrow']).split("//")
-        borrowList.pop()
-        fromTime = "".join(request.POST['fromTime'])
-        toTime = "".join(request.POST['toTime'])
-        fromDate = "".join(request.POST['fromDate'])
-        toDate = "".join(request.POST['toDate'])
-        return render(request, '3-borrow/step2.html', {'borrowLists': borrowList, 'fromTime': fromTime, 'fromDate': fromDate, 'toTime': toTime, 'toDate': toDate})
+            borrowList = "".join(request.POST['resultBorrow']).split("//")
+            borrowList.pop()
+            fromTime = "".join(request.POST['fromTime'])
+            toTime = "".join(request.POST['toTime'])
+            fromDate = "".join(request.POST['fromDate'])
+            toDate = "".join(request.POST['toDate'])
+            return render(request, '3-borrow/step2.html', {'borrowLists': borrowList, 'fromTime': fromTime, 'fromDate': fromDate, 'toTime': toTime, 'toDate': toDate})
+    else:
+        return redirect('error')
 
 
 def borrow_finish(request):
-    print(request.POST)
     if(request.method == "POST"):
         EquipmentBorrow.objects.create(
             username=Profile.objects.get(username=request.user),
@@ -87,6 +89,8 @@ def borrow_finish(request):
             borrowState=0
         )
         return redirect('mypage')
+    else:
+        return redirect('error')
 
 
 def studio_step1(request):
@@ -116,7 +120,6 @@ def studio_step1(request):
 
 def studio_step2(request):
     if(request.method == "POST"):
-        print(request.POST)
         borrowList = "".join(request.POST['resultBorrow']).split("//")
         borrowList.pop()
         fromTime = "".join(request.POST['fromTime'])
@@ -124,7 +127,8 @@ def studio_step2(request):
         fromDate = "".join(request.POST['fromDate'])
         toDate = "".join(request.POST['toDate'])
         return render(request, '4-studio/step2.html', {'borrowLists': borrowList, 'fromTime': fromTime, 'fromDate': fromDate, 'toTime': toTime, 'toDate': toDate})
-
+    else:
+        return redirect('error')
 
 def studio_finish(request):
     if(request.method == "POST"):
@@ -151,7 +155,8 @@ def studio_finish(request):
             studioState=0
         )
         return redirect('mypage')
-
+    else:
+        return redirect('error')
 
 def mypage(request):
     EquipLists = EquipmentBorrow.objects.filter(username=Profile.objects.get(username=request.user))
