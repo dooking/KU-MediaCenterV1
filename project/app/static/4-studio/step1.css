@@ -138,6 +138,13 @@ form {
     height: 8px;
     border-radius: 2px;
     border: solid 0.5px #707070;
+    background-color: #ffffff;
+}
+.time-block-booked {
+    width: 18px;
+    height: 8px;
+    border-radius: 2px;
+    border: solid 0.5px #707070;
     background-color: #dfdfdf;
 }
 .time-hour {

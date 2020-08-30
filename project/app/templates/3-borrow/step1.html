@@ -21,10 +21,19 @@
     <!-- 전체 폼 시작 -->
     <div class = "wrapper">
     <form method="POST" name="sDate">
-        {% csrf_token %}
+        {% csrf_token %}    
         <div class ="first_form">
             <p class = "step-sub">1. 예약 날짜 선택</p>
-            <input type="date" name="selectDate" id="selectDate" value="{{calendar}}" min="{{now}}">
+            <select id="year"></select>
+            <span>년</span>
+            <select id="month"></select>
+            <span>월</span>
+            <select id="day"></select>
+            <span>일</span>
+            <input type="hidden" name="currentYear" id="currentYear" value="{{year}}">
+            <input type="hidden" name="currentMonth" id="currentMonth" value="{{month}}">
+            <input type="hidden" name="currentDay" id="currentDay" value="{{day}}">
+            <input type="hidden" name="selectDate" id="selectDate" value="">
         </div>
     </form>
     <form method="POST" name = "step1" action="{% url 'borrow_step2' %}" onsubmit="return checkAll();">
@@ -72,7 +81,7 @@
                                             <div class ='stack'>
                                                 {% for hour in equipment.time1 %}
                                                 <div class="time-hour">
-                                                    <div class="{{forloop.counter|add:"8"}}" id={{hour}}>
+                                                    <div class="{{forloop.counter0}}" id={{hour}}>
                                                     </div>
                                                 </div>
                                                 {% endfor %}
@@ -113,14 +122,29 @@
             <div class = 'rev_time'>
                 <label>예약 일시</label>
                 <input type="date" id="fromDate" name="fromDate" value="{{calendar}}" readonly/>
-                <input type="time" id="fromTime" name="fromTime" value="13:00" min="09:00" max="17:00" step="3600" required/>
+                <select id="startAMPM">
+                    <option value="am">오전</option>
+                    <option value="pm">오후</option>
+                </select>
+                <select id="selectFromTime"></select>
+                <span>시</span>
             </div>
             <div class = 'rev_time'>
                 <label>반납 일시</label>
-                <input type="date" id="toDate" name="toDate" value="{{calendar}}" min="{{calendar}}" max="{{nextDay}}" required/>
-                <input type="time" id="toTime" name="toTime" value="16:00" min="09:00" max="17:00" required/>
+                <select id="returnDate">
+                </select>
+                <select id="endAMPM">
+                    <option value="am">오전</option>
+                    <option value="pm">오후</option>
+                </select>
+                <select id="selectToTime"></select>
+                <span>시</span>
             </div>
         </div>
+        <input type="hidden" id="toDate" name="toDate" value=""/>
+        <input type="hidden" id="fromTime" name="fromTime" value=""/>
+        <input type="hidden" id="toTime" name="toTime" value=""/>
+        <input type="hidden" id="nextDay" name="nextDay" value="{{nextDay}}"/>
         <input type="hidden" id="resultBorrow" name="resultBorrow" value="">
         <div class = "button_box">
             <button type="submit">다음 단계</button>
@@ -128,6 +152,9 @@
     </form>       
     </div>
     <script type="text/javascript" src="{% static '3-borrow/step1.js' %}"></script>
+    <script type="text/javascript" src="{% static '3-borrow/stockCheck.js' %}"></script>
+    <script type="text/javascript" src="{% static '3-borrow/selectDate.js' %}"></script>
+    <script type="text/javascript" src="{% static '3-borrow/formValidate.js' %}"></script>
     {% endblock content %}
 </body>
 </html>
