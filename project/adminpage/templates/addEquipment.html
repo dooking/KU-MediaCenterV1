@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
+{% extends 'admin_base.html' %} 
+{% load static %} 
+{% block title %} 관리자 페이지 {% endblock title %} 
+{% block css %}
+<link rel="stylesheet" href="{% static 'addEquipment.css' %}" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+{% endblock css %} 
+{% block content %}
     {% if msg %}
     <script type="text/javascript">
       alert("{{msg}}");
@@ -51,5 +51,5 @@
     <script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'qrcode.js' %}"></script>
     <script type="text/javascript" src="{% static 'makeQR.js' %}"></script>
-  </body>
-</html>
+
+{% endblock content %} 

@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
+{% extends 'admin_base.html' %} 
+{% load static %} 
+{% block title %} 관리자 페이지 {% endblock title %} 
+{% block css %}
+<link rel="stylesheet" href="{% static 'equipment.css' %}" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+{% endblock css %} 
+{% block content %}
     {% for equipment in equipments %}
     <div>
       <p>{{equipment.equipmentName}}</p>
@@ -39,5 +39,4 @@
     <a href="{% url 'addEquipment' %}">
       <button>장비 추가하기</button>
     </a>
-  </body>
-</html>
+{% endblock content%}
