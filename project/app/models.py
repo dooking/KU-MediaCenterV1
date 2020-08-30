@@ -47,7 +47,7 @@ class EquipmentBorrow(models.Model):
     purpose = models.CharField(max_length=50, default="")
     auth = models.CharField(max_length=50, default="")
     remark = models.CharField(max_length=50, default="")
-    # 신청중 0 대여중 1 반납완료 2 연체 3
+    # 신청취소 -1 신청중 0 대여중 1 반납완료 2 연체 3
     borrowState = models.IntegerField(default=0)
 
     def __str__(self):
@@ -82,7 +82,7 @@ class StudioBorrow(models.Model):
     purpose = models.CharField(max_length=50, default="")
     auth = models.CharField(max_length=50, default="")
     remark = models.CharField(max_length=50, default="")
-    # 신청중 0 대여중 1 반납완료 2 연체 3
+    # 신청취소 -1 신청중 0 대여중 1 반납완료 2 연체 3
     studioState = models.IntegerField(default=0)
 
     def __str__(self):

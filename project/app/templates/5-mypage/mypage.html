@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} 마이페이지 {% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="{% static '5-mypage/mypage.css' %}" />
+
+{% endblock css %} {% block content %}
+
+<div class="wrapper">
+    <div class="page_title_div">
+        <a href="{% url 'main' %}">
+            <img class="arrow_icon" src="{% static 'images/arrow_icon.png' %}" alt="뒤로가기">
+            <span class="page_title">마이 페이지</span>
+        </a>
+    </div>
+
+    <div class="page_contents">
+
+        <!-- 프로필 기본 정보 -->
+        <div class="profile_div">
+            <img class="profile_img" src="{% static 'images/user_profile.png' %}" alt="프로필 아이콘">
+            <div class="profile_info">
+                <p class="user_name">{{ user.profile.name }}</p>
+                <p class="user_major">{{ user.profile.major }}</p>
+            </div>
+        </div>
+
+        <!-- 프로필 디테일 정보 -->
+        <div class="profile_detail_div">
+            <div class="go_borrow_list">
+                <a
+                 href="{% url 'main' %}">
+                    지난 예약 내역
+                    <img class="arrow_icon_2" src="{% static 'images/arrow_icon.png' %}" alt="지난 예약 내역 보러가기">
+                </a>
+            </div>
+            <div class="panelty">
+                <p class="panelty_title">Penalty</p>
+                <p class="panelty_num">{{  user.profile.penalty  }} 점</p>
+            </div>
+
+        </div>
+        <!-- 예약 현황  -->
+        
+        <span>장비 예약 현황</span>
+        {% for EquipList in EquipLists%}
+        <!-- 변수 예시  -->
+        <!--유저 이름     username=김동현/컴퓨터학과       -->
+        <!--빌린 장비     equipment=['DSLR (Canon EOS-80D) : 1']      -->
+        <!--빌린 날짜     fromDate=20200829      -->
+        <!--빌린 시간     fromDateTime      -->
+        <!--반납 날짜     toDate=20200829      -->
+        <!--반납 시간     toDateTime      -->
+        <!--실제 반납 날짜     realDate=0      -->
+        <!--실제 반납 시간     realDateTime=0      -->
+        <!--소속     group=매체실 산하 방송국      -->
+        <!--목적     purpose=방송국 촬영     -->
+        <!--학생증여부     auth=학생증      -->
+        <!--비고     remark=dd      -->
+        <!--현재상태     borrowState=0      -->
+        {% endfor %}
+
+        <span>스튜디오 예약 현황</span>
+        {% for StudioList in StudioLists%}
+        {% endfor %}
+
+        
+        <!-- 예약 현황  -->
+    </div>
+
+</div>
+
+{% endblock content %}

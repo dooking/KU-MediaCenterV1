@@ -37,5 +37,10 @@ urlpatterns = [
     path('studio/step2', views.studio_step2, name="studio_step2"),
     path('studio/finish', views.studio_finish, name="studio_finish"),
 
+    path('mypage/', views.mypage, name="mypage"),
+
     path('accounts/', include('allauth.urls')),
+    path('error/', views.error, name="error"),
+
+
 ]

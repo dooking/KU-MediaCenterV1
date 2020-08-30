@@ -7,21 +7,41 @@
         <div class="main_div">
             <div class="card_box">
                 <div class="card_elements">
+
+
+    <!-- 로그인 됨 -->
                     {% if user.is_authenticated %}
-                    <div class="profile_icon_div">
-                        <img class="profile_icon" src="{% static '1-startpage/images/profile_icon.png' %}" alt="프로필 아이콘">
-                    </div>
-                    <div class="profile_div">
-                        <div class="upper_profile_div">
-                            <span class="user_name"> {{ user.Name }} </span>
-                            <a class="logout_button" href="">
-                                로그아웃
-                            </a>
+                    <div class="upper_profile_div">
+                        <div class="profile_icon_div">
+                            <img class="profile_icon" src="{% static 'images/profile_icon.png' %}" alt="프로필 아이콘">
                         </div>
-                        <div class="lower_profile_div">
-                        <span class="profile_info">{{ user.profile.info }}</p>
-                        </div> 
+                        <div class="profile_div">
+                            <div class="profile_name_div">
+                                <span class="user_name"> {{ user.profile.name }} </span>
+
+                                <a class="logout_button" href="">
+                                    로그아웃
+                                </a>
+                            </div>
+                            <!-- <div class="profile_major_div"> -->
+                            <span class="profile_major">{{ user.profile.major }}</p>
+                            <!-- </div>  -->
+
+                        </div>
                     </div>
+
+                    <div class="profile_info">
+                        <span class="profile_penalty"> Penalty {{  user.profile.penalty  }}</span>
+                    
+                        <a class="mypage_button" href="{% url 'mypage' %}">
+                            ✔ 대여내역 확인하기 
+                        </a>
+                   </div>
+
+
+
+
+         <!-- 로그인 안 됨  -->
                     {% else %}
                     <div class="enter_icon_div">
                         <img class="enter_icon" src="{% static 'images/enter_icon.png' %}" alt="enter_icon">
