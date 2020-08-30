@@ -160,3 +160,7 @@ def mypage(request):
 
 def error(request):
     return render(request, 'error.html')
+
+def logout(request):
+    auth.logout(request)
+    return redirect('main')

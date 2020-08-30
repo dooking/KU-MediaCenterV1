@@ -42,5 +42,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('error/', views.error, name="error"),
 
+    path('logout', views.logout, name="logout"),
 
 ]

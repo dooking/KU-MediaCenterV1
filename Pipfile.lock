@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3dea5c6e8c7be2742147b0006e8de4422e4f858ab7e4a0e1d7acf9ac82584644"
+            "sha256": "d48365394238a9df7aaf9da2cc5f6107c58823d413fa2573ba713fd37e158e76"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -60,6 +60,11 @@
             ],
             "index": "pypi",
             "version": "==0.42.0"
+        },
+        "django-fullcalendar": {
+            "editable": true,
+            "git": "https://github.com/rodrigoamaral/django-fullcalendar.git",
+            "ref": "d116fcfc2093e57035932a9ea7c111d449fd7e4d"
         },
         "idna": {
             "hashes": [
