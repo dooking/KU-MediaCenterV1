@@ -7,43 +7,42 @@
 {% endblock css %} 
 {% block content %}
 	<div>
-		<h1>대여 확인하기</h1>
+		<h1>대여 승인하기</h1>
 		<p id= "list">{{currentEquipment.equipment}}</p>
 		<div id="newlist"></div>
 	</div>
 	<div id="test">
-		<h1>QR 코드 리더</h1>
 		<div id="output">
 			<div id="outputMessage">
 				QR코드를 카메라에 노출시켜 주세요
 			</div>
     		<div id="outputLayer">
-                <form method="POST" id='postFrom' style="display:flex; flex-direction: column;">
+                <form method="POST" id='postFrom'>
 					{% csrf_token %}
-					<input type="text" name='equipments' id="equipments">
-                    <button type="submit">대여 승인하기</button>
+					<input type="hidden" name='equipments' id="equipments">
+                    <button type="submit">대여 승인</button>
                 </form>
     		</div>
 		</div>
 	</div>
 	<div>&nbsp;</div>
 	<div>
-		<h1>스캔</h1>
+		<p>QR코드 리더</p>
 		<div id="frame">
 			<div id="loadingMessage">
 				🎥 카메라에 액세스 할 수 없습니다<br/>카메라 활성화 해주세요
 			</div>
 			<canvas id="canvas"></canvas>
-			<div style="display:flex; flex-direction:column;">
+			<div>
 				<p id='equipmentName'></p>
 				<p id='equipmentSerialNumber'></p>
 				<p id='equipmentType'></p>
 				<p id='equipmentSemiType'></p>
-				<button onclick='addEquipmentToForm()' style='width:100px'>이 장비 선택하기</button>
+				<button onclick='addEquipmentToForm()'>확인</button>
 			</div>
 		</div>
 	</div>
 {% load static %}
 <script type="text/javascript" src="{% static 'jsQR.js' %}"></script>
-<script type="text/javascript"src="{% static 'qrcheckBorrow.js' %}">	</script>
-{% endblock %}
+<script type="text/javascript" src="{% static 'qrcheckBorrow.js' %}"></script>
+{% endblock content %}
