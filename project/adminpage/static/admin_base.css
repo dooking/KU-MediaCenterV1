@@ -6,7 +6,6 @@
 body {
   height: 100vh;
 }
-
 header {
   background-color: #8d091d;
   display: flex;
@@ -28,4 +27,10 @@ header {
   color: white;
   padding: 0 10px;
   text-decoration: none;
+}
+#wrapper {
+  width: 100%;
+  height: 88vh;
+  /* background-color: blue; */
+  padding: 0 5%;
 }
