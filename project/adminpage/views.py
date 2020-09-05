@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+# from django.shortcuts import render, redirect
 from app.models import Equipment, EquipmentBorrow
+from django.shortcuts import render, redirect
 
 # Create your views here.
 
@@ -8,6 +9,64 @@ from app.models import Equipment, EquipmentBorrow
 # TODO: 장비 모델 추가 및 삭제 (고장 포함) (장비 모델 crud)
 # TODO: 슈퍼 사용자가 근장한테 권한 주는 페이지
 # TODO: QRcode 입력해서 대여 장비의 상태 바꾸기
+
+from django.http import HttpResponse
+from .models import CalendarEvent
+from project.util import events_to_json, calendar_options
+from django.core import serializers
+
+OPTIONS = """{  timeFormat: "HH",
+                columnHeaderText: function(date) {
+                    let weekList = ["일", "월", "화", "수", "목", "금", "토"];
+                    return weekList[date.getDay()];
+                },
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay',
+                },
+                
+                allDaySlot: true,
+                firstDay: 0,
+                weekMode: 'liquid',
+                slotMinutes: 15,
+                defaultEventMinutes: 30,
+                minTime: 0,
+                maxTime: 24,
+                editable: false,
+                dayClick: function(date, allDay, jsEvent, view) {
+                    if (allDay) {
+                        $('#calendar').fullCalendar('gotoDate', date)
+                        $('#calendar').fullCalendar('changeView', 'agendaDay')
+                    }
+                },
+                eventClick: function(event, jsEvent, view) {
+                    if (view.name == 'month') {
+                        $('#calendar').fullCalendar('gotoDate', event.start)
+                        $('#calendar').fullCalendar('changeView', 'agendaDay')
+                    }
+                },
+                
+                
+            }"""
+
+
+def calendar(request):
+    event_url = 'all_events/'
+    return render(request, 'calendar.html', {'calendar_config_options': calendar_options(event_url, OPTIONS)})
+
+
+def all_events(request):
+    events = CalendarEvent.objects.all()
+    eee = serializers.serialize('json', events)
+    print(eee)
+    print(events_to_json(events))
+
+    equipmentBorrows = EquipmentBorrow.objects.all()
+    e = serializers.serialize('json', equipmentBorrows)
+    print(e)
+
+    return HttpResponse(events_to_json(events), content_type='application/json')
 
 
 def main(request):
