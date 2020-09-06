@@ -9,7 +9,7 @@
 {% if msg %}
 <script type="text/javascript">
   alert("{{YPsg}}");
-</script>>{% endif %}
+</script>{% endif %}
 <div class="wrapper">
   <form method="post" class="addForm">
     {% csrf_token %}
@@ -32,7 +32,6 @@
       <input type="text" placeholder="장비 일련 번호를 입력하세요" id="serialNumber" name="serialNumber" class="addForm-input" />
     </label>
     <div class="addForm-btnbox">
-
       <button type="submit" class="addForm-btn">등록하기</button>
     </div>
   </form>
