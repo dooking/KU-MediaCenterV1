@@ -12,12 +12,16 @@
           {% if state0s %} {% for state0 in state0s %}
             <div class="current_list_card">
               <p>{{state0.username}}</p>
-              <p>대여: {{state0.fromDate}}일 {{state0.fromDateTime}}시</p>
-              <p>반납: {{state0.toDate}}일 {{state0.toDateTime}}시</p>
-              <a class="detail">세부 사항</a>
-              <a href="{% url 'qrcheckBrrow' state0.pk %}">
-                <button class = 'check1'>대여 확인</button>
+              <div class="current_list_subbox">
+                <div>
+                  <p>대여: {{state0.fromDate}}일 {{state0.fromDateTime}}시</p>
+                  <p>반납: {{state0.toDate}}일 {{state0.toDateTime}}시</p>
+                </div>
+                <!-- <a class="detail">세부 사항</a> -->
+                <a href="{% url 'qrcheckBrrow' state0.pk %}">
+                  <button class = 'check'>대여 확인</button>
                 </a>
+              </div>
             </div>
           {% endfor%} {% endif %}
       </div>
@@ -26,12 +30,16 @@
           {% if state1s %} {% for state1 in state1s %}
             <div class="current_list_card">
               <p>{{state1.username}}</p>
-              <p>대여: {{state1.fromDate}}일 {{state1.fromDateTime}}시</p>
-              <p>반납: {{state1.toDate}}일 {{state1.toDateTime}}시</p>
-              <a class="detail">세부 사항</a>
-              <a href="{% url 'qrcheckReturn' state1.pk %}">
-                <button class = 'check2'>반납 확인</button>
-              </a>
+              <div class="current_list_subbox">
+                <div>
+                  <p>대여: {{state1.fromDate}}일 {{state1.fromDateTime}}시</p>
+                  <p>반납: {{state1.toDate}}일 {{state1.toDateTime}}시</p>
+                </div>
+                <!-- <a class="detail">세부 사항</a> -->
+                <a href="{% url 'qrcheckReturn' state1.pk %}">
+                  <button class = 'check check2'>반납 확인</button>
+                </a>
+              </div>
             </div>
           {% endfor%} {% endif %}
       </div>
@@ -40,10 +48,14 @@
           {% if state2s %} {% for state2 in state2s %}
           <div class="current_list_card">
             <p>{{state1.username}}</p>
-            <p>대여: {{state2.fromDate}}일 {{state2.fromDateTime}}시</p>
-            <p>반납: {{state2.toDate}}일 {{state2.toDateTime}}시</p>
-            <a class="detail">세부 사항</a>
-            <p>연체 처리 어케할깡ㅜㅜ</p>
+            <div>
+              <p>대여: {{state2.fromDate}}일 {{state2.fromDateTime}}시</p>
+              <p>반납: {{state2.toDate}}일 {{state2.toDateTime}}시</p>
+            </div>
+            <!-- <a class="detail">세부 사항</a> -->
+            <a>
+              <button class = 'check check3'>연체 확인</button>
+            </a>
           </div>
           {% endfor%} {% endif %}
       </div>
