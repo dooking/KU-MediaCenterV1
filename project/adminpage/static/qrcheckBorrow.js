@@ -5,16 +5,34 @@ const semiType = document.getElementById('equipmentSemiType')
 const outputLayer = document.getElementById("outputLayer");
 const equipments = document.getElementById('equipments')
 
-const list = document.getElementById('list')
+const listName = document.getElementById('list_name')
+const listDevice = document.getElementById('list_device')
+const listPeriod = document.getElementById('list_period')
+const listAuth = document.getElementById('list_auth')
+const listGroup = document.getElementById('list_group')
+const listEtc = document.getElementById('list_etc')
 
 function init(){
-    const htmllist = document.getElementById('newlist')
+    const htmllistName = document.getElementById('newlist_name')
+    const htmllistDevice = document.getElementById('newlist_device')
+    const htmllistPeriod = document.getElementById('newlist_period')
+    const htmllistAuth = document.getElementById('newlist_auth')
+    const htmllistGroup = document.getElementById('newlist_group')
+    const htmllistEtc = document.getElementById('newlist_etc')
 
-    const newlists = list.innerText.slice(1,-1).replace(/'/g,'').replace(/ /g,'').split(',')
-    for(let newlist of newlists){
+    const newlistsName = listName.innerText.split('/')[0]
+    console.log(newlistsName)
+    for(let newlistDevice of newlistsDevice){
         let item = document.createElement('p')
-        item.innerText = newlist+ '개'
-        htmllist.appendChild(item)
+        item.innerText = newlistDevice + '개'
+        htmllistDevice.appendChild(item)
+    }
+
+    const newlistsDevice = listDevice.innerText.slice(1,-1).replace(/'/g,'').replace(/ /g,'').split(',')
+    for(let newlistDevice of newlistsDevice){
+        let item = document.createElement('p')
+        item.innerText = newlistDevice + '개'
+        htmllistDevice.appendChild(item)
     }
 }
 
@@ -96,7 +114,7 @@ function addEquipmentToForm(){
         outputLayer.appendChild(item)
         if(equipments.value.length === 0){
             equipments.value = result
-        }else{
+        } else{
             equipments.value = equipments.value +'@@'+ result
         }
 

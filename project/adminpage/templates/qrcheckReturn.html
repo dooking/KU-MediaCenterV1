@@ -6,43 +6,85 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 {% endblock css %} 
 {% block content %}
-<div>
-	<h1>반납 확인하기</h1>
-	<p id= "list">{{currentEquipment.equipment}}</p>
-	<div id="newlist"></div>
-</div>
-<div id="test">
-	<div id="output">
-		<div id="outputMessage">
-			QR코드를 카메라에 노출시켜 주세요
-		</div>
-		<div id="outputLayer">
-			<form method="POST" id='postFrom'>
-				{% csrf_token %}
-				<input type="hidden" name='equipments' id="equipments">
-				<button type="submit">반납 확인</button>
-			</form>
-		</div>
+	<p class = "qr_title">반납 확인하기</p>
+	<div>
+		<p class = "qr_title_2">예약 내역</p>
+		<table>
+			<tr>
+				<th>이름</th>
+				<th>예약 장비 목록</th>
+				<th>기간</th>
+				<th>제출 신분증</th>
+				<th>소속</th>
+				<th>비고</th>
+			</tr>
+			<tr>
+				<td>고서영</td>
+				<td id="newlist">Canon EOS-6D Mark ll (수량: 1)<br>
+					짐벌 (DJI RONIN-S) (수량: 1)<br>
+					Tripod (SONY VCT-1170RM) (수량: 1)<br>
+					Memory Card (SDXC 32GB) (수량: 1)<br>
+					Wireless Mic (SONY UWP-D11) (수량: 2)<br>
+					LED 조명 (DRACAST SilkRay Panel 400) (수량: 2)<br>
+				</td>
+				<td>2020년 7월 16일 목요일 13시<br> 
+					~2020년 7월 17일 금요일 10시	
+				</td>
+				<td>학생증</td>
+				<td>고려대학교 TV방송국 KTN</td>
+				<td>이것은 비고입니다</td>
+			</tr>
+		</table>
+		<p id= "list" style="display:none;">{{currentEquipment.equipment}}</p>
 	</div>
-</div>
-<div>&nbsp;</div>
-<div>
-	<p>QR코드 리더</p>
-	<div id="frame">
-		<div id="loadingMessage">
-			🎥 카메라에 액세스 할 수 없습니다<br/>카메라 활성화 해주세요
+	<div class = "qr_box">
+		<div id="frame">
+			<div id="test">
+				<p class = "qr_title_2">QR코드 리더</p>
+				<div id="output">
+					<div id="outputMessage">
+						QR코드를 카메라에 노출시켜 주세요
+					</div>
+				</div>
+			</div>
+			<div>
+				<div id="loadingMessage">
+					🎥 카메라에 액세스 할 수 없습니다<br/>카메라 활성화 해주세요
+				</div>
+				<div class= "qr_camera">
+					<canvas id="canvas"></canvas>
+				</div>
+			</div>
 		</div>
-		<canvas id="canvas"></canvas>
 		<div>
-			<p id='equipmentName'></p>
-			<p id='equipmentSerialNumber'></p>
-			<p id='equipmentType'></p>
-			<p id='equipmentSemiType'></p>
-			<button onclick='addEquipmentToForm()'>확인</button>
+			<div class = 'qr_card'>
+				<p class = "qr_title_2" id="title_2">인식 결과</p>
+				<div class = "gray_box" id="stretch_way">
+					<div id="row_way">
+						<p class="qr_item" id='equipmentType'></p>
+						<p class="qr_item" id='equipmentSemiType'></p>
+						<p class="qr_item" id='equipmentName'></p>
+						<p class="qr_item"  id='equipmentSerialNumber'></p>
+					</div>
+					<button onclick='addEquipmentToForm()' class= "ok_button">확인</button>
+				</div>
+			</div>
+			<div class = 'qr_card'>
+				<p class = "qr_title_2" id="title_2">담은 내역</p>
+				<div class = "gray_box" id="outputLayer">
+					<p>카메라 DSLR Canon EOS80D D43</p>
+					<p>카메라 DSLR Canon EOS6D Mark II D50</p>
+					<p>카메라 보조장치 짐벌 DJI RONIN-S G1</p>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
+	<form method="POST" id='postFrom'>
+		{% csrf_token %}
+		<input type="hidden" name='equipments' id="equipments">
+		<button type="submit" class="confirm_button">반납 확인</button>
+	</form>
 {% load static %}
 <script type="text/javascript" src="{% static 'jsQR.js' %}"></script>
-<script type="text/javascript" src="{% static 'qrcheckReturn.js' %}"></script>
+<script type="text/javascript" src="{% static 'qrcheckBorrow.js' %}"></script>
 {% endblock content %}
