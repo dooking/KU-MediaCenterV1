@@ -1,42 +1,59 @@
-{% extends 'admin_base.html' %} 
-{% load static %} 
-{% block title %} 관리자 페이지 {% endblock title %} 
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %} 관리자 페이지 {% endblock title %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'equipment.css' %}" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-{% endblock css %} 
+{% endblock css %}
 {% block content %}
-    {% for equipment in equipments %}
-    <div>
-      <p>{{equipment.equipmentName}}</p>
-      <p>{{equipment.serialNumber}}</p>
-      <p>{{equipment.equipType}}</p>
-      <p>{{equipment.equipSemiType}}</p>
-      {% if equipment.borrowState == 0 and equipment.isExist == True %}
-      <p>대여가능</p>
-      {% elif equipment.borrowState == 1 %}
-      <p>대여중</p>
-      {% else %}
-      <p>고장남</p>
-      {% endif %} {% if equipment.isExist == True %}
-      <a href="{% url 'brokenEquipment' equipment.pk %}">
-        <button>고장 났으면 체크</button>
-      </a>
-      {% else %}
-      <a href="{% url 'repairEquipment' equipment.pk %}">
-        <button>고쳤으면 체크</button>
-      </a>
-      {% endif %}
-      <a href="{% url 'deleteEquipment' equipment.pk %}">
-        <button>장비 삭제</button>
-      </a>
-    </div>
-    {% endfor %}
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    <a href="{% url 'addEquipment' %}">
-      <button>장비 추가하기</button>
+<div class="equip-wrapper">
+  <div class="equip-head">
+    <h2 class="equip-heading">장비 관리</h2>
+    <a class="equip-table-link" href="{% url 'addEquipment' %}">
+      <button class="btn_add">+ 장비 추가</button>
     </a>
+  </div>
+  <div class="equip-table">
+    <div class="equip-table-header">
+      <span class="equipType">TYPE</span>
+      <span class="equipSemiType">하위 TYPE</span>
+      <span class="equipmentName">장비이름</span>
+      <span class="serialNum">일련번호</span>
+      <span class="admin">관리하기</span>
+    </div>
+    <div class="row-wrapper">
+      {% for equipment in equipments %}
+      <div class="equip-table-row">
+        <span class="equipType">{{equipment.equipType}}</span>
+        <span class="equipSemiType">{{equipment.equipSemiType}}</span>
+        <span class="equipmentName">{{equipment.equipmentName}}</span>
+        <span class="serialNum">{{equipment.serialNumber}}</span>
+        <!-- {% if equipment.borrowState == 0 and equipment.isExist == True %}
+        <span>대여가능</span>
+        {% elif equipment.borrowState == 1 %}
+        <span>대여중</span>
+        {% else %}
+        <span>고장남</span>
+        {% endif %} -->
+
+        <div class="btn_wrap">
+          {% if equipment.isExist == True %}
+          <a class="equip-table-link" href="{% url 'brokenEquipment' equipment.pk %}">
+            <button class="btn--inactive">비활성화</button>
+          </a>
+          {% else %}
+          <a class="equip-table-link" href="{% url 'repairEquipment' equipment.pk %}">
+            <button class="btn--active">활성화</button>
+          </a>
+          {% endif %}
+          <a class="equip-table-link" href="{% url 'deleteEquipment' equipment.pk %}">
+            <button class="btn_delete">삭제</button>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
 {% endblock content%}
