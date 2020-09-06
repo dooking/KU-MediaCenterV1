@@ -23,6 +23,9 @@
         <a href="{% url 'equipment' %}">STUDIO</a>
       </div>
     </header>
-    {% block content %} {% endblock content %}
-  </body>
+    <div id="wrapper">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</body>
 </html>

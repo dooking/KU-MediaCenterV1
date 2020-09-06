@@ -97,6 +97,7 @@ def equipment(request):
 
 def qrcheckBrrow(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
+    print(currentEquipment)
     if request.method == "POST":
         currentEquipment.update(
             equipment=request.POST['equipments'], borrowState=1)
