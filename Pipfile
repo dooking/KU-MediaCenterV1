@@ -1,4 +1,4 @@
-[[source]]
+[source]
 name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
@@ -11,6 +11,7 @@ django = "*"
 django-allauth = "*"
 qrcode = "*"
 pillow = "*"
+django-fullcalendar = {editable = true, git = "https://github.com/rodrigoamaral/django-fullcalendar.git"}
 
 [requires]
 python_version = "3.7"
