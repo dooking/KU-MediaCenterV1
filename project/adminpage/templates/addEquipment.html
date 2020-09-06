@@ -1,55 +1,49 @@
-{% extends 'admin_base.html' %} 
-{% load static %} 
-{% block title %} 관리자 페이지 {% endblock title %} 
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %} 관리자 페이지 {% endblock title %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'addEquipment.css' %}" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-{% endblock css %} 
+<meta name="viewport" content="width=device-width, initial-scYPle=1" />
+{% endblock css %}
 {% block content %}
-    {% if msg %}
-    <script type="text/javascript">
-      alert("{{msg}}");
-    </script>
-    {% endif %}
-    <form method="post">
-      {% csrf_token %}
-      <input
-        type="text"
-        placeholder="장비 이름"
-        id="equipmentName"
-        name="equipmentName"
-      />
-      <input
-        type="text"
-        placeholder="장비 serial 번호"
-        id="serialNumber"
-        name="serialNumber"
-      />
-      <input
-        type="text"
-        placeholder="장비 type (셀렉트 박스로 바꿀거임)"
-        id="equipType"
-        name="equipType"
-      />
-      <input
-        type="text"
-        placeholder="장비 하위 type"
-        id="equipSemiType"
-        name="equipSemiType"
-      />
+{% if msg %}
+<script type="text/javascript">
+  alert("{{YPsg}}");
+</script>>{% endif %}
+<div class="wrapper">
+  <form method="post" class="addForm">
+    {% csrf_token %}
+    <h2 class="addForm-heading">장비 추가</h2>
 
-      <button type="submit">제품 등록하기</button>
-    </form>
+    <label>TYPE<br>
+      <input type="text" placeholder="TYPE을 입력하세요 (셀렉트 박스로 바꿀거임)" id="equipType" name="equipType"
+        class="addForm-input" />
+    </label>
 
-    <button id="makeQRcode" onclick="makeCode()">제품 qrcode 생성하기</button>
-    <div
-      id="qrcode"
-      style="width: 100px; height: 100px; margin-top: 15px"
-    ></div>
+    <label>하위 TYPE<br>
+      <input type="text" placeholder="하위 TYPE을 입력하세요" id="equipSemiType" name="equipSemiType" class="addForm-input" />
+    </label>
 
-    {% load static %}
-    <script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'qrcode.js' %}"></script>
-    <script type="text/javascript" src="{% static 'makeQR.js' %}"></script>
+    <label>장비 이름<br>
+      <input type="text" placeholder="장비 이름을 입력하세요" id="equipmentName" name="equipmentName" class="addForm-input" />
+    </label>
 
-{% endblock content %} 
+    <label>일련 번호<br>
+      <input type="text" placeholder="장비 일련 번호를 입력하세요" id="serialNumber" name="serialNumber" class="addForm-input" />
+    </label>
+    <div class="addForm-btnbox">
+
+      <button type="submit" class="addForm-btn">등록하기</button>
+    </div>
+  </form>
+</div>
+
+<button id="makeQRcode" onclick="makeCode()">제품 qrcode 생성하기</button>
+<div id="qrcode" style="width: 100px; height: 100px; margin-top: 15px"></div>
+
+{% load static %}
+<script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'qrcode.js' %}"></script>
+<script type="text/javascript" src="{% static 'makeQR.js' %}"></script>
+
+{% endblock content %}

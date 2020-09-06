@@ -1,0 +1,129 @@
+.equip-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.equip-wrapper button {
+    cursor: pointer;
+}
+.equip-wrapper span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-break: break-all;
+}
+.equip-head{
+    width: 88%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+}
+.equip-heading {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 30px;
+
+    padding-left: 50px;
+    width: 200px;
+}
+
+.btn_add {
+    width: 123px;
+    height: 35px;
+
+    border-radius: 17.5px;
+    font-size: 16px;
+    font-weight: 500;
+    border-style: none;
+    color: #ffffff;
+    background-color: #aaaaaa;
+}
+.equip-table {
+    width: 88%;
+    height: 70vh;
+    padding: 0px 4%;
+
+    border-radius: 7px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    background-color: #fcfcfc;
+
+    overflow-y: auto;
+}
+
+.equip-table-header {
+    font-size: 18.75px;
+    font-weight: bold;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    border-bottom: 2px solid #aaaaaa;
+    padding-top: 18px;
+    margin-bottom: 12px;
+
+    position: sticky;
+    top: 0px;
+    padding-top: 18px;
+    background-color: #ffffff;
+}
+
+.equip-table-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 16px;
+    margin-bottom: 9px;
+}
+
+.btn_wrap button{
+    font-size: 12.5px;
+    font-weight:500;
+    color: #ffffff;
+    letter-spacing: 0.4px;
+    border-style: none;
+
+    height: 28px;
+}
+
+.btn_delete {
+    width: 45px;
+    background-color: #aa1a30;
+    color: #ffffff;
+}
+
+.equip-table-link {
+    text-decoration: none;
+}
+
+.btn--inactive {
+    width: 76.5px;
+    background-color: #4f4f4f;
+}
+.btn--active {
+    width: 76.5px;
+    background-color: #008910;
+}
+
+.equipType {
+    width: 15%;
+}
+.equipSemiType {
+    width: 20%;
+}
+.equipmentName{
+    width: 30%;
+}
+.serialNum {
+    width: 20%;
+}
+.admin {
+    width: 15%;
+}
+.btn_wrap {
+    width: 15%;
+    padding-left: 10px;
+}
