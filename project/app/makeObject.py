@@ -1,24 +1,31 @@
 from .models import Profile, Equipment, Studio, EquipmentBorrow, StudioBorrow
 
+
 def ResultObject(lists, selectDate, isEquip):
     resultObject = []
     for reserveType in lists:
         if(isEquip):
-            equipTypeList = Equipment.objects.filter(equipType=reserveType['equipType']).values('equipmentName').distinct()
-            resultObject.append(findName(equipTypeList, reserveType['equipType'], selectDate, isEquip))
+            equipTypeList = Equipment.objects.filter(
+                equipType=reserveType['equipType']).values('equipmentName').distinct()
+            resultObject.append(
+                findName(equipTypeList, reserveType['equipType'], selectDate, isEquip))
         else:
-            studioTypeList = Studio.objects.filter(studioType=reserveType['studioType']).values('studioName').distinct()
-            resultObject.append(findName(studioTypeList, reserveType['studioType'], selectDate, isEquip))
+            studioTypeList = Studio.objects.filter(
+                studioType=reserveType['studioType']).values('studioName').distinct()
+            resultObject.append(
+                findName(studioTypeList, reserveType['studioType'], selectDate, isEquip))
     return resultObject
 
 
 def findName(reserveTypeLists, semiType, selectDate, isEquip):
-    totalInfo= []
+    totalInfo = []
     for reserveTypeList in reserveTypeLists:
         if(isEquip):
-            totalInfo.append(makeDict((reserveTypeList['equipmentName']), semiType, selectDate, isEquip))
+            totalInfo.append(
+                makeDict((reserveTypeList['equipmentName']), semiType, selectDate, isEquip))
         else:
-            totalInfo.append(makeDict((reserveTypeList['studioName']), semiType, selectDate, isEquip))
+            totalInfo.append(
+                makeDict((reserveTypeList['studioName']), semiType, selectDate, isEquip))
     result = {"type": semiType, "info": totalInfo}
     return result
 
@@ -29,12 +36,14 @@ def makeDict(Ename, semiType, selectDate, isEquip):
         equipList = Equipment.objects.filter(isExist=True, equipmentName=Ename)
         dictEquip["name"] = Ename
         dictEquip["count"] = len(equipList)
-        dictEquip["time1"], dictEquip["time2"] = findEquipTime(Ename, selectDate, len(equipList))
+        dictEquip["time1"], dictEquip["time2"] = findEquipTime(
+            Ename, selectDate, len(equipList))
     else:
         equipList = Studio.objects.filter(isExist=True, studioName=Ename)
         dictEquip["name"] = Ename
         dictEquip["count"] = len(equipList)
-        dictEquip["time1"], dictEquip["time2"] = findStudioTime(Ename, selectDate, len(equipList))
+        dictEquip["time1"], dictEquip["time2"] = findStudioTime(
+            Ename, selectDate, len(equipList))
     return dictEquip
 
 
@@ -61,7 +70,7 @@ def findStudioTime(Ename, Eto, Ecount):
                 if(int(borrowList.fromDate) < int(borrowList.toDate)):
                     for j in range(borrowList.toDateTime+2):
                         tomorrowTime[j] -= 1
-                    for j in range(borrowList.fromDateTime,25,1):
+                    for j in range(borrowList.fromDateTime, 25, 1):
                         todayTime[j] -= 1
                 # 오늘 반납
                 else:
@@ -77,6 +86,7 @@ def findStudioTime(Ename, Eto, Ecount):
                     for j in range(borrowList.fromDateTime, borrowList.toDateTime+2):
                         tomorrowTime[j] -= 1
     return todayTime, tomorrowTime
+
 
 def findEquipTime(Ename, Eto, Ecount):
     todayTime = [Ecount for i in range(24)]

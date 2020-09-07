@@ -1,8 +1,6 @@
 # from django.shortcuts import render, redirect
 from app.models import Equipment, EquipmentBorrow, Profile
 from django.shortcuts import render, redirect
-from django.db.models import Q
-from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -17,24 +15,19 @@ from .models import CalendarEvent
 from project.util import events_to_json, calendar_options
 from django.core import serializers
 
-OPTIONS = """{  timeFormat: "HH",
-                columnHeaderText: function(date) {
-                    let weekList = ["일", "월", "화", "수", "목", "금", "토"];
-                    return weekList[date.getDay()];
-                },
+OPTIONS = """{  timeFormat: "H:mm",
                 header: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay',
                 },
-                
-                allDaySlot: true,
+                allDaySlot: false,
                 firstDay: 0,
                 weekMode: 'liquid',
                 slotMinutes: 15,
                 defaultEventMinutes: 30,
-                minTime: 0,
-                maxTime: 24,
+                minTime: 8,
+                maxTime: 20,
                 editable: false,
                 dayClick: function(date, allDay, jsEvent, view) {
                     if (allDay) {
@@ -48,8 +41,6 @@ OPTIONS = """{  timeFormat: "HH",
                         $('#calendar').fullCalendar('changeView', 'agendaDay')
                     }
                 },
-                
-                
             }"""
 
 
@@ -72,30 +63,48 @@ def all_events(request):
 
 
 def main(request):
-    # 대여 목록의 state를 0,1,2로 구분해놨고, 이를 필터링해주고 랜더링 해주면 됨
+    # 대여 목록의 state를 0,1,2로 구분해놨고, 이를 필터링해
+    # 주고 랜더링 해주면 됨
     # 각각의 cell에 update해주는 창 하나 만들기 확인 누르면 다시 랜더링 되는걸로
-    state0 = EquipmentBorrow.objects.filter(borrowState=0)
-    state1 = EquipmentBorrow.objects.filter(borrowState=1)
-    state2 = EquipmentBorrow.objects.filter(borrowState=2)
-
+    # TODO:자동으로 연체 되게 업데이트 해주는것 해야됨
+    state0 = makeLists(EquipmentBorrow.objects.filter(borrowState=0))
+    state1 = makeLists(EquipmentBorrow.objects.filter(borrowState=1))
+    state2 = makeLists(EquipmentBorrow.objects.filter(borrowState=2))
     return render(request, "main.html", {
         "state0s": state0, "state1s": state1, "state2s": state2
     })
 
 
+def makeLists(nowState):
+    results = []
+    if len(nowState) > 0:
+        for state in nowState:
+            temp = {}
+            # equipLists = []
+            # for i in state.equipment.replace("[", " ").replace("]", " ").replace("'", " ").split(","):
+            #     equipments = {}
+            #     equipments["equip"] = i.strip().split(":")[0].strip()
+            #     equipments["count"] = i.strip().split(":")[1].strip()
+            #     equipLists.append(equipments)
+            temp["pk"] = state.pk
+            temp["username"] = state.username.name
+            temp["major"] = state.username.major
+            # temp["equips"] = equipLists
+            temp["fromDateYear"] = state.fromDate[:4]
+            temp["fromDateMonth"] = state.fromDate[4:6]
+            temp["fromDateDay"] = state.fromDate[6:8]
+            temp["fromDateTime"] = state.fromDateTime
+            temp["toDateYear"] = state.toDate[:4]
+            temp["toDateMonth"] = state.toDate[4:6]
+            temp["toDateDay"] = state.toDate[6:8]
+            temp["toDateTime"] = state.toDateTime
+            results.append(temp)
+    return results
+
+
 def total(request):
     # 모든 대여내역 다 보여주면 됨
-    borrows_all = EquipmentBorrow.objects.all()
-
-    q = request.GET.get('q', '')
-    if q:
-        borrows_all = borrows_all.filter(Q(username__name__icontains=q) | Q(username__major__icontains=q) | Q(equipment__icontains=q) | Q(
-            fromDate__icontains=q) | Q(toDate__icontains=q) | Q(purpose__icontains=q) | Q(auth__icontains=q) | Q(remark__icontains=q))
-    page = int(request.GET.get('p', 1))
-    paginator = Paginator(borrows_all, 5)
-    borrows = paginator.get_page(page)
-
-    return render(request, "total.html", {"borrows": borrows, "range": range(1, borrows.paginator.num_pages+1), "low_range": borrows.number-2, "high_range": borrows.number+2})
+    return render(request, "total.html")
 
 
 def equipment(request):
@@ -109,11 +118,10 @@ def equipment(request):
 
 def qrcheckBrrow(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
-    print(currentEquipment)
     if request.method == "POST":
         currentEquipment.update(
             equipment=request.POST['equipments'], borrowState=1)
-        return redirect('main')
+        return redirect('adminMain')
     return render(request, "qrcheckBorrow.html", {'currentEquipment': currentEquipment[0]})
 
 
@@ -121,8 +129,17 @@ def qrcheckReturn(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
     if request.method == "POST":
         currentEquipment.update(
-            equipment=request.POST['equipments'], borrowState=1)
-        return redirect('main')
+            equipment=request.POST['equipments'], borrowState=3)
+        return redirect('adminMain')
+    return render(request, "qrcheckReturn.html", {'currentEquipment': currentEquipment[0]})
+
+
+def qrcheckLate(request, post_pk):
+    currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
+    if request.method == "POST":
+        currentEquipment.update(
+            equipment=request.POST['equipments'], borrowState=2)
+        return redirect('adminMain')
     return render(request, "qrcheckReturn.html", {'currentEquipment': currentEquipment[0]})
 
 

@@ -16,16 +16,13 @@
     <header>
       <p class="logo">장비대여시스템 관리자 페이지</p>
       <div class="top-nav">
-        <a href="{% url 'main' %}">DAILY</a>
+        <a href="{% url 'adminMain' %}">DAILY</a>
         <a href="{% url 'main' %}">MONTH</a>
         <a href="{% url 'total' %}">LIST</a>
         <a href="{% url 'equipment' %}">MANAGE</a>
         <a href="{% url 'adminAuth' %}">AUTH</a>
       </div>
     </header>
-    <div id="wrapper">
-        {% block content %}
-        {% endblock content %}
-    </div>
-</body>
+    <div id="wrapper">{% block content %} {% endblock content %}</div>
+  </body>
 </html>
