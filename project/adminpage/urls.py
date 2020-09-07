@@ -30,4 +30,11 @@ urlpatterns = [
     # calendar
     path('calendar', views.calendar, name='calendar'),
     path('all_events/', views.all_events, name='all_events'),
+
+    #관리자 권한 부여
+    path('adminAuth', views.adminAuth, name='adminAuth'),
+    path('adminAddAuth/<int:user_pk>', views.adminAddAuth, name='adminAddAuth'),
+    path('adminDeleteAuth/<int:user_pk>',
+         views.adminDeleteAuth, name="adminDeleteAuth"),
+
 ]

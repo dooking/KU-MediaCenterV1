@@ -1,0 +1,52 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %} 관리자 페이지 {% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'equipment.css' %}" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+{% endblock css %}
+{% block content %}
+<div class="equip-wrapper">
+  <div class="equip-head">
+    <h2 class="equip-heading">관리자 권한 부여하기</h2>
+  </div>
+  <div class="equip-table">
+    <div class="equip-table-header">
+      <span class="equipType">이름</span>
+      <span class="equipSemiType">이름</span>
+      <span class="equipmentName">이름</span>
+      <span class="admin">관리하기</span>
+    </div>
+    <div class="row-wrapper">
+      {% for user in users %}
+      <div class="equip-table-row">
+        <span class="equipType">{{user.username}}</span>
+        <span class="equipSemiType">{{user.name}}</span>
+        <span class="equipmentName">{{user.state}}</span>
+        <!-- <span class="serialNum">{{user.isAuth}}</span> -->
+        <!-- {% if equipment.borrowState == 0 and equipment.isExist == True %}
+        <span>대여가능</span>
+        {% elif equipment.borrowState == 1 %}
+        <span>대여중</span>
+        {% else %}
+        <span>고장남</span>
+        {% endif %} -->
+
+        <div class="btn_wrap">
+          {% if user.isAuth == 0 %}
+          <a class="equip-table-link" href="{% url 'adminAddAuth' user.pk %}">
+            <button class="btn--inactive">관리자로 전환</button>
+          </a>
+          {% else %}
+          <a class="equip-table-link" href="{% url 'adminDeleteAuth' user.pk %}">
+            <button class="btn--active">이용자로 전환</button>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock content%}
