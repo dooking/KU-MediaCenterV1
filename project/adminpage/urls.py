@@ -3,7 +3,7 @@ from django.urls import path, include
 from adminpage import views
 
 
-# TODO:url 손보기  including 되는거라 ㅇㅇ
+# TODO:
 urlpatterns = [
     # main
     path('main', views.main, name='main'),
