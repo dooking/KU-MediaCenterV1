@@ -1,5 +1,5 @@
 # from django.shortcuts import render, redirect
-from app.models import Equipment, EquipmentBorrow
+from app.models import Equipment, EquipmentBorrow, Profile
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -157,7 +157,23 @@ def brokenEquipment(request, equipment_pk):
     Equipment.objects.filter(pk=equipment_pk).update(isExist=False)
     return redirect('equipment')
 
-
 def repairEquipment(request, equipment_pk):
     Equipment.objects.filter(pk=equipment_pk).update(isExist=True)
     return redirect('equipment')
+
+def adminAuth(request):
+    users = Profile.objects.all()
+    return render(request, "adminAuth.html", {"users": users})
+
+def adminAddAuth(request, user_pk):
+    Profile.objects.filter(pk = user_pk).update(isAuth=1)
+    return redirect('adminAuth')
+
+def adminDeleteAuth(request, user_pk):
+    Profile.objects.filter(pk = user_pk).update(isAuth=0)
+    return redirect('adminAuth')
+
+def adminAddSuperAuth(request, user_pk):
+    Profile.objects.filter(pk = user_pk).update(isAuth=2)
+    return redirect('adminAuth')
+
