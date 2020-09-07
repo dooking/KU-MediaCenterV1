@@ -1,4 +1,4 @@
-function makeCode() {
+function makeCode(qrDiv) {
   const equipmentName = document.getElementById("equipmentName");
   const serialNumber = document.getElementById("serialNumber");
   const equipType = document.getElementById("equipType");
@@ -16,7 +16,7 @@ function makeCode() {
   }
   const newEquipment = `${equipmentName.value}^${serialNumber.value}^${equipType.value}^${equipSemiType.value}`;
 
-  new QRCode(document.getElementById("qrcode"), {
+  new QRCode(qrDiv, {
     text: newEquipment,
     width: 100,
     height: 100,
@@ -26,3 +26,14 @@ function makeCode() {
   });
   //qrcode.makeCode(newEquipment);
 }
+
+const makeQRBtn = document.getElementById("makeQRcode");
+const submitBtn = document.getElementById("submit_form");
+
+makeQRBtn.addEventListener("click", () => {
+  makeQRBtn.style.display = "none";
+  const qrDiv = document.getElementById("qrcode");
+  qrDiv.style.display = "block";
+  makeCode(qrDiv);
+  submitBtn.style.display = "block";
+});
