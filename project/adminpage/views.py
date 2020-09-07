@@ -1,6 +1,8 @@
 # from django.shortcuts import render, redirect
 from app.models import Equipment, EquipmentBorrow
 from django.shortcuts import render, redirect
+from django.db.models import Q
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -83,7 +85,16 @@ def main(request):
 
 def total(request):
     # 모든 대여내역 다 보여주면 됨
-    return render(request, "total.html")
+    borrows_all = EquipmentBorrow.objects.all()
+
+    q = request.GET.get('q', '')
+    if q:
+        borrows_all = borrows_all.filter(Q(username__name__icontains=q)|Q(username__major__icontains=q)|Q(equipment__icontains=q)|Q(fromDate__icontains=q)|Q(toDate__icontains=q)|Q(purpose__icontains=q)|Q(auth__icontains=q)|Q(remark__icontains=q))
+    page = int(request.GET.get('p', 1))
+    paginator = Paginator(borrows_all, 5) 
+    borrows = paginator.get_page(page)
+
+    return render(request, "total.html", {"borrows":borrows, "range":range(1, borrows.paginator.num_pages+1), "low_range":borrows.number-2, "high_range":borrows.number+2})
 
 
 def equipment(request):
