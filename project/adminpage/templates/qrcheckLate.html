@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{% static 'qrcheckBorrow.css' %}" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 {% endblock css %} {% block content %}
-<p class="qr_title">대여 승인하기</p>
+<p class="qr_title">반납 확인하기</p>
 <div>
   <p class="qr_title_2">예약 내역</p>
   <table>
@@ -91,9 +91,9 @@
 <form method="POST" id="postFrom">
   {% csrf_token %}
   <input type="hidden" name="equipments" id="equipments" />
-  <button type="submit" class="confirm_button">대여 승인</button>
+  <button type="submit" class="confirm_button">연체 확인</button>
 </form>
 {% load static %}
 <script type="text/javascript" src="{% static 'jsQR.js' %}"></script>
-<script type="text/javascript" src="{% static 'qrcheckBorrow.js' %}"></script>
+<script type="text/javascript" src="{% static 'qrcheckReturn.js' %}"></script>
 {% endblock content %}

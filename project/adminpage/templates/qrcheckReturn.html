@@ -16,25 +16,41 @@
       <th>비고</th>
     </tr>
     <tr>
-      <td>{{currentEquipment.username}}</td>
-      <td id="newlist">
-        Canon EOS-6D Mark ll (수량: 1)<br />
-        짐벌 (DJI RONIN-S) (수량: 1)<br />
-        Tripod (SONY VCT-1170RM) (수량: 1)<br />
-        Memory Card (SDXC 32GB) (수량: 1)<br />
-        Wireless Mic (SONY UWP-D11) (수량: 2)<br />
-        LED 조명 (DRACAST SilkRay Panel 400) (수량: 2)<br />
+      <td id="newlist_name">{{currentEquipment.username}}</td>
+      <td id="newlist_device">
+        <input
+          hidden
+          value="{{currentEquipment.equipment}}"
+          id="equipmentList"
+        />
       </td>
-      <td>
-        {{currentEquipment.fromDate}} {{currentEquipment.fromDateTime}}<br />
-        ~{{currentEquipment.toDate}} {{currentEquipment.toDateTime}}
+      <td id="newlist_period">
+        <input
+          hidden
+          id="list_period_fromDate"
+          value="{{currentEquipment.fromDate}}"
+        />
+        <input
+          hidden
+          id="list_period_fromDateTime"
+          value="{{currentEquipment.fromDateTime}}"
+        />
+        <input
+          hidden
+          id="list_period_toDate"
+          value="{{currentEquipment.toDate}}"
+        />
+        <input
+          hidden
+          id="list_period_toDateTime"
+          value="{{currentEquipment.toDateTime}}"
+        />
       </td>
-      <td>{{currentEquipment.auth}}</td>
-      <td>{{currentEquipment.group}}</td>
-      <td>{{currentEquipment.remark}}</td>
+      <td id="newlist_auth">{{currentEquipment.auth}}</td>
+      <td id="newlist_group">{{currentEquipment.group}}</td>
+      <td id="newlist_etc">{{currentEquipment.remark}}</td>
     </tr>
   </table>
-  <p id="list" style="display: none">{{currentEquipment.equipment}}</p>
 </div>
 <div class="qr_box">
   <div id="frame">
@@ -68,11 +84,7 @@
     </div>
     <div class="qr_card">
       <p class="qr_title_2" id="title_2">담은 내역</p>
-      <div class="gray_box" id="outputLayer">
-        <p>카메라 DSLR Canon EOS80D D43</p>
-        <p>카메라 DSLR Canon EOS6D Mark II D50</p>
-        <p>카메라 보조장치 짐벌 DJI RONIN-S G1</p>
-      </div>
+      <div class="gray_box" id="outputLayer"></div>
     </div>
   </div>
 </div>
@@ -83,5 +95,5 @@
 </form>
 {% load static %}
 <script type="text/javascript" src="{% static 'jsQR.js' %}"></script>
-<script type="text/javascript" src="{% static 'qrcheckBorrow.js' %}"></script>
+<script type="text/javascript" src="{% static 'qrcheckReturn.js' %}"></script>
 {% endblock content %}

@@ -6,7 +6,7 @@ from adminpage import views
 # TODO:
 urlpatterns = [
     # main
-    path('main', views.main, name='main'),
+    path('main', views.main, name='adminMain'),
 
     # 대여목록 전체
     path('total', views.total, name='total'),
@@ -26,6 +26,8 @@ urlpatterns = [
          views.qrcheckBrrow, name='qrcheckBrrow'),
     path('qrcheck/return/<int:post_pk>',
          views.qrcheckReturn, name='qrcheckReturn'),
+    path('qrcheck/late/<int:post_pk>',
+         views.qrcheckReturn, name='qrcheckLate'),
 
     # calendar
     path('calendar', views.calendar, name='calendar'),

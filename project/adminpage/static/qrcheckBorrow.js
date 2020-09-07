@@ -13,31 +13,37 @@ const listGroup = document.getElementById("list_group");
 const listEtc = document.getElementById("list_etc");
 
 function init() {
-  const htmllistName = document.getElementById("newlist_name");
   const htmllistDevice = document.getElementById("newlist_device");
-  const htmllistPeriod = document.getElementById("newlist_period");
-  const htmllistAuth = document.getElementById("newlist_auth");
-  const htmllistGroup = document.getElementById("newlist_group");
-  const htmllistEtc = document.getElementById("newlist_etc");
-
-  const newlistsName = listName.innerText.split("/")[0];
-  console.log(newlistsName);
-  for (let newlistDevice of newlistsDevice) {
-    let item = document.createElement("p");
-    item.innerText = newlistDevice + "개";
-    htmllistDevice.appendChild(item);
-  }
-
-  const newlistsDevice = listDevice.innerText
+  const equipmentList = document.getElementById("equipmentList");
+  const newlistsDevice = equipmentList.value
     .slice(1, -1)
     .replace(/'/g, "")
     .replace(/ /g, "")
     .split(",");
+
   for (let newlistDevice of newlistsDevice) {
     let item = document.createElement("p");
-    item.innerText = newlistDevice + "개";
+    const itemAttr = newlistDevice.split(":");
+    item.innerText = itemAttr[0] + "    " + itemAttr[1] + "개";
     htmllistDevice.appendChild(item);
   }
+
+  const fromDate = document.getElementById("list_period_fromDate").value;
+  const fromDateTime = document.getElementById("list_period_fromDateTime")
+    .value;
+  const toDate = document.getElementById("list_period_toDate").value;
+  const toDateTime = document.getElementById("list_period_toDateTime").value;
+
+  const periodFront = `${fromDate.slice(0, 4)}년 ${fromDate.slice(
+    4,
+    6
+  )}월 ${fromDate.slice(6, 8)}일 ${fromDateTime}시`;
+  const periodBack = `${toDate.slice(0, 4)}년 ${toDate.slice(
+    4,
+    6
+  )}월 ${toDate.slice(6, 8)}일 ${toDateTime}시`;
+  document.getElementById("newlist_period").innerHTML =
+    periodFront + "<br/>" + periodBack;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
