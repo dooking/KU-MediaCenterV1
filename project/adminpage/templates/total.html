@@ -5,59 +5,71 @@
 {% endblock css %} {% block content %}
 
 <table>
-    <thead>
-        <tr>
-            <th colspan="2">이름</th>
-            <th colspan="3">대여 장비 목록</th>
-            <th colspan="2">기간</th>
-            <th colspan="1">제출 신분증</th>
-            <th colspan="1">이용 목적</th>
-            <th colspan="1">비고</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for borrow in borrows %}
-        <tr>
-            <td colspan="2">{{ borrow.username}}</td>
-            <td colspan="3">{{ borrow.equipment }}</td>
-            <td colspan="2">{{ borrow.fromDate }} {{ borrow.fromDateTime }}시 <br>
-                ~{{ borrow.toDate }} {{ borrow.toDateTime }}시
-            </td>
-            <td colspan="1">{{ borrow.auth }}</td>
-            <td colspan="1">{{ borrow.purpose }}</td>
-            <td colspan="1">{{ borrow.remark }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
+  <thead>
+    <tr>
+      <th colspan="2">이름</th>
+      <th colspan="3">대여 장비 목록</th>
+      <th colspan="2">기간</th>
+      <th colspan="1">제출 신분증</th>
+      <th colspan="1">이용 목적</th>
+      <th colspan="1">비고</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for borrow in borrows %}
+    <tr>
+      <td colspan="2">{{ borrow.username}}</td>
+      <td colspan="3" id="htmllist">
+        <input
+          type="text"
+          hidden
+          value="{{ borrow.equipment }}"
+          id="equipmentList"
+        />
+      </td>
+      <td colspan="2">
+        {{ borrow.fromDate }} {{ borrow.fromDateTime }}시 <br />
+        ~{{ borrow.toDate }} {{ borrow.toDateTime }}시
+      </td>
+      <td colspan="1">{{ borrow.auth }}</td>
+      <td colspan="1">{{ borrow.purpose }}</td>
+      <td colspan="1">{{ borrow.remark }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
 <div class="search_page">
-    <form action="" method="get">
-        <input class="qinput" type="text" name="q" value="{{ q }}" placeholder="검색하기">
-    </form>
-    <ul class="pages">
-        {% if borrows.has_previous %}
-        <li>
-            <a href="?p={{borrows.previous_page_number }}">❮&nbsp&nbsp&nbsp&nbsp</a>
-        </li>
-        {% endif %}
-        {% for i in range %}
-        {% if i > high_range or low_range > i %}
-        <!-- nothing -->
-        {% elif borrows.number == i %}
-        <li class="current_page">
-            <a id="current" href="?p={{ i }}">&nbsp{{i}}&nbsp</a>
-        </li>
-        {% else %}
-        <li>
-            <a href="?p={{ i }}">&nbsp{{i}}&nbsp</a>
-        </li>
-        {% endif %}
-        {% endfor %}
-        {% if borrows.has_next %}
-        <li>
-            <a href="?p={{borrows.next_page_number }}">&nbsp&nbsp&nbsp&nbsp❯</a>
-        </li>
-        {% endif %}
-    </ul>
+  <form action="" method="get">
+    <input
+      class="qinput"
+      type="text"
+      name="q"
+      value="{{ q }}"
+      placeholder="검색하기"
+    />
+  </form>
+  <ul class="pages">
+    {% if borrows.has_previous %}
+    <li>
+      <a href="?p={{borrows.previous_page_number }}">❮&nbsp&nbsp&nbsp&nbsp</a>
+    </li>
+    {% endif %} {% for i in range %} {% if i > high_range or low_range > i %}
+    <!-- nothing -->
+    {% elif borrows.number == i %}
+    <li class="current_page">
+      <a id="current" href="?p={{ i }}">&nbsp{{i}}&nbsp</a>
+    </li>
+    {% else %}
+    <li>
+      <a href="?p={{ i }}">&nbsp{{i}}&nbsp</a>
+    </li>
+    {% endif %} {% endfor %} {% if borrows.has_next %}
+    <li>
+      <a href="?p={{borrows.next_page_number }}">&nbsp&nbsp&nbsp&nbsp❯</a>
+    </li>
+    {% endif %}
+  </ul>
 </div>
+{% load static %}
+<script type="text/javascript" src="{% static 'total.js' %}"></script>
 {% endblock content %}
