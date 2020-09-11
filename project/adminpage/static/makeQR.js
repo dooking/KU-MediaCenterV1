@@ -12,7 +12,7 @@ function makeCode(qrDiv) {
   ) {
     alert("input을 모두 입력해주세요");
     equipmentName.focus();
-    return;
+    return false;
   }
   const newEquipment = `${equipmentName.value}^${serialNumber.value}^${equipType.value}^${equipSemiType.value}`;
 
@@ -24,7 +24,8 @@ function makeCode(qrDiv) {
     colorLight: "#ffffff",
     correctLevel: QRCode.CorrectLevel.H,
   });
-  //qrcode.makeCode(newEquipment);
+
+  return true;
 }
 
 const makeQRBtn = document.getElementById("makeQRcode");
@@ -34,6 +35,11 @@ makeQRBtn.addEventListener("click", () => {
   makeQRBtn.style.display = "none";
   const qrDiv = document.getElementById("qrcode");
   qrDiv.style.display = "block";
-  makeCode(qrDiv);
+  const result = makeCode(qrDiv);
   submitBtn.style.display = "block";
+  if (!result) {
+    qrDiv.style.display = "none";
+    makeQRBtn.style.display = "block";
+    submitBtn.style.display = "none";
+  }
 });
