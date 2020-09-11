@@ -26,7 +26,7 @@
       {% for equipment in equipments %}
       <div class="equip-table-row">
         <a class="equip-table-link" href="{% url 'equipment_qr' equipment.pk %}">
-          <button class="btn--inactive">비활성화</button>
+          <button class="btn--inactive">QR 보기</button>
         </a>
         <span class="equipType">{{equipment.equipType}}</span>
         <span class="equipSemiType">{{equipment.equipSemiType}}</span>
