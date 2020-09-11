@@ -15,6 +15,7 @@
   </div>
   <div class="equip-table">
     <div class="equip-table-header">
+      <span class="equipType">QR 보기</span>
       <span class="equipType">TYPE</span>
       <span class="equipSemiType">하위 TYPE</span>
       <span class="equipmentName">장비이름</span>
@@ -24,6 +25,9 @@
     <div class="row-wrapper">
       {% for equipment in equipments %}
       <div class="equip-table-row">
+        <a class="equip-table-link" href="{% url 'equipment_qr' equipment.pk %}">
+          <button class="btn--inactive">비활성화</button>
+        </a>
         <span class="equipType">{{equipment.equipType}}</span>
         <span class="equipSemiType">{{equipment.equipSemiType}}</span>
         <span class="equipmentName">{{equipment.equipmentName}}</span>
