@@ -116,8 +116,11 @@ def equipment(request):
     equipments = Equipment.objects.all()
     return render(request, "equipment.html", {"equipments": equipments})
 
+
 def equipment_qr(request, equipment_pk):
-    return render(request, "equipment_qr.html", )
+    currentEquipment = Equipment.objects.get(pk=equipment_pk)
+    return render(request, "equipment_qr.html", {"currentEquipment": currentEquipment})
+
 
 def qrcheckBrrow(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
