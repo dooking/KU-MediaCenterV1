@@ -14,6 +14,7 @@ urlpatterns = [
     # 장비 추가 및 삭제
     path('equipment', views.equipment, name='equipment'),
     path('addequipment', views.addEquipment, name='addEquipment'),
+    path('equipment_qr/<int:equipment_pk>', views.equipment_qr, name='equipment_qr'),
     path('deleteequipment/<int:equipment_pk>',
          views.deleteEquipment, name="deleteEquipment"),
     path('brokenEquipment/<int:equipment_pk>',
