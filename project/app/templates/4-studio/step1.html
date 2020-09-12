@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="{% static '4-studio/step1.css' %}" type="text/css"/>
     {% endblock css %}
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %} 스튜디오 예약하기 {% endblock title %}
-
 </head>
+
 <body>
     {% block content %}
     <!-- 스텝 보여주는 부분 -->
@@ -39,23 +41,23 @@
     <form method="POST" name = "step1" action="{% url 'studio_step2' %}" onsubmit="return checkAll()">
         {% csrf_token %}
         <div>
-            <p class = 'step-sub'>2. 스튜디오 선택</p>
+            <p class = 'step-sub first_form'>2. 스튜디오 선택</p>
             {% for otherObject in otherObjects %}
                 <div class = "red_menu_box" >
                     {% if otherObject.type != "편집실" %}
-                        <input type="checkbox" id="{{otherObject.type}}" value="{{otherObject.type}}" onclick="checkHandler(this)"/>
+                        <input class="header_checkbox" type="checkbox" id="{{otherObject.type}}" value="{{otherObject.type}}" onclick="checkHandler(this)"/>
                     {% endif %}
                     <p class ="red_menu_text">{{otherObject.type}}</p>
                     <p class ="red_menu_text" onclick = "hide(this)">▼</p>
                 </div>    
-                <div class = "cam_box">
+                <div class = "cam_box ">
                     {% for studioInfo in otherObject.info %}
-                        <div class = "cam_menu">
+                        <div class = "cam_menu ">
                             <div class = "cam_check">
                                 <input type="hidden" class="studioCount" value="{{studioInfo.time1}}">
                                 <input type="hidden" class="studioCount2" value="{{studioInfo.time2}}">
                                 {% if otherObject.type == "편집실" %}
-                                    <input type="radio" name="edit" id="edit" value = "{{studioInfo.name}}" onclick="radioHandler(this)">
+                                    <input type="radio" name="edit" id="edit" value = "{{studioInfo.name}}" onclick="radioHandler(this)" >
                                     <input type="hidden" class="studioName" value="{{studioInfo.name}}">
                                     <p>{{studioInfo.name}}</p>
                                 {% else %}
@@ -64,11 +66,8 @@
                             </div>
                             <div class="graph">
                                 <div class = "chart">
-                                    <div class = "standard">
-                                        <p id = "num">수량</p>
-                                        <p id = "time">시간</p>
-                                    </div>
-                                    <div class = 'redbar'></div>
+
+
                                     <div class = 'bar_body'>
                                         <div class = 'day'>
                                             <div class ='stack'>
@@ -78,6 +77,7 @@
                                                     </div>
                                                 </div>
                                                 {% endfor %}
+                                       
                                             </div>
                                             <div class = 'hour_num'>
                                                 <p>0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24</p>

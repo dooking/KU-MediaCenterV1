@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{% static 'base.css' %}">
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <!-- Our Custom CSS -->
     <!-- <link rel="stylesheet" href="../static/style3.css"> -->
     <link rel="stylesheet" href="../static/base.css">
@@ -90,6 +92,13 @@
                 <!-- <div class="menu_icon_div" id="sidebarCollapse" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <img class="menu_icon_img" src="../static/images/menu_icon.png" alt="메뉴 아이콘">
                 </div> -->
+
+                <a id="back" href="javascript:history.back()">
+                    <span id="back" class="material-icons">
+                    keyboard_arrow_left
+                    </span>
+                </a>
+
                 <div class="logo_div">
                     <a  href="{% url 'main' %}"> 
                         <img class="logo_img" src="{% static 'images/logo.png' %}" alt="로고">
