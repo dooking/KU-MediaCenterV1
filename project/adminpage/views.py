@@ -1,7 +1,7 @@
 # from django.shortcuts import render, redirect
 from app.models import Equipment, EquipmentBorrow, Profile
 from django.shortcuts import render, redirect
-
+from django.db.models import Q
 # Create your views here.
 
 # TODO: 예약 현황 관리 -> 상태별로 띄워주는 것으로 구현
@@ -14,6 +14,7 @@ from django.http import HttpResponse
 from .models import CalendarEvent
 from project.util import events_to_json, calendar_options
 from django.core import serializers
+import datetime
 
 OPTIONS = """{  timeFormat: "H:mm",
                 header: {
@@ -126,8 +127,16 @@ def qrcheckBrrow(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
     if request.method == "POST":
         equipments = request.POST['equipments']
+        for equipment in equipments.split("@@"):
+            [eName, eNumber, eType, eSemiType] = equipment.split("^")
+            eType = eType.replace("\ufeff", "")
+            EquipmentState = Equipment.objects.filter(
+                Q(equipType=eType), Q(serialNumber=eNumber))
+            EquipmentState.update(
+                borrowState=1
+            )
         currentEquipment.update(
-            equipment=equipments, borrowState=1)
+            equipmentList=equipments, borrowState=1)
         return redirect('adminMain')
     return render(request, "qrcheckBorrow.html", {'currentEquipment': currentEquipment[0]})
 
@@ -135,8 +144,21 @@ def qrcheckBrrow(request, post_pk):
 def qrcheckReturn(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
     if request.method == "POST":
+        equipments = request.POST['equipments']
+        for equipment in equipments.split("@@"):
+            [eName, eNumber, eType, eSemiType] = equipment.split("^")
+            eType = eType.replace("\ufeff", "")
+            EquipmentState = Equipment.objects.filter(
+                Q(equipType=eType), Q(serialNumber=eNumber))
+            now = datetime.datetime.now()
+            EquipmentState.update(
+                borrowState=0
+            )
+        realDate = int(now.strftime("%Y-%m-%d").replace("-", ""))
+        realDateTime = int(now.hour)
         currentEquipment.update(
-            equipment=request.POST['equipments'], borrowState=3)
+            equipmentList=equipments, realDate=realDate, realDateTime=realDateTime, borrowState=3)
+
         return redirect('adminMain')
     return render(request, "qrcheckReturn.html", {'currentEquipment': currentEquipment[0]})
 
@@ -144,8 +166,17 @@ def qrcheckReturn(request, post_pk):
 def qrcheckLate(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
     if request.method == "POST":
+        equipments = request.POST['equipments']
+        for equipment in equipments.split("@@"):
+            [eType, eSemiType, eName, eNumber] = equipment.split("^")
+            eType = eType.replace("\ufeff", "")
+            EquipmentState = Equipment.objects.filter(
+                Q(equipmentName=eName), Q(equipType=eType), Q(serialNumber=eNumber))
+            EquipmentState.update(
+                borrowState=0
+            )
         currentEquipment.update(
-            equipment=request.POST['equipments'], borrowState=2)
+            equipmentList=equipments, borrowState=3)
         return redirect('adminMain')
     return render(request, "qrcheckReturn.html", {'currentEquipment': currentEquipment[0]})
 

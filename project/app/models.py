@@ -37,6 +37,7 @@ class EquipmentBorrow(models.Model):
         Profile, on_delete=models.CASCADE, related_name='Euser')
     # 장비 -> String처리
     equipment = models.CharField(max_length=200)
+    equipmentList = models.CharField(max_length=250, null=True)
     fromDate = models.CharField(max_length=50)
     fromDateTime = models.IntegerField()
     toDate = models.CharField(max_length=50)
