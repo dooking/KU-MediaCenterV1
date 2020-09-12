@@ -25,8 +25,7 @@
         <!-- 프로필 디테일 정보 -->
         <div class="profile_detail_div">
             <div class="go_borrow_list">
-                <a
-                 href="{% url 'main' %}">
+                <a href="{% url 'main' %}">
                     지난 예약 내역
                     <img class="arrow_icon_2" src="{% static 'images/arrow_icon.png' %}" alt="지난 예약 내역 보러가기">
                 </a>
@@ -38,24 +37,16 @@
 
         </div>
         <!-- 예약 현황  -->
-        <!-- 예약 없으면 메시지 띄워주기 -->
-        <!-- 예약 현황 띄워주기 -->
-        <!-- 반납 날짜가 지나면 사라지기 -->
-            <!-- -> z반납 날짜가 지나면 지난 예약 내역으로 옮겨짐 -->
 
-        
         <span>장비 예약 현황</span>
-        {% for EquipList in EquipLists %}
+        {% for E in Equip_now %}
         <div>
-            
-            <p>대여일 : {{ EquipList.fromDate }} 년,월,일 {{ EquipList.fromDateTime }}</p>
-            <P>반납일 : {{ EquipList.toDate }} {{ EquipList.toDateTime }}</P>
-            <p>{{ EquipList.equipment }}</p>
-            <P>제출 신분증 : {{ EquipList.auth }}</P>
-            <P>비고 : {{ EquipList.remark }}</P>
-            <p>현재상태 : {{ EquipList.borrowState }} </p>
-
-       </div>
+            <p>대여일: {{E.fromDateYear}}년 {{E.fromDateMonth}}월 {{E.fromDateDay}}일 {{E.fromDateTime}}시</p>
+            <p>반납일: {{E.toDateYear}}년 {{E.toDateMonth}}월 {{E.toDateDay}}일 {{E.toDateTime}}시</p>
+            {% for equip in E.equips %}
+            <p>{{equip.name}} (수량: {{equip.count}})</p>
+            {% endfor %}
+        </div>
 
         <!-- 변수 예시  -->
         <!--유저 이름     username=김동현/컴퓨터학과       -->
@@ -75,17 +66,18 @@
         {% endfor %}
        <br>
         <span>스튜디오 예약 현황</span>
-        {% for StudioList in StudioLists%}
-        
-        <p>대여일 : {{ StudioList.fromDate }} 년,월,일 {{ StudioList.fromDateTime }}</p>
-        <P>반납일 : {{ StudioList.toDate }} {{ StudioList.toDateTime }}</P>
-        <p>{{ StudioList.studio }}</p>
-        <P>제출 신분증 : {{ StudioList.auth }}</P>
-        <P>비고 : {{ StudioList.remark }}</P>
-        <p>현재상태 : {{ StudioList.borrowState }} </p>
+
+        {% for S in Studio_now%}
+        <div>
+            <p>대여일: {{S.fromDateYear}}년 {{S.fromDateMonth}}월 {{S.fromDateDay}}일 {{S.fromDateTime}}시</p>
+            <p>반납일: {{S.toDateYear}}년 {{S.toDateMonth}}월 {{S.toDateDay}}일 {{S.toDateTime}}시</p>
+            {% for studio in S.studio %}
+            <p>{{studio}}</p>
+            {% endfor %}
+        </div>
         {% endfor %}
 
-        
+
         <!-- 예약 현황  -->
     </div>
 

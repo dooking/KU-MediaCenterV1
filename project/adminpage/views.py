@@ -104,7 +104,8 @@ def makeLists(nowState):
 
 def total(request):
     # 모든 대여내역 다 보여주면 됨
-    return render(request, "total.html")
+    totalBrrows = EquipmentBorrow.objects.all()
+    return render(request, "total.html", {"borrows": totalBrrows})
 
 
 def equipment(request):
@@ -114,6 +115,11 @@ def equipment(request):
     # 함수는 따로 뺴야됨
     equipments = Equipment.objects.all()
     return render(request, "equipment.html", {"equipments": equipments})
+
+
+def equipment_qr(request, equipment_pk):
+    currentEquipment = Equipment.objects.get(pk=equipment_pk)
+    return render(request, "equipment_qr.html", {"currentEquipment": currentEquipment})
 
 
 def qrcheckBrrow(request, post_pk):
@@ -175,23 +181,27 @@ def brokenEquipment(request, equipment_pk):
     Equipment.objects.filter(pk=equipment_pk).update(isExist=False)
     return redirect('equipment')
 
+
 def repairEquipment(request, equipment_pk):
     Equipment.objects.filter(pk=equipment_pk).update(isExist=True)
     return redirect('equipment')
+
 
 def adminAuth(request):
     users = Profile.objects.all()
     return render(request, "adminAuth.html", {"users": users})
 
+
 def adminAddAuth(request, user_pk):
-    Profile.objects.filter(pk = user_pk).update(isAuth=1)
+    Profile.objects.filter(pk=user_pk).update(isAuth=1)
     return redirect('adminAuth')
+
 
 def adminDeleteAuth(request, user_pk):
-    Profile.objects.filter(pk = user_pk).update(isAuth=0)
+    Profile.objects.filter(pk=user_pk).update(isAuth=0)
     return redirect('adminAuth')
+
 
 def adminAddSuperAuth(request, user_pk):
-    Profile.objects.filter(pk = user_pk).update(isAuth=2)
+    Profile.objects.filter(pk=user_pk).update(isAuth=2)
     return redirect('adminAuth')
-
