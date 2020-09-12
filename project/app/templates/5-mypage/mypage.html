@@ -8,10 +8,7 @@
 
 <div class="wrapper">
     <div class="page_title_div">
-        <a href="{% url 'main' %}">
-            <img class="arrow_icon" src="{% static 'images/arrow_icon.png' %}" alt="뒤로가기">
-            <span class="page_title">마이 페이지</span>
-        </a>
+       <span class="page_title">마이 페이지</span>
     </div>
 
     <div class="page_contents">
@@ -41,9 +38,25 @@
 
         </div>
         <!-- 예약 현황  -->
+        <!-- 예약 없으면 메시지 띄워주기 -->
+        <!-- 예약 현황 띄워주기 -->
+        <!-- 반납 날짜가 지나면 사라지기 -->
+            <!-- -> z반납 날짜가 지나면 지난 예약 내역으로 옮겨짐 -->
+
         
         <span>장비 예약 현황</span>
-        {% for EquipList in EquipLists%}
+        {% for EquipList in EquipLists %}
+        <div>
+            
+            <p>대여일 : {{ EquipList.fromDate }} 년,월,일 {{ EquipList.fromDateTime }}</p>
+            <P>반납일 : {{ EquipList.toDate }} {{ EquipList.toDateTime }}</P>
+            <p>{{ EquipList.equipment }}</p>
+            <P>제출 신분증 : {{ EquipList.auth }}</P>
+            <P>비고 : {{ EquipList.remark }}</P>
+            <p>현재상태 : {{ EquipList.borrowState }} </p>
+
+       </div>
+
         <!-- 변수 예시  -->
         <!--유저 이름     username=김동현/컴퓨터학과       -->
         <!--빌린 장비     equipment=['DSLR (Canon EOS-80D) : 1']      -->
@@ -58,10 +71,18 @@
         <!--학생증여부     auth=학생증      -->
         <!--비고     remark=dd      -->
         <!--현재상태     borrowState=0      -->
-        {% endfor %}
 
+        {% endfor %}
+       <br>
         <span>스튜디오 예약 현황</span>
         {% for StudioList in StudioLists%}
+        
+        <p>대여일 : {{ StudioList.fromDate }} 년,월,일 {{ StudioList.fromDateTime }}</p>
+        <P>반납일 : {{ StudioList.toDate }} {{ StudioList.toDateTime }}</P>
+        <p>{{ StudioList.studio }}</p>
+        <P>제출 신분증 : {{ StudioList.auth }}</P>
+        <P>비고 : {{ StudioList.remark }}</P>
+        <p>현재상태 : {{ StudioList.borrowState }} </p>
         {% endfor %}
 
         
