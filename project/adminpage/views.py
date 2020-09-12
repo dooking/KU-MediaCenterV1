@@ -76,9 +76,7 @@ def main(request):
         nowTime = int(now.hour)
         toDate,toDateTime = int(equip.toDate), int(equip.toDateTime)
         if((toDate == nowDate and toDateTime < nowTime) or (toDate < nowDate)):
-            print((toDate == nowDate and toDateTime < nowTime) , (toDate < nowDate))
             lateEquipment = EquipmentBorrow.objects.filter(pk=equip.pk)
-            print((lateEquipment))
             lateEquipment.update(
                 borrowState = 2
             )
