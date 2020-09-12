@@ -176,17 +176,26 @@ body{
     left: 0px;
     z-index: 100;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-content: center;
 }
 
 .header_flex{
-    width: 84%;
+    width: 66%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: flex-end;
     padding-bottom: 14px;
 
+}
+#back{
+    color: white;
+    text-decoration: none;
+    font-size: 38px;
+    box-sizing: content-box;
+    display: flex;
+    align-items: flex-end;
+    margin-left: 14px;
 }
 
 /* .menu_icon_img{

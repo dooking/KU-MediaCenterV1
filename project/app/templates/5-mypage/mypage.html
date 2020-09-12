@@ -8,10 +8,7 @@
 
 <div class="wrapper">
     <div class="page_title_div">
-        <a href="{% url 'main' %}">
-            <img class="arrow_icon" src="{% static 'images/arrow_icon.png' %}" alt="뒤로가기">
-            <span class="page_title">마이 페이지</span>
-        </a>
+       <span class="page_title">마이 페이지</span>
     </div>
 
     <div class="page_contents">
@@ -50,6 +47,7 @@
             <p>{{equip.name}} (수량: {{equip.count}})</p>
             {% endfor %}
         </div>
+
         <!-- 변수 예시  -->
         <!--유저 이름     username=김동현/컴퓨터학과       -->
         <!--빌린 장비     equipment=['DSLR (Canon EOS-80D) : 1']      -->
@@ -64,9 +62,11 @@
         <!--학생증여부     auth=학생증      -->
         <!--비고     remark=dd      -->
         <!--현재상태     borrowState=0      -->
-        {% endfor %}
 
+        {% endfor %}
+       <br>
         <span>스튜디오 예약 현황</span>
+
         {% for S in Studio_now%}
         <div>
             <p>대여일: {{S.fromDateYear}}년 {{S.fromDateMonth}}월 {{S.fromDateDay}}일 {{S.fromDateTime}}시</p>
