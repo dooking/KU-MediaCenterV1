@@ -303,6 +303,7 @@ def mypage(request):
         {"Equip_now": Equip_now, "Studio_now": Studio_now},
     )
 
+
 # 지난예약내역
 def lastReservation(request):
     Equip_last = makeListsEquip(
@@ -326,27 +327,25 @@ def lastReservation(request):
         {"Equip_last": Equip_last, "Studio_last": Studio_last},
     )
 
+
 # 장비 예약 취소
 def cancelEquip(request):
     if request.method == "POST":
         eb_pk = request.POST["pk"]
-        borrowState = request.POST["borrowState"]
 
         eb = EquipmentBorrow.objects.get(pk=eb_pk)
-        eb.borrowState = -1
-        eb.save()
+        eb.delete()
 
         return redirect("mypage")
+
 
 # 스튜디오 예약 취소
 def cancelStudio(request):
     if request.method == "POST":
         sb_pk = request.POST["pk"]
-        studioState = request.POST["studioState"]
 
         sb = StudioBorrow.objects.get(pk=sb_pk)
-        sb.studioState = -1
-        sb.save()
+        sb.delete()
 
         return redirect("mypage")
 
