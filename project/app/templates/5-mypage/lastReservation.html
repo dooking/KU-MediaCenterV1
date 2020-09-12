@@ -20,9 +20,6 @@
         <span>장비 예약 현황</span>
         {% for E in Equip_last %}
         <div>
-            {% if E.borrowState == -1 %}
-            <p>(신청 취소 된 예약입니다.)</p>
-            {% endif %}
             <p>대여일: {{E.fromDateYear}}년 {{E.fromDateMonth}}월 {{E.fromDateDay}}일 {{E.fromDateTime}}시</p>
             <p>반납일: {{E.toDateYear}}년 {{E.toDateMonth}}월 {{E.toDateDay}}일 {{E.toDateTime}}시</p>
             {% for equip in E.equips %}
