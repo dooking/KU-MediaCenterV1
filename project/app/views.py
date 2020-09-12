@@ -188,7 +188,8 @@ def studio_step1(request):
         selectDate = "".join(request.POST["selectDate"]).replace("-", "")
         year, month, day = "".join(request.POST["selectDate"]).split("-")
         nextDay = (
-            datetime.datetime(int(year), int(month), int(day)) + datetime.timedelta(1)
+            datetime.datetime(int(year), int(month), int(day)
+                              ) + datetime.timedelta(1)
         ).strftime("%Y-%m-%d")
         otherObject = (
             ResultObject(editorialSudio, selectDate, False)

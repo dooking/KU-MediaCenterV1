@@ -20,8 +20,9 @@ function init() {
   console.log(newlistsDevice);
   for (let newlistDevice of newlistsDevice) {
     let item = document.createElement("p");
-    const itemAttr = newlistDevice.split("^").join(" ");
-    item.innerText = itemAttr;
+    const itemAttr = newlistDevice.split("^");
+    const text = `${itemAttr[2]} ${itemAttr[3]} ${itemAttr[0]} ${itemAttr[1]}`;
+    item.innerText = text;
     htmllistDevice.appendChild(item);
   }
 
@@ -142,7 +143,7 @@ function addEquipmentToForm() {
     semiType.innerText.length > 0
   ) {
     let item = document.createElement("p");
-    const newEquipment = `${name.innerText} ${serialNumber.innerText} ${type.innerText} ${semiType.innerText}`;
+    const newEquipment = `${type.innerText} ${semiType.innerText} ${name.innerText} ${serialNumber.innerText}`;
     const result = `${name.innerText}^${serialNumber.innerText}^${type.innerText}^${semiType.innerText}`;
     item.innerText = newEquipment;
 
