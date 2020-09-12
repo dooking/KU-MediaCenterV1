@@ -125,8 +125,9 @@ def equipment_qr(request, equipment_pk):
 def qrcheckBrrow(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
     if request.method == "POST":
+        equipments = request.POST['equipments']
         currentEquipment.update(
-            equipment=request.POST['equipments'], borrowState=1)
+            equipment=equipments, borrowState=1)
         return redirect('adminMain')
     return render(request, "qrcheckBorrow.html", {'currentEquipment': currentEquipment[0]})
 

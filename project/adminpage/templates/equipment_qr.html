@@ -15,7 +15,7 @@
   <script type="text/javascript" src="{% static 'qrcode.js' %}"></script>
   <script type="text/javascript">
   const qrDiv = document.getElementById("qrDiv");
-  const inputValue = document.getElementById("inputValue")
+  const inputValue = document.getElementById("inputValue").value
     new QRCode(qrDiv, {
       text: inputValue,
       width: 100,
