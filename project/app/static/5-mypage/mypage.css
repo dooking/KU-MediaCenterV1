@@ -89,3 +89,11 @@ p{
     width: 25px;
 
 }
+
+.modal_open {
+    display: block;
+}
+
+.modal_close {
+    display: none;
+}
