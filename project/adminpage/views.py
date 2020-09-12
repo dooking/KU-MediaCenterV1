@@ -1,7 +1,7 @@
 # from django.shortcuts import render, redirect
 from app.models import Equipment, EquipmentBorrow, Profile
 from django.shortcuts import render, redirect
-
+import datetime
 # Create your views here.
 
 # TODO: 예약 현황 관리 -> 상태별로 띄워주는 것으로 구현
@@ -14,6 +14,8 @@ from django.http import HttpResponse
 from .models import CalendarEvent
 from project.util import events_to_json, calendar_options
 from django.core import serializers
+
+from django.db.models import Q
 
 OPTIONS = """{  timeFormat: "H:mm",
                 header: {
@@ -67,6 +69,18 @@ def main(request):
     # 주고 랜더링 해주면 됨
     # 각각의 cell에 update해주는 창 하나 만들기 확인 누르면 다시 랜더링 되는걸로
     # TODO:자동으로 연체 되게 업데이트 해주는것 해야됨
+    equipLists = EquipmentBorrow.objects.filter(Q(borrowState=0)|Q(borrowState=1))
+    for equip in equipLists:
+        now = datetime.datetime.now()
+        nowDate = int(now.strftime("%Y-%m-%d").replace("-", ""))
+        nowTime = int(now.hour)
+        toDate,toDateTime = int(equip.toDate), int(equip.toDateTime)
+        if((toDate == nowDate and toDateTime < nowTime) or (toDate < nowDate)):
+            lateEquipment = EquipmentBorrow.objects.filter(pk=equip.pk)
+            lateEquipment.update(
+                borrowState = 2
+            )
+        
     state0 = makeLists(EquipmentBorrow.objects.filter(borrowState=0))
     state1 = makeLists(EquipmentBorrow.objects.filter(borrowState=1))
     state2 = makeLists(EquipmentBorrow.objects.filter(borrowState=2))
@@ -125,7 +139,15 @@ def equipment_qr(request, equipment_pk):
 def qrcheckBrrow(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
     if request.method == "POST":
+        #카메라^DSLR^DSLR (Canon EOS-80A)^1  @@카메라^DSLR^DSLR (Canon EOS-80A)^1@@카메라^DSLR^DSLR (Canon EOS-80A)^1
         equipments = request.POST['equipments']
+        for equipment in equipments.split("@@"):
+            [eType, eSemiType, eName, eNumber] = equipment.split("^")
+            eType = eType.replace("\ufeff","")
+            EquipmentState  = Equipment.objects.filter(Q(equipmentName=eName), Q(equipType=eType), Q(serialNumber = eNumber))
+            EquipmentState.update(
+                borrowState = 1
+            )
         currentEquipment.update(
             equipment=equipments, borrowState=1)
         return redirect('adminMain')
