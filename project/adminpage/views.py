@@ -127,6 +127,25 @@ def equipment(request):
     # 장비 삭제 및 사용 불가 처리는 여기서 할 수 있도록
     # 함수는 따로 뺴야됨
     equipments = Equipment.objects.all()
+    if(request.method == "POST"):
+        print(request.POST)
+        equipType = "".join(request.POST['equipType'])
+        equipSemiType = "".join(request.POST['equipSemiType'])
+        equipmentName = "".join(request.POST['equipmentName'])
+        serialNumber = "".join(request.POST['serialNumber'])
+        borrowState = "".join(request.POST['borrowState'])
+        remark = "".join(request.POST['remark'])
+        equipPK = "".join(request.POST['equipPK'])
+        print(equipType,equipSemiType,equipmentName,borrowState,equipPK)
+        editEquip = Equipment.objects.filter(pk=equipPK)
+        editEquip.update(
+            equipType = equipType,
+            equipSemiType = equipSemiType,
+            equipmentName = equipmentName,
+            serialNumber = serialNumber,
+            borrowState = borrowState,
+            remark = remark
+        )
     return render(request, "equipment.html", {"equipments": equipments})
 
 
@@ -222,14 +241,22 @@ def deleteEquipment(request, equipment_pk):
     return redirect('equipment')
 
 
+def detailEquipment(request, equipment_pk):
+    equipment = Equipment.objects.get(pk=equipment_pk)
+    return render(request, 'detailEquipment.html',{'Equipment':equipment})
+    
 def brokenEquipment(request, equipment_pk):
     Equipment.objects.filter(pk=equipment_pk).update(isExist=False)
-    return redirect('equipment')
+    equipment = Equipment.objects.get(pk=equipment_pk)
+    return render(request, 'detailEquipment.html',{'Equipment':equipment})
 
 
 def repairEquipment(request, equipment_pk):
     Equipment.objects.filter(pk=equipment_pk).update(isExist=True)
-    return redirect('equipment')
+    equipment = Equipment.objects.get(pk=equipment_pk)
+    print(equipment)
+    print("hihi")
+    return render(request, 'detailEquipment.html',{'Equipment':equipment})
 
 
 def adminAuth(request):

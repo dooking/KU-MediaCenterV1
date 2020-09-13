@@ -17,6 +17,8 @@ urlpatterns = [
     path('equipment_qr/<int:equipment_pk>', views.equipment_qr, name='equipment_qr'),
     path('deleteequipment/<int:equipment_pk>',
          views.deleteEquipment, name="deleteEquipment"),
+    path('detailEquipment/<int:equipment_pk>',
+         views.detailEquipment, name="detailEquipment"),
     path('brokenEquipment/<int:equipment_pk>',
          views.brokenEquipment, name="brokenEquipment"),
     path('repairEquipment/<int:equipment_pk>',
