@@ -39,7 +39,7 @@
     <form method="POST" name = "step1" action="{% url 'borrow_step2' %}" onsubmit="return checkAll();">
         {% csrf_token %}
         <div>
-            <p class = 'step-sub'>2. 대여 장비 선택</p>
+            <p class = 'step-sub first_form'>2. 대여 장비 선택</p>
 
             {% for otherObject in otherObjects %}
                 <div class = "red_menu_box" onclick = "hide(this)">
@@ -87,7 +87,7 @@
                                                 {% endfor %}
                                             </div>
                                             <div class = 'hour_num'>
-                                                <p>9 10 11 12 13 14 15 16 17</p>
+                                                <p>09 10 11 12 13 14 15 16 17</p>
                                             </div>
                                         </div>
                                         <div class = "day_divide"></div>
@@ -101,7 +101,7 @@
                                                 {% endfor %}
                                             </div>
                                             <div class = "hour_num">
-                                                <p>9 10 11 12 13 14 15 16 17</p>
+                                                <p>09 10 11 12 13 14 15 16 17</p>
                                             </div>
                                         </div>
                                     </div>
@@ -114,7 +114,7 @@
         </div>
 
         <div>
-            <p class = "step-sub">3. 대여 목록</p>
+            <p class = "step-sub first_form">3. 대여 목록</p>
         </div>
         <div class="borrow_list">
         </div>

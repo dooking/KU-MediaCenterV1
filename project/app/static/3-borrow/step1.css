@@ -13,27 +13,29 @@ form {
     justify-content: flex-start;
 }
 .first_form {
-    padding-left: 3px;
+    padding-left: 25px;
+    margin-top: 15px;
+
 }
 .step-sub {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
-    padding: 10px;
+
     color: #8d091d;
 }
 .step_box {
+    margin: 17px 0;
     width: 100%;
-    height: 50px;
+    height: 44px;
     display: flex;
     flex-direction: row;
 }
 .step {
     width: 50%;
-    height: 100%;
     color: white;
     font-family: sans-serif;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -41,9 +43,10 @@ form {
 }
 #step1 {
     background-color: #8d091d;
+    
 }
 #step2 {
-    background-color: gray;
+    background-color: #cbcbcb;
 }
 .standard {
     display: flex;
@@ -51,7 +54,7 @@ form {
     align-items: flex-end;
     justify-content: flex-end;
     padding-bottom: 13px;
-    padding-right: 2px;
+    padding-right: 4px;
 }
 #num {
     font-size: 13px;
@@ -102,6 +105,7 @@ form {
     width: 100%;
 }
 .cam_menu {
+    margin: 0 15px;
     /* background-color: blue; */
     display: flex;
     flex-direction: column;
@@ -146,7 +150,7 @@ form {
     justify-content: flex-end;
     align-items: flex-end;
     font-size: 11px;
-    padding: 0.5px;
+    padding: 0.8px;
 }
 .day {
     display: flex;
@@ -158,23 +162,27 @@ form {
 .hour_num {
     font-size: 11px;
     /* background-color: aqua;  */
-    word-spacing: 6px; 
-    padding-top: 2px;  
+    word-spacing: 7px; 
+    margin-top: 4px;  
+    line-height: 0.8;
+    margin-bottom: 0;
+    letter-spacing: -0.7px;
 }
 .day_divide {
     width: 1px;
-    border-left: dotted 1px #707070;
+    border-left: dashed 1px #707070;
 }
 .stack {
     display: flex;
     flex-direction: row;
+    margin-left: 6px
 
 
 }
 .bar_body {
     display: flex;
     flex-direction: row;
-    width: 80%;
+    width: 85%;
     white-space: nowrap;
     overflow-x: scroll;
 }
@@ -212,6 +220,13 @@ form {
     border-radius: 50%;
     border: 2px black solid;
 }
+
+.borrow_list{
+    margin: 0 40px ;
+    list-style-type: circle;
+}
+
+
 .button_box {
     width: 100%;
     height: 50px;
@@ -240,13 +255,21 @@ button{
 }
 .rev_time {
     margin: 5px;
-    
 }
 .set_time {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 40px;
+    margin: 20px;
+
+}
+#fromDate{
+    width: 90%;
+    margin-bottom: 3px;
+}
+#returnDate{
+    width: 100%;
+    margin-bottom: 3px;
 
 }
 .hihi {

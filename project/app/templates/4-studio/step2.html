@@ -33,7 +33,7 @@
                         <input type="hidden" name="toDate" value="{{toDate}}">
                         <p>{{fromDate}} {{fromTime}}:00 ~ {{toDate}} {{toTime}}:00</p>
                         {% for borrowList in borrowLists %}
-                            <li>{{borrowList}}</li>
+                            <li class="borrowList">{{borrowList}}</li>
                         {% endfor %}
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                 <div class = "content_box">
                     <p class = "step-sub">6. 비고 입력</p>
                     <p class = "step-sub-sub" >(출입카드 반납시간 입력 필수)</p>
-                    <input type="text" placeholder="ex)" name="remark" 반납시간 및 기타 문의 사랑" size = "35">
+                    <input type="text" placeholder="ex) 00일 00시 반납 예정" name="remark" 반납시간 및 기타 문의 사랑" size = "35">
                 </div>
             </div>
             <div class = "button_box">
