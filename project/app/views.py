@@ -116,6 +116,7 @@ def borrow_step1(request):
 
 def borrow_step2(request):
     if request.method == "POST":
+        print(request.POST)
         borrowList = "".join(request.POST["resultBorrow"]).split("//")
         borrowList.pop()
         fromTime = "".join(request.POST["fromTime"])
@@ -208,6 +209,8 @@ def studio_step1(request):
                 "nextDay": nextDay,
             },
         )
+    print(otherObject)
+
     return render(
         request,
         "4-studio/step1.html",

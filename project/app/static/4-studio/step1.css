@@ -111,9 +111,6 @@ form {
     margin: 0;
     color:  #8d091d;
 }
-.mystyle {
-    display: none;
-}
 .red_menu_box {
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     background-color: #8d091d;
@@ -142,6 +139,9 @@ form {
     letter-spacing: normal;
     text-align: left;
 }
+#arrow{
+    font-size: 14px;
+}
 #arrow:checked{
     rotate: 180deg;
 }
@@ -164,7 +164,6 @@ form {
 .cam_box {
     width: 100%;
     position: relative;
-    top: -20px;
 }
 .cam_menu {
     /* background-color: blue; */
@@ -219,7 +218,7 @@ form {
     flex-direction: row-reverse;
     justify-content: flex-end;
     align-items: flex-end;
-    font-size: 11px;
+    font-size: 0.65em;
     padding: 0.8px;
 }
 .day {
@@ -230,7 +229,7 @@ form {
     margin-right: 15px;
 }
 .hour_num {
-    font-size: 11px;
+    font-size: 0.65em;
     /* background-color: aqua;  */
     word-spacing: 14px; 
     padding-top: 2px;  
@@ -344,4 +343,16 @@ button{
 }
 .hihi {
     padding-left: 20px;
+}
+.cam_check_2{
+    padding: 0px 25px;
+}
+.red_menu_other{
+    margin-right: auto;
+}
+.red_menu_edit{
+    margin-left : 0px;
+}
+.mystyle {
+    display: none;
 }

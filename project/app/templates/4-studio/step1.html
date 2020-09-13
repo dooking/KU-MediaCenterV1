@@ -45,32 +45,34 @@
             {% for otherObject in otherObjects %}
                 <div class = "red_menu_box" >
                     {% if otherObject.type != "편집실" %}
-                    <div class="studio_header_flex">
                         <input class="header_checkbox" type="checkbox" id="{{otherObject.type}}" value="{{otherObject.type}}" onclick="checkHandler(this)"/>
+                        <p class ="red_menu_text red_menu_other">{{otherObject.type}}</p>
+                        <p class ="red_menu_text" id="arrow" onclick = "hide(this)">▼</p>
+                    {% else %}
+                        <p class ="red_menu_text red_menu_edit">{{otherObject.type}}</p>
+                        <p class ="red_menu_text" id="arrow" onclick = "hide(this)">▼</p>
                     {% endif %}
-                        <p class ="red_menu_text">{{otherObject.type}}</p>
-                    </div>
-                    <p class ="red_menu_text" id="arrow" onclick = "hide(this)">▼</p>
                 </div>    
-                <div class = "cam_box ">
+                <div class = "cam_box mystyle">
                     {% for studioInfo in otherObject.info %}
                         <div class = "cam_menu ">
-                            <div class = "cam_check">
+                            {% if otherObject.type == "편집실" %}
+                                <div class = "cam_check">
+                            {% else %}
+                                <div class = "cam_check cam_check_2">
+                            {% endif %}
                                 <input type="hidden" class="studioCount" value="{{studioInfo.time1}}">
                                 <input type="hidden" class="studioCount2" value="{{studioInfo.time2}}">
                                 {% if otherObject.type == "편집실" %}
                                     <input type="radio" name="edit" id="edit"  value = "{{studioInfo.name}}" onclick="radioHandler(this)" >
                                     <input type="hidden" class="studioName" value="{{studioInfo.name}}">
                                     <p>{{studioInfo.name}}</p>
-                            
                                 {% else %}
                                     <input type="hidden" class="studioName" value="{{studioInfo.name}}">
                                 {% endif %}
-                            </div>
+                                </div>
                             <div class="graph">
                                 <div class = "chart">
-
-
                                     <div class = 'bar_body'>
                                         <div class = 'day'>
                                             <div class ='stack'>
@@ -91,7 +93,7 @@
                                             <div class = "stack">
                                                 {% for hour in studioInfo.time2 %}
                                                 <div class="time-hour">
-                                                    <div class="{{forloop.counter0|add:"25"}}" id={{hour}}>
+                                                    <div class="{{forloop.counter0|add:"24"}}" id={{hour}}>
                                                     </div>
                                                 </div>
                                                 {% endfor %}

@@ -66,9 +66,6 @@ form {
     margin: 0;
     color:  #8d091d;
 }
-.mystyle {
-    display: none;
-}
 .red_menu_box {
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     background-color: #8d091d;
@@ -274,4 +271,11 @@ button{
 }
 .hihi {
     padding-left: 20px;
+}
+
+.mystyle {
+    display: none;
+}
+#arrow {
+    font-size: 14px;
 }
