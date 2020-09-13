@@ -48,8 +48,8 @@ def makeDict(Ename, semiType, selectDate, isEquip):
 
 
 def findStudioTime(Ename, Eto, Ecount):
-    todayTime = [Ecount for i in range(25)]
-    tomorrowTime = [Ecount for i in range(25)]
+    todayTime = [Ecount for i in range(24)]
+    tomorrowTime = [Ecount for i in range(24)]
     # 오늘 현황 (오늘 반납할 사람 + 빌리는 사람)
     todayReturn = StudioBorrow.objects.filter(
         Q(fromDate=str(int(Eto)-1)), Q(toDate=Eto), (Q(studioState=0) | Q(studioState=1)| Q(studioState=2)))
@@ -70,7 +70,7 @@ def findStudioTime(Ename, Eto, Ecount):
                 if(int(borrowList.fromDate) < int(borrowList.toDate)):
                     for j in range(borrowList.toDateTime+2):
                         tomorrowTime[j] -= 1
-                    for j in range(borrowList.fromDateTime, 25, 1):
+                    for j in range(borrowList.fromDateTime, 24, 1):
                         todayTime[j] -= 1
                 # 오늘 반납
                 else:
@@ -85,6 +85,7 @@ def findStudioTime(Ename, Eto, Ecount):
                 if(borrowList.fromDate == borrowList.toDate):
                     for j in range(borrowList.fromDateTime, borrowList.toDateTime+2):
                         tomorrowTime[j] -= 1
+    print(len(todayTime))
     return todayTime, tomorrowTime
 
 
