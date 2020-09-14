@@ -1,5 +1,5 @@
 from .models import Profile, Equipment, Studio, EquipmentBorrow, StudioBorrow
-
+from django.db.models import Q
 
 def ResultObject(lists, selectDate, isEquip):
     resultObject = []
@@ -48,12 +48,12 @@ def makeDict(Ename, semiType, selectDate, isEquip):
 
 
 def findStudioTime(Ename, Eto, Ecount):
-    todayTime = [Ecount for i in range(25)]
-    tomorrowTime = [Ecount for i in range(25)]
+    todayTime = [Ecount for i in range(24)]
+    tomorrowTime = [Ecount for i in range(24)]
     # 오늘 현황 (오늘 반납할 사람 + 빌리는 사람)
     todayReturn = StudioBorrow.objects.filter(
-        fromDate=str(int(Eto)-1), toDate=Eto)
-    todayBorrow = StudioBorrow.objects.filter(fromDate=Eto)
+        Q(fromDate=str(int(Eto)-1)), Q(toDate=Eto), (Q(studioState=0) | Q(studioState=1)| Q(studioState=2)))
+    todayBorrow = StudioBorrow.objects.filter(Q(fromDate=Eto),(Q(studioState=0) | Q(studioState=1)| Q(studioState=2)))
     # 어제 빌림 -> 오늘 반납
     for borrowList in todayReturn:
         for equipList in borrowList.studio.split("//"):
@@ -70,14 +70,14 @@ def findStudioTime(Ename, Eto, Ecount):
                 if(int(borrowList.fromDate) < int(borrowList.toDate)):
                     for j in range(borrowList.toDateTime+2):
                         tomorrowTime[j] -= 1
-                    for j in range(borrowList.fromDateTime, 25, 1):
+                    for j in range(borrowList.fromDateTime, 24, 1):
                         todayTime[j] -= 1
                 # 오늘 반납
                 else:
                     for j in range(borrowList.fromDateTime, borrowList.toDateTime+2):
                         todayTime[j] -= 1
     # 내일 현황 (내일기준 빌리는사람)
-    tomorrowBorrow = StudioBorrow.objects.filter(fromDate=str(int(Eto)+1))
+    tomorrowBorrow = StudioBorrow.objects.filter(Q(fromDate=str(int(Eto)+1)),(Q(studioState=0) | Q(studioState=1)| Q(studioState=2)))
     for borrowList in tomorrowBorrow:
         for equipList in borrowList.studio.split("//"):
             equipList = equipList.strip()
@@ -85,6 +85,7 @@ def findStudioTime(Ename, Eto, Ecount):
                 if(borrowList.fromDate == borrowList.toDate):
                     for j in range(borrowList.fromDateTime, borrowList.toDateTime+2):
                         tomorrowTime[j] -= 1
+    print(len(todayTime))
     return todayTime, tomorrowTime
 
 
@@ -93,8 +94,8 @@ def findEquipTime(Ename, Eto, Ecount):
     tomorrowTime = [Ecount for i in range(24)]
     # 오늘 현황 (오늘 반납할 사람 + 빌리는 사람)
     todayReturn = EquipmentBorrow.objects.filter(
-        fromDate=str(int(Eto)-1), toDate=Eto)
-    todayBorrow = EquipmentBorrow.objects.filter(fromDate=Eto)
+        Q(fromDate=str(int(Eto)-1)), Q(toDate=Eto),(Q(borrowState=0) | Q(borrowState=1)| Q(borrowState=2)))
+    todayBorrow = EquipmentBorrow.objects.filter(Q(fromDate=Eto),(Q(borrowState=0) | Q(borrowState=1)| Q(borrowState=2)))
     for borrowList in todayReturn:
         for equipList in borrowList.equipment.replace("[", "").replace("]", "").replace("'", "").split(","):
             [equip, count] = equipList.split(":")
@@ -119,7 +120,7 @@ def findEquipTime(Ename, Eto, Ecount):
                     for j in range(borrowList.fromDateTime, borrowList.toDateTime+2):
                         todayTime[j] -= int(count)
     # 내일 현황 (내일기준 반납할 사람 + 빌리는 사람)
-    tomorrowBorrow = EquipmentBorrow.objects.filter(fromDate=str(int(Eto)+1))
+    tomorrowBorrow = EquipmentBorrow.objects.filter(Q(fromDate=str(int(Eto)+1)),(Q(borrowState=0) | Q(borrowState=1)| Q(borrowState=2)))
     for borrowList in tomorrowBorrow:
         for equipList in borrowList.equipment.replace("[", "").replace("]", "").replace("'", "").split(","):
             [equip, count] = equipList.split(":")

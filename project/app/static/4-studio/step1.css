@@ -7,33 +7,35 @@
     align-items: center;
 }
 form {
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
 .first_form {
-    padding-left: 3px;
+    padding-left: 25px;
+    margin-top: 15px;
+
 }
 .step-sub {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
-    padding: 10px;
+
     color: #8d091d;
 }
 .step_box {
+    margin: 17px 0;
     width: 100%;
-    height: 50px;
+    height: 44px;
     display: flex;
     flex-direction: row;
 }
 .step {
     width: 50%;
-    height: 100%;
     color: white;
     font-family: sans-serif;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -42,16 +44,62 @@ form {
 #step1 {
     background-color: #8d091d;
 }
+
 #step2 {
-    background-color: gray;
+    background-color: #cbcbcb;
 }
+
+
+
+#edit{
+
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    background-image: url('/static/images/unclicked.png');
+    background-position:  center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+#edit:checked{
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    background-image: url("/static/images/clicked.png");
+    background-position:  center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+
+}
+/* 여기 이미지 상대경로에서 안 가져오고 장고 문법으로 가져오는 거 모르겠어요 */
+.header_checkbox{
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    background-image: url('/static/images/header_unclicked_2.png');
+    background-position:  center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+.header_checkbox:checked{
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    background-image: url('/static/images/header_clicked.png');
+    background-position:  center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.16);
+}
+
+
 .standard {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-end;
     padding-bottom: 13px;
-    padding-right: 2px;
+    padding-right: 5px;
 }
 #num {
     font-size: 13px;
@@ -62,9 +110,6 @@ form {
     font-size: 13px;
     margin: 0;
     color:  #8d091d;
-}
-.mystyle {
-    display: none;
 }
 .red_menu_box {
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
@@ -77,9 +122,28 @@ form {
     align-items: center;
     padding: 0px 35px;
 }
+.studio_header_flex{
+    display: flex;
+    align-items: center;
+}
+
 .red_menu_text {
     color: white;
-    margin: 0;
+    margin-left: 12px;
+    margin-bottom: 0;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: left;
+}
+#arrow{
+    font-size: 14px;
+}
+#arrow:checked{
+    rotate: 180deg;
 }
 .white_menu_box {
     background-color: white;
@@ -98,8 +162,8 @@ form {
     margin: 0;
 }
 .cam_box {
-    padding-top: 10px;
     width: 100%;
+    position: relative;
 }
 .cam_menu {
     /* background-color: blue; */
@@ -108,18 +172,19 @@ form {
     align-items: left;
 }
 .cam_check {   
-    padding: 10px;
+    padding: 10px 25px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* background-color: cadetblue; */
+
 }
 .cam_check p {
     margin: 0 10px;
 }
 .graph {
     border-top: 0.3px solid black;
-    margin-bottom: 10px;
+    padding:  15px 0 0 25px;
+    border-bottom: 0.3px solid black;
 
 }
 .chart {
@@ -130,58 +195,63 @@ form {
 .redbar {
     background-color: #8d091d;
     width: 2px;
-    height: 100px;
+    height: 80px;
     padding-right: 2px;
+
 }
 .time-block {
-    width: 18px;
-    height: 8px;
-    border-radius: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
     border: solid 0.5px #707070;
     background-color: #ffffff;
 }
 .time-block-booked {
-    width: 18px;
-    height: 8px;
-    border-radius: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
     border: solid 0.5px #707070;
-    background-color: #dfdfdf;
+    background-color: #cbcbcb;
 }
 .time-hour {
     display: flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
     align-items: flex-end;
-    font-size: 11px;
-    padding: 0.5px;
+    font-size: 0.65em;
+    padding: 0.8px;
 }
 .day {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 10px;
+    margin-right: 15px;
 }
 .hour_num {
-    font-size: 11px;
+    font-size: 0.65em;
     /* background-color: aqua;  */
-    word-spacing: 6px; 
+    word-spacing: 14px; 
     padding-top: 2px;  
+    letter-spacing: -1.4px;
+    font-stretch: ultra-condensed;
+    width: 10px;
 }
 .day_divide {
     width: 1px;
-    border-left: dotted 1px #707070;
+    border-left: dashed 1px #707070;
 }
 .stack {
     display: flex;
     flex-direction: row;
+    margin-left: 4px;
 
 
 }
 .bar_body {
     display: flex;
     flex-direction: row;
-    width: 80%;
+    width: 90%;
     white-space: nowrap;
     overflow-x: scroll;
 }
@@ -219,6 +289,13 @@ form {
     border-radius: 50%;
     border: 2px black solid;
 }
+
+
+.borrow_list{
+    margin: 0 40px ;
+    list-style-type: circle;
+}
+
 .button_box {
     width: 100%;
     height: 50px;
@@ -252,9 +329,30 @@ button{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 40px;
+    margin: 20px;
+
+}
+#fromDate{
+    width: 90%;
+    margin-bottom: 3px;
+}
+#returnDate{
+    width: 100%;
+    margin-bottom: 3px;
 
 }
 .hihi {
     padding-left: 20px;
+}
+.cam_check_2{
+    padding: 0px 25px;
+}
+.red_menu_other{
+    margin-right: auto;
+}
+.red_menu_edit{
+    margin-left : 0px;
+}
+.mystyle {
+    display: none;
 }

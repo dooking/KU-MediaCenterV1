@@ -39,14 +39,14 @@
     <form method="POST" name = "step1" action="{% url 'borrow_step2' %}" onsubmit="return checkAll();">
         {% csrf_token %}
         <div>
-            <p class = 'step-sub'>2. 대여 장비 선택</p>
+            <p class = 'step-sub first_form'>2. 대여 장비 선택</p>
 
             {% for otherObject in otherObjects %}
-                <div class = "red_menu_box" onclick = "hide(this)">
+                <div class = "red_menu_box " onclick = "hide(this)">
                     <p class = "red_menu_text">{{otherObject.type}}</p>
-                    <p class ="red_menu_text">▼</p>
+                    <p class ="red_menu_text" id="arrow">▼</p>
                 </div>    
-                <div class = "cam_box">
+                <div class = "cam_box mystyle">
                     {% for equipment in otherObject.info %}
                         <div class = "cam_menu">
                             <div class = "cam_check">
@@ -57,9 +57,9 @@
                                     <input type="radio" name="camera" id="camera" value = "{{equipment.name}}" onclick="radioHandler(this)">
                                     <p>{{equipment.name}}</p>
                                 {% elif otherObject.type == "기타 부속" %}
-                                    <input type="checkbox" id="etc" value = "{{equipment.name}}" onclick="return false;"/>
+                                    <input type="checkbox" id="etc" value = "{{equipment.name}}" onclick="etcHandler(this)"/>
                                     <p>{{equipment.name}}</p>
-                                    <select name="countEquipment" id="{{equipment.name}}" onchange="numberHandler(this)">
+                                    <select class="countSelect mystyle" name="countEquipment" id="{{equipment.name}}" onclick="numberHandler(this)" />
                                         <option value="0">0개</option>
                                         <option value="1">1개</option>
                                         <option value="2">2개</option>
@@ -87,7 +87,7 @@
                                                 {% endfor %}
                                             </div>
                                             <div class = 'hour_num'>
-                                                <p>9 10 11 12 13 14 15 16 17</p>
+                                                <p>09 10 11 12 13 14 15 16 17</p>
                                             </div>
                                         </div>
                                         <div class = "day_divide"></div>
@@ -101,7 +101,7 @@
                                                 {% endfor %}
                                             </div>
                                             <div class = "hour_num">
-                                                <p>9 10 11 12 13 14 15 16 17</p>
+                                                <p>09 10 11 12 13 14 15 16 17</p>
                                             </div>
                                         </div>
                                     </div>
@@ -114,7 +114,7 @@
         </div>
 
         <div>
-            <p class = "step-sub">3. 대여 목록</p>
+            <p class = "step-sub first_form">3. 대여 목록</p>
         </div>
         <div class="borrow_list">
         </div>

@@ -145,7 +145,7 @@ function addEquipmentToForm() {
     semiType.innerText.length > 0
   ) {
     let item = document.createElement("p");
-    const newEquipment = `${name.innerText} ${serialNumber.innerText} ${type.innerText} ${semiType.innerText}`;
+    const newEquipment = `${type.innerText} ${semiType.innerText} ${name.innerText} ${serialNumber.innerText}`;
     const result = `${name.innerText}^${serialNumber.innerText}^${type.innerText}^${semiType.innerText}`;
     item.innerText = newEquipment;
 

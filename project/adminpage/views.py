@@ -1,7 +1,7 @@
 # from django.shortcuts import render, redirect
 from app.models import Equipment, EquipmentBorrow, Profile
 from django.shortcuts import render, redirect
-
+from django.db.models import Q
 # Create your views here.
 
 # TODO: 예약 현황 관리 -> 상태별로 띄워주는 것으로 구현
@@ -14,6 +14,7 @@ from django.http import HttpResponse
 from .models import CalendarEvent
 from project.util import events_to_json, calendar_options
 from django.core import serializers
+import datetime
 
 OPTIONS = """{  timeFormat: "H:mm",
                 header: {
@@ -67,6 +68,18 @@ def main(request):
     # 주고 랜더링 해주면 됨
     # 각각의 cell에 update해주는 창 하나 만들기 확인 누르면 다시 랜더링 되는걸로
     # TODO:자동으로 연체 되게 업데이트 해주는것 해야됨
+    equipLists = EquipmentBorrow.objects.filter(Q(borrowState=0)|Q(borrowState=1))
+    for equip in equipLists:
+        now = datetime.datetime.now()
+        nowDate = int(now.strftime("%Y-%m-%d").replace("-", ""))
+        nowTime = int(now.hour)
+        toDate,toDateTime = int(equip.toDate), int(equip.toDateTime)
+        if((toDate == nowDate and toDateTime < nowTime) or (toDate < nowDate)):
+            lateEquipment = EquipmentBorrow.objects.filter(pk=equip.pk)
+            lateEquipment.update(
+                borrowState = 2
+            )
+        
     state0 = makeLists(EquipmentBorrow.objects.filter(borrowState=0))
     state1 = makeLists(EquipmentBorrow.objects.filter(borrowState=1))
     state2 = makeLists(EquipmentBorrow.objects.filter(borrowState=2))
@@ -114,6 +127,25 @@ def equipment(request):
     # 장비 삭제 및 사용 불가 처리는 여기서 할 수 있도록
     # 함수는 따로 뺴야됨
     equipments = Equipment.objects.all()
+    if(request.method == "POST"):
+        print(request.POST)
+        equipType = "".join(request.POST['equipType'])
+        equipSemiType = "".join(request.POST['equipSemiType'])
+        equipmentName = "".join(request.POST['equipmentName'])
+        serialNumber = "".join(request.POST['serialNumber'])
+        borrowState = "".join(request.POST['borrowState'])
+        remark = "".join(request.POST['remark'])
+        equipPK = "".join(request.POST['equipPK'])
+        print(equipType,equipSemiType,equipmentName,borrowState,equipPK)
+        editEquip = Equipment.objects.filter(pk=equipPK)
+        editEquip.update(
+            equipType = equipType,
+            equipSemiType = equipSemiType,
+            equipmentName = equipmentName,
+            serialNumber = serialNumber,
+            borrowState = borrowState,
+            remark = remark
+        )
     return render(request, "equipment.html", {"equipments": equipments})
 
 
@@ -125,8 +157,18 @@ def equipment_qr(request, equipment_pk):
 def qrcheckBrrow(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
     if request.method == "POST":
+        #카메라^DSLR^DSLR (Canon EOS-80A)^1  @@카메라^DSLR^DSLR (Canon EOS-80A)^1@@카메라^DSLR^DSLR (Canon EOS-80A)^1
+        equipments = request.POST['equipments']
+        for equipment in equipments.split("@@"):
+            [eName, eNumber, eType, eSemiType] = equipment.split("^")
+            eType = eType.replace("\ufeff", "")
+            EquipmentState = Equipment.objects.filter(
+                Q(equipType=eType), Q(serialNumber=eNumber))
+            EquipmentState.update(
+                borrowState=1
+            )
         currentEquipment.update(
-            equipment=request.POST['equipments'], borrowState=1)
+            equipmentList=equipments, borrowState=1)
         return redirect('adminMain')
     return render(request, "qrcheckBorrow.html", {'currentEquipment': currentEquipment[0]})
 
@@ -134,8 +176,21 @@ def qrcheckBrrow(request, post_pk):
 def qrcheckReturn(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
     if request.method == "POST":
+        equipments = request.POST['equipments']
+        for equipment in equipments.split("@@"):
+            [eName, eNumber, eType, eSemiType] = equipment.split("^")
+            eType = eType.replace("\ufeff", "")
+            EquipmentState = Equipment.objects.filter(
+                Q(equipType=eType), Q(serialNumber=eNumber))
+            now = datetime.datetime.now()
+            EquipmentState.update(
+                borrowState=0
+            )
+        realDate = int(now.strftime("%Y-%m-%d").replace("-", ""))
+        realDateTime = int(now.hour)
         currentEquipment.update(
-            equipment=request.POST['equipments'], borrowState=3)
+            equipmentList=equipments, realDate=realDate, realDateTime=realDateTime, borrowState=3)
+
         return redirect('adminMain')
     return render(request, "qrcheckReturn.html", {'currentEquipment': currentEquipment[0]})
 
@@ -143,8 +198,17 @@ def qrcheckReturn(request, post_pk):
 def qrcheckLate(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
     if request.method == "POST":
+        equipments = request.POST['equipments']
+        for equipment in equipments.split("@@"):
+            [eType, eSemiType, eName, eNumber] = equipment.split("^")
+            eType = eType.replace("\ufeff", "")
+            EquipmentState = Equipment.objects.filter(
+                Q(equipmentName=eName), Q(equipType=eType), Q(serialNumber=eNumber))
+            EquipmentState.update(
+                borrowState=0
+            )
         currentEquipment.update(
-            equipment=request.POST['equipments'], borrowState=2)
+            equipmentList=equipments, borrowState=3)
         return redirect('adminMain')
     return render(request, "qrcheckReturn.html", {'currentEquipment': currentEquipment[0]})
 
@@ -177,14 +241,22 @@ def deleteEquipment(request, equipment_pk):
     return redirect('equipment')
 
 
+def detailEquipment(request, equipment_pk):
+    equipment = Equipment.objects.get(pk=equipment_pk)
+    return render(request, 'detailEquipment.html',{'Equipment':equipment})
+    
 def brokenEquipment(request, equipment_pk):
     Equipment.objects.filter(pk=equipment_pk).update(isExist=False)
-    return redirect('equipment')
+    equipment = Equipment.objects.get(pk=equipment_pk)
+    return render(request, 'detailEquipment.html',{'Equipment':equipment})
 
 
 def repairEquipment(request, equipment_pk):
     Equipment.objects.filter(pk=equipment_pk).update(isExist=True)
-    return redirect('equipment')
+    equipment = Equipment.objects.get(pk=equipment_pk)
+    print(equipment)
+    print("hihi")
+    return render(request, 'detailEquipment.html',{'Equipment':equipment})
 
 
 def adminAuth(request):

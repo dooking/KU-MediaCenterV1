@@ -116,6 +116,7 @@ def borrow_step1(request):
 
 def borrow_step2(request):
     if request.method == "POST":
+        print(request.POST)
         borrowList = "".join(request.POST["resultBorrow"]).split("//")
         borrowList.pop()
         fromTime = "".join(request.POST["fromTime"])
@@ -188,7 +189,8 @@ def studio_step1(request):
         selectDate = "".join(request.POST["selectDate"]).replace("-", "")
         year, month, day = "".join(request.POST["selectDate"]).split("-")
         nextDay = (
-            datetime.datetime(int(year), int(month), int(day)) + datetime.timedelta(1)
+            datetime.datetime(int(year), int(month), int(day)
+                              ) + datetime.timedelta(1)
         ).strftime("%Y-%m-%d")
         otherObject = (
             ResultObject(editorialSudio, selectDate, False)
@@ -207,6 +209,8 @@ def studio_step1(request):
                 "nextDay": nextDay,
             },
         )
+    print(otherObject)
+
     return render(
         request,
         "4-studio/step1.html",
@@ -279,25 +283,75 @@ def studio_finish(request):
         return redirect("error")
 
 
+# 5 - mypage
 def mypage(request):
     Equip_now = makeListsEquip(
         EquipmentBorrow.objects.filter(
-            Q(username=Profile.objects.get(username=request.user)), ~Q(borrowState=3)
+            Q(username=Profile.objects.get(username=request.user)),
+            ~Q(borrowState=3),
+            ~Q(borrowState=-1),
         )
     )
 
     Studio_now = makeListsStudio(
         StudioBorrow.objects.filter(
-            Q(username=Profile.objects.get(username=request.user)), ~Q(studioState=2)
+            Q(username=Profile.objects.get(username=request.user)),
+            ~Q(studioState=2),
+            ~Q(studioState=-1),
         )
     )
-    print(Equip_now)
-    print(Studio_now)
+
     return render(
         request,
         "5-mypage/mypage.html",
         {"Equip_now": Equip_now, "Studio_now": Studio_now},
     )
+
+
+# 지난예약내역
+def lastReservation(request):
+    Equip_last = makeListsEquip(
+        EquipmentBorrow.objects.filter(
+            Q(username=Profile.objects.get(username=request.user)),
+            (Q(borrowState=3) | Q(borrowState=-1)),
+        )
+    )
+
+    Studio_last = makeListsStudio(
+        StudioBorrow.objects.filter(
+            Q(username=Profile.objects.get(username=request.user)),
+            (Q(studioState=2) | Q(studioState=-1)),
+        )
+    )
+    print(Equip_last)
+    print(Studio_last)
+    return render(
+        request,
+        "5-mypage/lastReservation.html",
+        {"Equip_last": Equip_last, "Studio_last": Studio_last},
+    )
+
+
+# 장비 예약 취소
+def cancelEquip(request):
+    if request.method == "POST":
+        eb_pk = request.POST["pk"]
+
+        eb = EquipmentBorrow.objects.get(pk=eb_pk)
+        eb.delete()
+
+        return redirect("mypage")
+
+
+# 스튜디오 예약 취소
+def cancelStudio(request):
+    if request.method == "POST":
+        sb_pk = request.POST["pk"]
+
+        sb = StudioBorrow.objects.get(pk=sb_pk)
+        sb.delete()
+
+        return redirect("mypage")
 
 
 def error(request):
@@ -309,6 +363,7 @@ def logout(request):
     return redirect("main")
 
 
+# EquipmentBorrow --> list형태로
 def makeListsEquip(nowState):
     results = []
     if len(nowState) > 0:
@@ -336,10 +391,12 @@ def makeListsEquip(nowState):
             temp["toDateMonth"] = state.toDate[4:6]
             temp["toDateDay"] = state.toDate[6:8]
             temp["toDateTime"] = state.toDateTime
+            temp["borrowState"] = state.borrowState
             results.append(temp)
     return results
 
 
+# StudioBorrow --> list형태로
 def makeListsStudio(nowState):
     results = []
     if len(nowState) > 0:
@@ -360,5 +417,6 @@ def makeListsStudio(nowState):
             temp["toDateMonth"] = state.toDate[4:6]
             temp["toDateDay"] = state.toDate[6:8]
             temp["toDateTime"] = state.toDateTime
+            temp["studioState"] = state.studioState
             results.append(temp)
     return results

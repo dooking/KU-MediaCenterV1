@@ -17,7 +17,6 @@
     <div class="equip-table-header">
       <span class="equipType">QR 보기</span>
       <span class="equipType">TYPE</span>
-      <span class="equipSemiType">하위 TYPE</span>
       <span class="equipmentName">장비이름</span>
       <span class="serialNum">일련번호</span>
       <span class="admin">관리하기</span>
@@ -25,11 +24,10 @@
     <div class="row-wrapper">
       {% for equipment in equipments %}
       <div class="equip-table-row">
-        <a class="equip-table-link" href="{% url 'equipment_qr' equipment.pk %}">
+        <a class="equip-table-link equipType center" href="{% url 'equipment_qr' equipment.pk %}">
           <button class="btn--inactive">QR 보기</button>
         </a>
         <span class="equipType">{{equipment.equipType}}</span>
-        <span class="equipSemiType">{{equipment.equipSemiType}}</span>
         <span class="equipmentName">{{equipment.equipmentName}}</span>
         <span class="serialNum">{{equipment.serialNumber}}</span>
         <!-- {% if equipment.borrowState == 0 and equipment.isExist == True %}
@@ -41,15 +39,9 @@
         {% endif %} -->
 
         <div class="btn_wrap">
-          {% if equipment.isExist == True %}
-          <a class="equip-table-link" href="{% url 'brokenEquipment' equipment.pk %}">
-            <button class="btn--inactive">비활성화</button>
+          <a class="equip-table-link" href="{% url 'detailEquipment' equipment.pk %}">
+            <button class="btn_delete">수정</button>
           </a>
-          {% else %}
-          <a class="equip-table-link" href="{% url 'repairEquipment' equipment.pk %}">
-            <button class="btn--active">활성화</button>
-          </a>
-          {% endif %}
           <a class="equip-table-link" href="{% url 'deleteEquipment' equipment.pk %}">
             <button class="btn_delete">삭제</button>
           </a>

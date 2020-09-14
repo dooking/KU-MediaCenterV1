@@ -1,26 +1,44 @@
 let tempList = new Map()
+let prevValue = ""
 
-function hide(thisisclicked) {
-    const hide = thisisclicked.parentNode.nextElementSibling;
-    hide.classList.toggle("mystyle");
+function hide(event) {
+    const hide = event.parentNode.nextElementSibling;
+    //hide.classList.toggle("mystyle");
+    if(hide.classList.contains("mystyle")){
+        hide.classList.remove("mystyle")
+        event.textContent = "▲"
+    }
+    else{
+        hide.classList.add("mystyle")
+        event.textContent = "▼"
+    }
 }
 function radioHandler(cb){
     const borrowList = document.querySelectorAll("li")
     const borrowClass = document.querySelector(".borrow_list")
     const addItem = document.createElement('li')
-    let check = false
+    let check = 0
     let index = 0
-
     for(let i=0; i<borrowList.length; i++){
         if(borrowList[i].className === "edit"){
-            check = true
+            if(cb.value === borrowList[i].textContent.slice(-5)){
+                check = 2
+            }
+            else{
+                check = 1
+            }
             index = i
             break;
         }
     }
-    if(check){
+    if(check === 1){
         borrowList[index].textContent = "편집실 "+cb.value
         tempList.set(cb.id,cb.value)
+    }
+    else if(check === 2){
+        borrowClass.removeChild(borrowList[index])
+        cb.checked = false
+        tempList.delete(cb.id)
     }
     else{
         addItem.setAttribute("class","edit")
@@ -55,7 +73,7 @@ function checkHandler(cb){
 }
 
 //time block
-for (let index=0; index<50; index++){
+for (let index=0; index<48; index++){
     let blockCount = document.getElementsByClassName(String(index))
     for (let i=0; i<blockCount.length; i++)
     {

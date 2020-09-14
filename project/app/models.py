@@ -30,13 +30,14 @@ class Equipment(models.Model):
 
     def __str__(self):
         return self.equipmentName
-
+        return f'equipmentName={self.equipmentName},serialNumber={self.serialNumber},equipType={self.equipType},equipSemiType={self.equipSemiType},isExist={self.isExist},borrowState={self.borrowState},remark={self.remark}'
 
 class EquipmentBorrow(models.Model):
     username = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='Euser')
     # 장비 -> String처리
     equipment = models.CharField(max_length=200)
+    equipmentList = models.CharField(max_length=250, null=True)
     fromDate = models.CharField(max_length=50)
     fromDateTime = models.IntegerField()
     toDate = models.CharField(max_length=50)

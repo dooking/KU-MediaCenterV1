@@ -1,6 +1,7 @@
 .center{
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 .equip-wrapper {
     display: flex;
@@ -16,6 +17,11 @@
     justify-content: center;
     align-items: center;
     word-break: break-all;
+    width: 20%;
+    margin-right: 40px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #8d091d;
 }
 .equip-head{
     width: 88%;
@@ -47,90 +53,69 @@
 .equip-table {
     width: 88%;
     height: 70vh;
-    padding: 0px 4%;
+    padding: 30px 4%;
     border-radius: 7px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     background-color: #fcfcfc;
     overflow-y: auto;
 }
-
-.equip-table-header {
-    font-size: 18px;
-    font-weight: 500;
-    padding-bottom: 4px;
+.equip-list{
+    width: 100%;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    border-bottom: 1.5px solid #bbbbbb;
-    padding-top: 18px;
-    margin-bottom: 12px;
-    position: sticky;
-    top: 0px;
-    padding-top: 18px;
-    background-color: #ffffff;
+    margin-bottom: 20px;
 }
-
-.equip-table-row {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    font-size: 16px;
-    margin-bottom: 15px;
+select, input[type="text"]{
+    width: 70%;
+    border-radius: 0.5em;
+    padding: 10px;
+    border: 1px solid grey;
 }
-
-.btn_wrap button{
-    font-size: 12.5px;
-    font-weight:500;
-    color: #ffffff;
-    letter-spacing: 0.4px;
-    border-style: none;
-    outline: none;
-    height: 28px;
+input[type="textarea"]{
+    width: 70%;
+    border-radius: 0.5em;
+    padding: 10px;
+    border: 1px solid grey;
+    height: 60px;
 }
-
-.btn_delete {
-    width: 45px;
+.btn_edit {
+    width: 100px;
+    height: 50px;
     background-color: #aa1a30;
     color: #ffffff;
     outline: none;
-    border-radius: 1.5px;
+    border-radius: 0.5em;
+    font-size: 1.2em;
+    cursor: pointer;
 }
-
+input[type="text"].isExist{
+    width: 35%;
+}
 .equip-table-link {
+    margin-left: 30px;
+    display: flex;
     text-decoration: none;
 }
-
 .btn--inactive {
     width: 76.5px;
     background-color: #bbbbbb;
     outline: none;
-    border-radius: 1.5px;
+    border-radius: 0.5em;
+    color: white;
+    font-size: 1.0em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 .btn--active {
     width: 76.5px;
     background-color: #008910;
     outline: none;
-    border-radius: 1.5px;
-}
-
-.equipType {
-    width: 15%;
-}
-.equipmentName{
-    width: 30%;
-}
-.serialNum {
-    width: 20%;
-}
-.admin {
-    width: 20%;
-}
-.btn_wrap {
-    width: 15%;
-    margin-left: 23px;
+    border-radius: 0.5em;
+    color: white;
+    font-size: 1.1em;
     display: flex;
-    justify-content: space-around;
-}
-.btn_wrap > a{
-    margin-left: 10px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
