@@ -1,27 +1,33 @@
-{% extends 'admin_base.html' %} {% load static %} {% block title %} 관리자
-페이지 {% endblock title %} {% block css %}
+{% extends 'admin_base.html' %} 
+{% load static %} 
+{% block title %} 관리자페이지 {% endblock title %} 
+{% block css %}
 <link rel="stylesheet" href="{% static 'admin_main.css' %}" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-{% endblock css %} {% block content %}
+{% endblock css %} 
+{% block content %}
 <div id="wrapper">
   <div class="main_div">
     <div class="current_list" id="current_list1">
       <p class="current_list_p">대여 예정</p>
       {% if state0s %} {% for state0 in state0s %}
       <div class="current_list_card">
-        <p>이름 : {{state0.username}}</p>
-        <p>학과 : {{state0.major}}</p>
-        <p>
-          대여: {{state0.fromDateYear}}년 {{state0.fromDateMonth}}월
-          {{state0.fromDateDay}}일 {{state0.fromDateTime}}시
-        </p>
-        <p>
-          반납: {{state0.toDateYear}}년 {{state0.toDateMonth}}월
-          {{state0.toDateDay}}일 {{state0.toDateTime}}시
-        </p>
-        {% for list in state0.equips %}
-        <p>대여목록 : {{list.equip}} : {{list.count}} 대</p>
-        {% endfor %}
+        <p>이름 : {{state0.username}}{{state0.major}}</p>
+        <div class="current_list_subbox">
+          <div>
+            <p>
+              대여: {{state0.fromDateYear}}년 {{state0.fromDateMonth}}월
+              {{state0.fromDateDay}}일 {{state0.fromDateTime}}시
+            </p>
+            <p>
+              반납: {{state0.toDateYear}}년 {{state0.toDateMonth}}월
+              {{state0.toDateDay}}일 {{state0.toDateTime}}시
+            </p>
+          </div>
+          {% for list in state0.equips %}
+          <p>대여목록 : {{list.equip}} : {{list.count}} 대</p>
+          {% endfor %}
+        </div>
         <a class="detail">세부 사항</a>
         <a href="{% url 'qrcheckBrrow' state0.pk %}">
           <button class="check1">대여 확인</button>
@@ -80,3 +86,5 @@
   </div>
 </div>
 {% endblock content %}
+
+
