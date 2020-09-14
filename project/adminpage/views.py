@@ -1,5 +1,5 @@
 # from django.shortcuts import render, redirect
-from app.models import Equipment, EquipmentBorrow, Profile
+from app.models import Equipment, EquipmentBorrow, Profile, Studio, StudioBorrow
 from django.shortcuts import render, redirect
 from django.db.models import Q
 # Create your views here.
@@ -148,11 +148,36 @@ def equipment(request):
         )
     return render(request, "equipment.html", {"equipments": equipments})
 
+def studio(request):
+    # 장비 목록 다 보여주면 됨
+    # 장비 추가는 따로 탭을 만들거고
+    # 장비 삭제 및 사용 불가 처리는 여기서 할 수 있도록
+    # 함수는 따로 뺴야됨
+    studios = Studio.objects.all()
+    if(request.method == "POST"):
+        print(request.POST)
+        studioType = "".join(request.POST['studioType'])
+        studioName = "".join(request.POST['studioName'])
+        borrowState = "".join(request.POST['borrowState'])
+        remark = "".join(request.POST['remark'])
+        studioPK = "".join(request.POST['studioPK'])
+        # print(equipType,equipSemiType,equipmentName,borrowState,equipPK)
+        editStudio = Studio.objects.filter(pk=studioPK)
+        editStudio.update(
+            studioType = studioType,
+            studioName = studioName,
+            borrowState = borrowState,
+            remark = remark
+        )
+    return render(request, "studio.html", {"studios": studios})
+
 
 def equipment_qr(request, equipment_pk):
     currentEquipment = Equipment.objects.get(pk=equipment_pk)
     return render(request, "equipment_qr.html", {"currentEquipment": currentEquipment})
-
+def studio_qr(request, studio_pk):
+    currentStudio = Studio.objects.get(pk=studio_pk)
+    return render(request, "studio_qr.html", {"currentStudio": currentStudio})
 
 def qrcheckBrrow(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
@@ -234,6 +259,16 @@ def addEquipment(request):
             return render(request, 'addEquipment.html', {"msg": error})
     return render(request, "addequipment.html")
 
+def addStudio(request):
+    if request.method == 'POST':
+        Studio.objects.create(
+            equipmentName=request.POST['studioName'],
+            equipType=request.POST['studioType'],
+            isExist=True,
+            borrowState=0
+        )
+    return render(request, "addStudio.html")
+
 
 def deleteEquipment(request, equipment_pk):
     deleteEquipment = Equipment.objects.get(pk=equipment_pk)
@@ -257,6 +292,29 @@ def repairEquipment(request, equipment_pk):
     print(equipment)
     print("hihi")
     return render(request, 'detailEquipment.html',{'Equipment':equipment})
+
+def deleteStudio(request, studio_pk):
+    deleteStudio = Studio.objects.get(pk=studio_pk)
+    deleteStudio.delete()
+    return redirect('studio')
+
+
+def detailStudio(request, studio_pk):
+    studio = Studio.objects.get(pk=studio_pk)
+    return render(request, 'detailStudio.html',{'Studio':studio})
+    
+def brokenStudio(request, studio_pk):
+    Studio.objects.filter(pk=studio_pk).update(isExist=False)
+    studio = Studio.objects.get(pk=studio_pk)
+    return render(request, 'detailStudio.html',{'Studio':studio})
+
+
+def repairStudio(request, studio_pk):
+    Studio.objects.filter(pk=studio_pk).update(isExist=True)
+    studio = Studio.objects.get(pk=Studio_pk)
+    print(studio)
+    print("hihi")
+    return render(request, 'detailStudio.html',{'Studio':studio})
 
 
 def adminAuth(request):
