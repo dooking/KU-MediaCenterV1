@@ -12,13 +12,20 @@ import json
 from .makeObject import *
 from django.db.models import Q
 
+def handler400(request, exception):
+    return render(None, 'error.html')
+def handler403(request, exception):
+    return render(None, 'error.html')
+def handler404(request, exception):
+    return render(None, 'error.html')
+def handler500(request):
+    return render(None, 'error.html')\
+
 # 0 - Adming
 # 1 - startpage
 
-
 def main(request):
     return render(request, "1-startpage/main.html")
-
 
 # 2 - Introduce
 
