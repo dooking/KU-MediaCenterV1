@@ -8,8 +8,10 @@
 {% block content %}
 <div class="equip-wrapper">
   <div class="equip-head">
-    <h2 class="equip-heading">장비 관리</h2>
-    <h2 class="equip-heading">스튜디오 관리</h2>
+    <div>
+      <a class="equip-heading" id = 'black' href="{% url 'equipment' %}">장비 관리</a>
+      <a class="equip-heading" id = 'gray' href="{% url 'studio' %}">스튜디오 관리</a>
+    </div>
     <a class="equip-table-link" href="{% url 'addEquipment' %}">
       <button class="btn_add">+ 장비 추가</button>
     </a>

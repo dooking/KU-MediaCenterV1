@@ -10,43 +10,43 @@
   <div class="equip-head">
     <h2 class="equip-heading">관리자 권한 부여하기</h2>
   </div>
-  <div class="equip-table">
-    <div class="equip-table-header">
-      <span class="equipType">이름</span>
-      <span class="equipSemiType">이름</span>
-      <span class="equipmentName">이름</span>
-      <span class="admin">관리하기</span>
-    </div>
-    <div class="row-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th colspan="2">이름</span>
+        <th colspan="3">학적사항</span>
+        <th colspan="2">권한</span>
+        <th colspan="2">관리하기</span>
+      </tr>
+    </thead>
+    <tbody>
       {% for user in users %}
-      <div class="equip-table-row">
-        <span class="equipType">{{user.username}}</span>
-        <span class="equipSemiType">{{user.name}}</span>
-        <span class="equipmentName">{{user.state}}</span>
-        <!-- <span class="serialNum">{{user.isAuth}}</span> -->
-        <!-- {% if equipment.borrowState == 0 and equipment.isExist == True %}
-        <span>대여가능</span>
-        {% elif equipment.borrowState == 1 %}
-        <span>대여중</span>
-        {% else %}
-        <span>고장남</span>
-        {% endif %} -->
-
-        <div class="btn_wrap">
-          {% if user.isAuth == 0 %}
+      <tr>
+        <td colspan="2">{{user.name}}</td>
+        <td colspan="3">{{user.major}}</td>
+        {% if user.isAuth == 0 %}
+        <td colspan="2">
+          <p class="equipState1">사용자</p>
+        </td>
+        <td colspan="2">
           <a class="equip-table-link" href="{% url 'adminAddAuth' user.pk %}">
-            <button class="btn--inactive">관리자로 전환</button>
+            <button class="btn--switch0">관리자로 전환</button>
           </a>
-          {% else %}
+        </td>
+        {% else %}
+        <td colspan="2">
+          <p class="equipState0">관리자</p>
+        </td>
+        <td colspan="2">
           <a class="equip-table-link" href="{% url 'adminDeleteAuth' user.pk %}">
-            <button class="btn--active">이용자로 전환</button>
+            <button class="btn--switch1">이용자로 전환</button>
           </a>
-          {% endif %}
-        </div>
-      </div>
+        </td>
+        {% endif %}
+      </tr>
       {% endfor %}
-    </div>
-  </div>
+    </tbody>
+  </table>
 </div>
 
 {% endblock content%}

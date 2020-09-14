@@ -24,6 +24,19 @@ urlpatterns = [
     path('repairEquipment/<int:equipment_pk>',
          views.repairEquipment, name="repairEquipment"),
 
+    # 공간 추가 및 삭제
+    path('studio', views.studio, name='studio'),
+    path('addstudio', views.addStudio, name='addStudio'),
+    path('studio_qr/<int:studio_pk>', views.studio_qr, name='studio_qr'),
+    path('deletestudio/<int:studio_pk>',
+         views.deleteStudio, name="deleteStudio"),
+    path('detailstudio/<int:studio_pk>',
+         views.detailStudio, name="detailStudio"),
+    path('brokenstudio/<int:studio_pk>',
+         views.brokenStudio, name="brokenStudio"),
+    path('repairstudio/<int:studio_pk>',
+         views.repairStudio, name="repairStudio"),
+
     # 장비 대여 예약 확인 및 관리
     path('qrcheck/borrow/<int:post_pk>',
          views.qrcheckBrrow, name='qrcheckBrrow'),
