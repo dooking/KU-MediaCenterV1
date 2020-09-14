@@ -17,6 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from app import views
 
+from django.conf.urls import (
+   handler400, handler403, handler404, handler500
+)
+
+handler400 = views.handler400
+handler403 = views.handler403
+handler404 = views.handler404
+handler500 = views.handler500
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("adminpage/", include("adminpage.urls")),
