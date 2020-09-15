@@ -8,7 +8,7 @@
 {% block content %}
   <div class="equip-wrapper">
     <div class="equip-head">
-      <h2 class="equip-heading">장비 관리</h2>
+      <h2 class="equip-heading">장비 수정하기</h2>
       <a class="equip-table-link" href="{% url 'equipment' %}">
         <button class="btn_add">홈으로</button>
       </a>
@@ -47,22 +47,27 @@
             <option value="2">연체</option>
           </select>
         </div>
-        <div class="equip-list">
-          <span>고장 여부</span>
-          {% if Equipment.isExist %}
-            <input type="text" class="isExist" placeholder="정상 대여 가능" readonly>
+        <div class="equip-active">
+          <span>활성/비활성화</span>
+          <!-- {% if Equipment.isExist %}
+            <input type="text" class="isExist" placeholder="활성 상태" readonly>
           {% else %}
-            <input type="text" class="isExist" placeholder="고장" readonly>
-          {% endif %}
+            <input type="text" class="isExist" placeholder="비활성 상태" readonly>
+          {% endif %} -->
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+          </label>
           {% if Equipment.isExist == True %}
-          <a class="equip-table-link" href="{% url 'brokenEquipment' Equipment.pk %}">
-            <div class="btn--inactive">비활성화</div>
+          <a class="active" href="{% url 'brokenEquipment' Equipment.pk %}">
+            <div class="btn--active">활성상태</div>
           </a>
           {% else %}
-          <a class="equip-table-link" href="{% url 'repairEquipment' Equipment.pk %}">
-            <div class="btn--active">활성화</div>
+          <a class="active" href="{% url 'repairEquipment' Equipment.pk %}">
+            <div class="btn--inactive">비활성상태</div>
           </a>
           {% endif %}
+
         </div>
         <div class="equip-list">
           <span>비고</span>
@@ -77,4 +82,23 @@
   </div>
   
 <script type="text/javascript" src="{% static 'detailEquipment.js' %}"></script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function () {
+  const checkbox = document.querySelector('input[type="checkbox"]');
+  
+  checkbox.addEventListener('change', function () {
+    if (checkbox.checked) {
+      const link = document.querySelector('.active')
+      link.innerHTML = "<div class="btn--active">활성상태</div>";
+      console.log('Checked', link);
+    } else {
+      const link = document.querySelector('.active')
+      // link.click();
+      link.innerHTML = "<div class="btn--inactive">비활성상태</div>"
+      console.log('Not checked');
+    }
+  });
+});
+
+</script>
 {% endblock content%}
