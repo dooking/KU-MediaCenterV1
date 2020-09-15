@@ -329,6 +329,7 @@ def deleteStudio(request, studio_pk):
 
 def detailStudio(request, studio_pk):
     studio = Studio.objects.get(pk=studio_pk)
+    print(studio)
     return render(request, 'detailStudio.html',{'studio':studio})
     
 def brokenStudio(request, studio_pk):
