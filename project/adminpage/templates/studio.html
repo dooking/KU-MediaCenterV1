@@ -19,7 +19,6 @@
   <table>
     <thead>
       <tr>
-        <th colspan="2">QR 보기</span>
         <th colspan="2">TYPE</span>
         <th colspan="3">스튜디오 이름</span>
         <th colspan="2">활성상태</span>
@@ -29,20 +28,11 @@
     <tbody>
       {% for studio in studios %}
       <tr>
-        <td colspan="2">
-          <a href="{% url 'studio_qr' studio.pk %}">
-            <button class="btn--qr">QR 보기</button>
-          </a>
-        </td>
         <td colspan="2">{{studio.studioType}}</td>
         <td colspan="3">{{studio.studioName}}</td>
-        {% if studio.borrowState == 0 and studio.isExist == True %}
+        {% if studio.studioState == 0 and studio.isExist == True %}
         <td colspan="2">
           <p class="equipState0">활성 상태</p>
-        </td>
-        {% elif studio.borrowState == 1 %}
-        <td colspan="2">
-          <p class="equipState1">비활성 상태</p>
         </td>
         {% else %}
         <td colspan="2">
