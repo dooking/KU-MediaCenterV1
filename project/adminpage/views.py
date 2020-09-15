@@ -87,6 +87,30 @@ def main(request):
         "state0s": state0, "state1s": state1, "state2s": state2
     })
 
+def main_studio(request):
+    # 대여 목록의 state를 0,1,2로 구분해놨고, 이를 필터링해
+    # 주고 랜더링 해주면 됨
+    # 각각의 cell에 update해주는 창 하나 만들기 확인 누르면 다시 랜더링 되는걸로
+    # TODO:자동으로 연체 되게 업데이트 해주는것 해야됨
+    studioLists = StudioBorrow.objects.filter(Q(studioState=0)|Q(studioState=1))
+    for studio in studioLists:
+        now = datetime.datetime.now()
+        nowDate = int(now.strftime("%Y-%m-%d").replace("-", ""))
+        nowTime = int(now.hour)
+        toDate,toDateTime = int(studio.toDate), int(studio.toDateTime)
+        if((toDate == nowDate and toDateTime < nowTime) or (toDate < nowDate)):
+            lateStudio = StudioBorrow.objects.filter(pk=studio.pk)
+            lateStudio.update(
+                studioState = 2
+            )
+        
+    state0 = makeLists(StudioBorrow.objects.filter(studioState=0))
+    state1 = makeLists(StudioBorrow.objects.filter(studioState=1))
+    state2 = makeLists(StudioBorrow.objects.filter(studioState=2))
+    return render(request, "main_studio.html", {
+        "state0s": state0, "state1s": state1, "state2s": state2
+    })
+
 
 def makeLists(nowState):
     results = []
@@ -175,9 +199,7 @@ def studio(request):
 def equipment_qr(request, equipment_pk):
     currentEquipment = Equipment.objects.get(pk=equipment_pk)
     return render(request, "equipment_qr.html", {"currentEquipment": currentEquipment})
-def studio_qr(request, studio_pk):
-    currentStudio = Studio.objects.get(pk=studio_pk)
-    return render(request, "studio_qr.html", {"currentStudio": currentStudio})
+
 
 def qrcheckBrrow(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
@@ -252,8 +274,7 @@ def addEquipment(request):
                 isExist=True,
                 borrowState=0
             )
-            msg = '정상적으로 제품을 등록하였습니다.'
-            return render(request, 'addEquipment.html', {"msg": msg})
+            return redirect('equipment')
         else:
             error = '이미 존재하는 serial number 입니다.'
             return render(request, 'addEquipment.html', {"msg": error})
@@ -262,12 +283,13 @@ def addEquipment(request):
 def addStudio(request):
     if request.method == 'POST':
         Studio.objects.create(
-            equipmentName=request.POST['studioName'],
-            equipType=request.POST['studioType'],
+            studioName=request.POST['studioName'],
+            studioType=request.POST['studioType'],
             isExist=True,
-            borrowState=0
+            studioState=0
         )
-    return render(request, "addStudio.html")
+        return redirect('studio')
+    return render(request, "addstudio.html")
 
 
 def deleteEquipment(request, equipment_pk):
@@ -301,20 +323,20 @@ def deleteStudio(request, studio_pk):
 
 def detailStudio(request, studio_pk):
     studio = Studio.objects.get(pk=studio_pk)
-    return render(request, 'detailStudio.html',{'Studio':studio})
+    return render(request, 'detailStudio.html',{'studio':studio})
     
 def brokenStudio(request, studio_pk):
     Studio.objects.filter(pk=studio_pk).update(isExist=False)
     studio = Studio.objects.get(pk=studio_pk)
-    return render(request, 'detailStudio.html',{'Studio':studio})
+    return render(request, 'detailStudio.html',{'studio':studio})
 
 
 def repairStudio(request, studio_pk):
     Studio.objects.filter(pk=studio_pk).update(isExist=True)
-    studio = Studio.objects.get(pk=Studio_pk)
+    studio = Studio.objects.get(pk=studio_pk)
     print(studio)
     print("hihi")
-    return render(request, 'detailStudio.html',{'Studio':studio})
+    return render(request, 'detailStudio.html',{'studio':studio})
 
 
 def adminAuth(request):

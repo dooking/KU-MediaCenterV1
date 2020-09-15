@@ -7,6 +7,7 @@ from adminpage import views
 urlpatterns = [
     # main
     path('main', views.main, name='adminMain'),
+    path('main_studio', views.main_studio, name='main_studio'),
 
     # 대여목록 전체
     path('total', views.total, name='total'),
@@ -27,7 +28,6 @@ urlpatterns = [
     # 공간 추가 및 삭제
     path('studio', views.studio, name='studio'),
     path('addstudio', views.addStudio, name='addStudio'),
-    path('studio_qr/<int:studio_pk>', views.studio_qr, name='studio_qr'),
     path('deletestudio/<int:studio_pk>',
          views.deleteStudio, name="deleteStudio"),
     path('detailstudio/<int:studio_pk>',
