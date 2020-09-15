@@ -46,36 +46,47 @@
   </tbody>
 </table>
 <div class="search_page">
-  <form action="" method="get">
-    <input
-      class="qinput"
-      type="text"
-      name="q"
-      value="{{ q }}"
-      placeholder="검색하기"
-    />
+  <form action="" method="GET">
+    {% csrf_token %}
+    <input class="qinput" type="text" name="query" placeholder="검색하기"/>
   </form>
-  <ul class="pages">
+  {% if borrows.has_other_pages %}     
+  <ul class = "pagination">
     {% if borrows.has_previous %}
-    <li>
-      <a href="?p={{borrows.previous_page_number }}">❮&nbsp&nbsp&nbsp&nbsp</a>
-    </li>
-    {% endif %} {% for i in range %} {% if i > high_range or low_range > i %}
-    <!-- nothing -->
-    {% elif borrows.number == i %}
-    <li class="current_page">
-      <a id="current" href="?p={{ i }}">&nbsp{{i}}&nbsp</a>
-    </li>
+      {% if query %}
+        <li><a href="?page={{ borrows.previous_page_number }}&query={{query}}">&laquo;</a></li>
+      {% else %}
+        <li><a href="?page={{ borrows.previous_page_number }}">&laquo;</a></li>
+      {% endif %}
     {% else %}
-    <li>
-      <a href="?p={{ i }}">&nbsp{{i}}&nbsp</a>
-    </li>
-    {% endif %} {% endfor %} {% if borrows.has_next %}
-    <li>
-      <a href="?p={{borrows.next_page_number }}">&nbsp&nbsp&nbsp&nbsp❯</a>
-    </li>
+      <li class = "disabled"><span>&laquo;</span></li>
     {% endif %}
-  </ul>
+    
+    {% for i in borrows.paginator.page_range %}  
+      
+      {% if borrows.number == i %}     
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+      
+        {% if query %}
+          <li><a href="?page={{ i }}&query={{query}}">{{ i }}</a></li>
+        {% else %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    
+    {% if borrows.has_next %}    
+      {% if query %}
+        <li><a href="?page={{ borrows.next_page_number }}&query={{query}}">&raquo;</a></li>
+      {% else %}
+        <li><a href="?page={{ borrows.next_page_number }}">&raquo;</a></li>
+      {% endif %}
+    {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+    {%endif %}
+    </ul>
+{%endif%}
 </div>
 {% load static %}
 <script type="text/javascript" src="{% static 'total.js' %}"></script>

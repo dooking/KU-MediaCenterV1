@@ -14,6 +14,8 @@ from django.http import HttpResponse
 from .models import CalendarEvent
 from project.util import events_to_json, calendar_options
 from django.core import serializers
+from django.core.paginator import Paginator
+from django.views.generic import ListView
 import datetime
 
 OPTIONS = """{  timeFormat: "H:mm",
@@ -68,7 +70,7 @@ def main(request):
     # 주고 랜더링 해주면 됨
     # 각각의 cell에 update해주는 창 하나 만들기 확인 누르면 다시 랜더링 되는걸로
     # TODO:자동으로 연체 되게 업데이트 해주는것 해야됨
-    equipLists = EquipmentBorrow.objects.filter(Q(borrowState=0)|Q(borrowState=1))
+    equipLists = EquipmentBorrow.objects.filter(Q(borrowState=0)|Q(borrowState=1)).order_by('fromDate')
     for equip in equipLists:
         now = datetime.datetime.now()
         nowDate = int(now.strftime("%Y-%m-%d").replace("-", ""))
@@ -141,15 +143,53 @@ def makeLists(nowState):
 
 def total(request):
     # 모든 대여내역 다 보여주면 됨
-    totalBrrows = EquipmentBorrow.objects.all()
-    return render(request, "total.html", {"borrows": totalBrrows})
+    totalBrrows_all = EquipmentBorrow.objects.all().order_by('toDate')
+    query = request.GET.get('query')
+    if(query):
+        filter_Brrows = filter_query(True, query,totalBrrows_all)
+        paginator = Paginator(filter_Brrows, 6) 
+    else:
+        paginator = Paginator(totalBrrows_all, 6)
+    page = int(request.GET.get('page', 1)) 
+    totalBrrows = paginator.get_page(page)
+    return render(request, "total.html", {"borrows": totalBrrows,"query":query})
 
 def total_studio(request):
     # 모든 대여내역 다 보여주면 됨
-    totalBrrows = StudioBorrow.objects.all()
-    print(totalBrrows)
-    return render(request, "total_studio.html", {"borrows": totalBrrows})
+    totalBrrows_all = StudioBorrow.objects.all().order_by('toDate')
+    query = request.GET.get('query')
+    if(query):
+        filter_Brrows = filter_query(False, query,totalBrrows_all)
+        paginator = Paginator(filter_Brrows, 6) 
+    else:
+        paginator = Paginator(totalBrrows_all, 6)
+    page = int(request.GET.get('page', 1)) 
+    totalBrrows = paginator.get_page(page)
+    return render(request, "total_studio.html", {"borrows": totalBrrows ,"query":query})
 
+# def total_studio(request):
+#     # 모든 대여내역 다 보여주면 됨
+#     totalBrrows = StudioBorrow.objects.all().order_by('toDate')
+#     if(request.method == "POST"):
+#         query = "".join(request.POST['query'])
+#         filter_Brrows = filter_query(False, query,totalBrrows)
+#         return render(request, "total_studio.html", {"borrows": filter_Brrows})
+#     return render(request, "total_studio.html", {"borrows": totalBrrows})
+
+def filter_query(isEquip, query, totalBrrows):
+    results = []
+    for brrows in totalBrrows:
+        if(isEquip):
+            if(query in str(brrows.equipment)):
+                results.append(brrows)
+                continue
+        else:
+            if(query in str(brrows.studio)):
+                results.append(brrows)
+                continue
+        if(query in str(brrows.username) or query in str(brrows.fromDate) or query in str(brrows.toDate) or query in str(brrows.auth)):
+            results.append(brrows)
+    return results
 
 def equipment(request):
     # 장비 목록 다 보여주면 됨
