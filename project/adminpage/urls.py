@@ -11,6 +11,7 @@ urlpatterns = [
 
     # 대여목록 전체
     path('total', views.total, name='total'),
+    path('total_studio', views.total_studio, name='total_studio'),
 
     # 장비 추가 및 삭제
     path('equipment', views.equipment, name='equipment'),

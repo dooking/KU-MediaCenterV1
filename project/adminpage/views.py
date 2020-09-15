@@ -144,6 +144,12 @@ def total(request):
     totalBrrows = EquipmentBorrow.objects.all()
     return render(request, "total.html", {"borrows": totalBrrows})
 
+def total_studio(request):
+    # 모든 대여내역 다 보여주면 됨
+    totalBrrows = StudioBorrow.objects.all()
+    print(totalBrrows)
+    return render(request, "total_studio.html", {"borrows": totalBrrows})
+
 
 def equipment(request):
     # 장비 목록 다 보여주면 됨
