@@ -18,18 +18,19 @@
   <thead>
     <tr>
       <th colspan="2">이름</th>
-      <th colspan="3">대여 스튜디오 목록</th>
+      <th colspan="2">대여 스튜디오 목록</th>
       <th colspan="2">기간</th>
       <th colspan="1">제출 신분증</th>
       <th colspan="1">이용 목적</th>
       <th colspan="1">비고</th>
+      <th colspan="1">관리하기</th>
     </tr>
   </thead>
   <tbody>
     {% for borrow in borrows %}
     <tr>
       <td colspan="2">{{ borrow.username}}</td>
-      <td colspan="3" class="htmllist">
+      <td colspan="2" class="htmllist">
         <input
           type="text"
           hidden
@@ -44,6 +45,14 @@
       <td colspan="1">{{ borrow.auth }}</td>
       <td colspan="1">{{ borrow.purpose }}</td>
       <td colspan="1">{{ borrow.remark }}</td>
+      <td colspan="1">          
+        <a href="{% url 'detailTotalStudio' borrow.pk %}">
+          <button class="btn--edit">수정</button>
+        </a>
+        <a href="{% url 'deleteTotalStudio' borrow.pk %}">
+          <button class="btn--delete">삭제</button>
+        </a>
+      </td>
     </tr>
     {% endfor %}
   </tbody>
@@ -59,18 +68,18 @@
     <ul class = "pagination">
       {% if borrows.has_previous %}
         {% if query %}
-          <li><a href="?page={{ borrows.previous_page_number }}&query={{query}}">&laquo;</a></li>
+          <li><a href="?page={{ borrows.previous_page_number }}&query={{query}}">&laquo; prev</a></li>
         {% else %}
-          <li><a href="?page={{ borrows.previous_page_number }}">&laquo;</a></li>
+          <li><a href="?page={{ borrows.previous_page_number }}">&laquo; prev</a></li>
         {% endif %}
       {% else %}
-        <li class = "disabled"><span>&laquo;</span></li>
+        <li class = "disabled"><span>&laquo; prev</span></li>
       {% endif %}
       
       {% for i in borrows.paginator.page_range %}  
         
         {% if borrows.number == i %}     
-          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          <li class="active"><span>{{ i }} <span class="sr-only"></span></span></li>
         {% else %}
         
           {% if query %}
@@ -83,12 +92,12 @@
       
       {% if borrows.has_next %}    
         {% if query %}
-          <li><a href="?page={{ borrows.next_page_number }}&query={{query}}">&raquo;</a></li>
+          <li><a href="?page={{ borrows.next_page_number }}&query={{query}}">&raquo; next</a></li>
         {% else %}
-          <li><a href="?page={{ borrows.next_page_number }}">&raquo;</a></li>
+          <li><a href="?page={{ borrows.next_page_number }}">&raquo; next</a></li>
         {% endif %}
       {% else %}
-          <li class="disabled"><span>&raquo;</span></li>
+          <li class="disabled"><span>&raquo; next</span></li>
       {%endif %}
       </ul>
   {%endif%}

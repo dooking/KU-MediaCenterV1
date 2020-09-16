@@ -147,11 +147,24 @@ def total(request):
     query = request.GET.get('query')
     if(query):
         filter_Brrows = filter_query(True, query,totalBrrows_all)
-        paginator = Paginator(filter_Brrows, 6) 
+        paginator = Paginator(filter_Brrows, 5) 
     else:
-        paginator = Paginator(totalBrrows_all, 6)
+        paginator = Paginator(totalBrrows_all, 5)
     page = int(request.GET.get('page', 1)) 
     totalBrrows = paginator.get_page(page)
+    if(request.method == "POST"):
+        equipPK = "".join(request.POST["equipPK"])
+        editEquipList = EquipmentBorrow.objects.filter(pk=equipPK)
+        editEquipList.update(
+            realDate = "".join(request.POST["realDate"]),
+            realDateTime = "".join(request.POST["realDateTime"]),
+            group = "".join(request.POST["group"]),
+            phone = "".join(request.POST["phone"]),
+            purpose = "".join(request.POST["purpose"]),
+            auth = "".join(request.POST["auth"]),
+            remark = "".join(request.POST["remark"]),
+            borrowState = "".join(request.POST["borrowState"]),
+        )
     return render(request, "total.html", {"borrows": totalBrrows,"query":query})
 
 def total_studio(request):
@@ -160,11 +173,24 @@ def total_studio(request):
     query = request.GET.get('query')
     if(query):
         filter_Brrows = filter_query(False, query,totalBrrows_all)
-        paginator = Paginator(filter_Brrows, 6) 
+        paginator = Paginator(filter_Brrows, 5) 
     else:
-        paginator = Paginator(totalBrrows_all, 6)
+        paginator = Paginator(totalBrrows_all, 5)
     page = int(request.GET.get('page', 1)) 
     totalBrrows = paginator.get_page(page)
+    if(request.method == "POST"):
+        equipPK = "".join(request.POST["equipPK"])
+        editStudioList = StudioBorrow.objects.filter(pk=equipPK)
+        editStudioList.update(
+            realDate = "".join(request.POST["realDate"]),
+            realDateTime = "".join(request.POST["realDateTime"]),
+            group = "".join(request.POST["group"]),
+            phone = "".join(request.POST["phone"]),
+            purpose = "".join(request.POST["purpose"]),
+            auth = "".join(request.POST["auth"]),
+            remark = "".join(request.POST["remark"]),
+            studioState = "".join(request.POST["borrowState"]),
+        )
     return render(request, "total_studio.html", {"borrows": totalBrrows ,"query":query})
 
 # def total_studio(request):
@@ -336,6 +362,28 @@ def addStudio(request):
         )
         return redirect('studio')
     return render(request, "addstudio.html")
+
+
+# 장비대여 리스트 수정 및 삭제 
+def deleteTotal(request, equipment_pk):
+    deleteEquipList = EquipmentBorrow.objects.get(pk=equipment_pk)
+    deleteEquipList.delete()
+    return redirect('total')
+
+def detailTotal(request, equipment_pk):
+    EquipList = EquipmentBorrow.objects.get(pk=equipment_pk)
+    return render(request, 'detailTotal.html',{'EquipList':EquipList})
+
+# 공간대여 리스트 수정 및 삭제 
+def deleteTotalStudio(request, equipment_pk):
+    deleteStudioList = StudioBorrow.objects.get(pk=equipment_pk)
+    deleteStudioList.delete()
+    return redirect('total_studio')
+
+def detailTotalStudio(request, equipment_pk):
+    StudioList = StudioBorrow.objects.get(pk=equipment_pk)
+    return render(request, 'detailTotalStudio.html',{'StudioList':StudioList})
+
 
 
 def deleteEquipment(request, equipment_pk):
