@@ -102,7 +102,7 @@ def findEquipTime(Ename, Eto, Ecount):
             equip = equip.strip()
             count = count.strip()
             if(equip == Ename):
-                for j in range(borrowList.toDateTime+2):
+                for j in range(borrowList.toDateTime+1):
                     todayTime[j] -= int(count)
     for borrowList in todayBorrow:
         for equipList in borrowList.equipment.replace("[", "").replace("]", "").replace("'", "").split(","):
@@ -112,7 +112,7 @@ def findEquipTime(Ename, Eto, Ecount):
             count = count.strip()
             if(equip == Ename):
                 if(int(borrowList.fromDate) < int(borrowList.toDate)):
-                    for j in range(borrowList.toDateTime+2):
+                    for j in range(borrowList.toDateTime+1):
                         tomorrowTime[j] -= int(count)
                     for j in range(borrowList.fromDateTime, 24, 1):
                         todayTime[j] -= int(count)
@@ -128,6 +128,6 @@ def findEquipTime(Ename, Eto, Ecount):
             count = count.strip()
             if(equip == Ename):
                 if(borrowList.fromDate == borrowList.toDate):
-                    for j in range(borrowList.fromDateTime, borrowList.toDateTime+2):
+                    for j in range(borrowList.fromDateTime, borrowList.toDateTime+1):
                         tomorrowTime[j] -= int(count)
-    return todayTime[9:18], tomorrowTime[9:18]
+    return todayTime[9:17], tomorrowTime[9:17]

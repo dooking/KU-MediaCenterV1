@@ -336,7 +336,6 @@ def addEquipment(request):
     if request.method == 'POST':
         foundEquipByserial = Equipment.objects.filter(
             serialNumber=request.POST['serialNumber'])
-
         if len(foundEquipByserial) == 0:
             Equipment.objects.create(
                 equipmentName=request.POST['equipmentName'],
@@ -349,7 +348,7 @@ def addEquipment(request):
             return redirect('equipment')
         else:
             error = '이미 존재하는 serial number 입니다.'
-            return render(request, 'addEquipment.html', {"msg": error})
+            return render(request, 'error.html', {"msg": error})
     return render(request, "addequipment.html")
 
 def addStudio(request):

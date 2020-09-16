@@ -11,19 +11,17 @@
 
     <label
       >TYPE<br />
-      <input
-        type="text"
-        placeholder="TYPE을 입력하세요"
-        id="equipType"
-        name="studioType"
-        class="addForm-input"
-      />
+      <select id="equipType" name="studioType" class="addForm-input">
+        <option value="편집실">편집실</option>
+        <option value="SBS 스튜디오">SBS 스튜디오</option>
+        <option value="사운드 스튜디오">사운드 스튜디오</option>
+      </select>
     </label>
     <label
       >장비 이름<br />
       <input
         type="text"
-        placeholder="스튜디오 이름을 입력하세요"
+        placeholder="스튜디오 이름을 입력하세요 (예 - 4번 PC)"
         id="equipmentName"
         name="studioName"
         class="addForm-input"
