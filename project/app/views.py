@@ -307,7 +307,6 @@ def mypage(request):
             ~Q(studioState=-1),
         )
     )
-
     return render(
         request,
         "5-mypage/mypage.html",
@@ -409,8 +408,14 @@ def makeListsStudio(nowState):
     if len(nowState) > 0:
         for state in nowState:
             temp = {}
-
-            studio_list = state.studio[1:-1].replace("'", "").split(",")
+            studio_list = []
+            for studio in (state.studio.split("// ")):
+                studio = studio.replace("//","")
+                if(studio[-1] == "C"):
+                    studio = "편집실 "+studio
+                studio_list.append(studio)
+            
+            #studio_list = state.studio[1:-1].replace("'", "").split(",")
 
             temp["pk"] = state.pk
             temp["username"] = state.username.name

@@ -9,9 +9,19 @@ urlpatterns = [
     path('main', views.main, name='adminMain'),
     path('main_studio', views.main_studio, name='main_studio'),
 
-    # 대여목록 전체
+    # 장비대여목록 전체
     path('total', views.total, name='total'),
+    path('deleteTotal/<int:equipment_pk>',
+         views.deleteTotal, name="deleteTotal"),
+    path('detailTotal/<int:equipment_pk>',
+         views.detailTotal, name="detailTotal"),
+
+    # 공간대여목록 전체
     path('total_studio', views.total_studio, name='total_studio'),
+    path('deleteTotalStudio/<int:equipment_pk>',
+         views.deleteTotalStudio, name="deleteTotalStudio"),
+    path('detailTotalStudio/<int:equipment_pk>',
+         views.detailTotalStudio, name="detailTotalStudio"),
 
     # 장비 추가 및 삭제
     path('equipment', views.equipment, name='equipment'),
