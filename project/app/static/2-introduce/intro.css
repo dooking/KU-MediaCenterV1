@@ -3,10 +3,10 @@
 }
 .title_div{
     display: flex;
-    margin-bottom: 15px;
+
     justify-content: flex-start;
     align-items: center;
-    margin: 25px 20px;
+    margin: 20px 20px 15px;
 }
 .arrow{
     transform: rotate(180deg);
@@ -27,7 +27,8 @@ h1{
     letter-spacing: normal;
     text-align: left;
     color: #8d091d;
-    margin: 0;
+
+    margin: 0 0 0 15px;
  
 }
 
@@ -63,4 +64,56 @@ p{
 span{
     color: #8d091d;
 
+}
+
+.check_flex{
+    display: flex;
+    
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 15px auto;
+}
+
+.checkbox{
+
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    background-image: url('/static/images/unclicked.png');
+    background-position:  center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    opacity: 80%;
+}
+.checkbox:checked{
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    background-image: url("/static/images/clicked.png");
+    background-position:  center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    opacity: 100%;
+
+}
+p.check_ment{
+    font-size: 16px;
+}
+button{
+    width: 155px;
+    height: 50px;
+    border-radius: 25px;
+    border: none;
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
+    background-image: linear-gradient(to bottom, #aa1a30, #8d091d);
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    margin: 20px auto;
 }

@@ -99,11 +99,19 @@
                 - 위와 같은 규칙을 준수하지 않은 경우, 해당 학생에 대하여
             <span> 벌점을 부여 </span> 하게 되며,  이에 따른 <span> 이용 제한이 가능 </span>하다.
      *연체 기준: 1시간 / NO SHOW 기준: 1시간
-
             </p>
-
         </div>
     </div>
-
+    <div class="check_flex">
+        <form action="">
+            <input type="checkbox" id="check" name="checkbox"  />
+        </form> 
+        <p class="check_ment">위 내용을 확인하였습니까?</p>
+    </div>
+        <input type="submit" placeholder="대여하기" id="btncheck" value="Send" >
+            <a href="{% url 'borrow' %}"></a>
+        </input>
 </div>
+
 {% endblock content %}
+<!-- css 에  -->
