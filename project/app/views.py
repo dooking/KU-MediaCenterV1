@@ -33,11 +33,18 @@ def main(request):
 def introduce(request):
     return render(request, "2-introduce/intro.html")
 
+def check_intro(request):
+    return render(request, "2-introduce/check_intro.html")
+
 
 # 3 - Borrow
 
 
 @csrf_exempt
+
+def device_info(request):
+    return render(request, "3-borrow/device_info.html")
+
 def borrow_step1(request):
     try:
         now = datetime.datetime.now()
@@ -164,6 +171,9 @@ def borrow_finish(request):
         return redirect("mypage")
     else:
         return redirect("error")
+
+def studio_info(request):
+    return render(request, "4-studio/studio_info.html")
 
 
 def studio_step1(request):
