@@ -117,3 +117,9 @@ button{
     color: #ffffff;
     margin: 20px auto;
 }
+.none{
+    display: none;
+}
+.block{
+    display: block;
+}
