@@ -57,7 +57,7 @@
                                     <input type="radio" id="edit" name="camera" id="camera" value = "{{equipment.name}}" onclick="radioHandler(this)">
                                     <p>{{equipment.name}}</p>
                                 {% elif otherObject.type == "기타 부속" %}
-                                    <input type="checkbox" id="etc edit" value = "{{equipment.name}}" onclick="etcHandler(this)"/>
+                                    <input type="checkbox" id="etc" value = "{{equipment.name}}" onclick="etcHandler(this)"/>
                                     <p>{{equipment.name}}</p>
                                     <select class="countSelect mystyle" name="countEquipment" id="{{equipment.name}}" onclick="numberHandler(this)" />
                                         <option value="0">0개</option>
@@ -65,7 +65,7 @@
                                         <option value="2">2개</option>
                                     </select>
                                 {% else %}
-                                    <input type="checkbox" id="{{equipment.name}} edit" value="{{equipment.name}}" onclick="checkHandler(this)"/>
+                                    <input type="checkbox" id="{{equipment.name}}" class="edit" value="{{equipment.name}}" onclick="checkHandler(this)"/>
                                     <p>{{equipment.name}}</p>
                                 {% endif %}
                             </div>

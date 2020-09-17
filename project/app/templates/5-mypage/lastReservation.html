@@ -8,15 +8,13 @@
 
 <div class="wrapper">
     <div class="page_title_div">
-        <a href="{% url 'mypage' %}">
-            <img class="arrow_icon" src="{% static 'images/arrow_icon.png' %}" alt="뒤로가기">
-            <span class="page_title">마이 페이지</span>
-        </a>
+        <span class="page_title"> 지난 예약 내역</span>
+
     </div>
 
     <div class="page_contents">
         <!-- 예약 현황  -->
-        <h3>지난 예약 내역</h3>
+
         <span>장비 예약 현황</span>
         {% for E in Equip_last %}
         <div>

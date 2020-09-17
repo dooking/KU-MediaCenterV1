@@ -82,7 +82,7 @@
     margin-bottom: 20px;
     align-items: center;
 }
-select, input[type="text"]{
+, input[type="text"]{
     width: 628px;
     height: 60px;
     border-radius: 7px;
@@ -190,7 +190,7 @@ transform: translateX(32px);
     color: #aa1a30;
     text-align: center;
 }
-.equip-list > input,select, .month{
+.equip-list > input,, .month{
     width: 80%
 }
 #date{
