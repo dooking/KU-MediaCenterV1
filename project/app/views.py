@@ -33,9 +33,10 @@ def main(request):
 def introduce(request):
     return render(request, "2-introduce/intro.html")
 
-def check_intro(request):
-    return render(request, "2-introduce/check_intro.html")
-
+def check_intro_equip(request):
+    return render(request, "2-introduce/check_intro_equip.html")
+def check_intro_studio(request):
+    return render(request, "2-introduce/check_intro_studio.html")
 
 # 3 - Borrow
 

@@ -32,9 +32,12 @@ urlpatterns = [
     # 0-Admin
     # 1-Startpage
     path("", views.main, name="main"),
+
     # 2-Introduce
     path("introduce/", views.introduce, name="introduce"),
-    path("check_intro/", views.check_intro, name="check_intro"),
+    path("check_intro/equip", views.check_intro_equip, name="check_intro_equip"),
+    path("check_intro/studio", views.check_intro_studio, name="check_intro_studio"),
+
     # 3-Borrow
     path("borrow/", views.borrow_step1, name="borrow_step1"),
     path("borrow/step2", views.borrow_step2, name="borrow_step2"),

@@ -46,6 +46,7 @@
                 <!-- <a class="go_borrow" href="{% url 'borrow_step1' %}">장비 대여하기</a> -->
             </div>
             {% else %}
+            {% for E in Equip_now %}
             <div>
                 <button class="js_equip_btn" id="{{E.pk}}" onClick="openEquipModal(this);">삭제</button>
                 <p>대여일: {{E.fromDateYear}}년 {{E.fromDateMonth}}월 {{E.fromDateDay}}일 {{E.fromDateTime}}시</p>
@@ -74,22 +75,10 @@
             {% for S in Studio_now%}
             <div>
                 <button class="js_studio_btn" id="{{S.pk}}" onClick="openStudioModal(this);">삭제</button>
-                    <p>대여일: {{S.fromDateYear}}년 {{S.fromDateMonth}}월 {{S.fromDateDay}}일 {{S.fromDateTime}}시</p>
-                    <p>반납일: {{S.toDateYear}}년 {{S.toDateMonth}}월 {{S.toDateDay}}일 {{S.toDateTime}}시</p>
-                    {% for studio in S.studio %}
-                    <p>{{studio}}</p>
-                    {% endfor %}
-                </div>
-                <div class="deleteModal modal_close" id="Studio_modal_{{S.pk}}">
-                    <p>예약을 취소하시겠습니까?</p>
-                    <span>X</span>
-                    <form action="{% url 'cancelStudio'%}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="pk" value={{S.pk}}>
-                        <input id="studioState_{{S.pk}}" type="hidden" name="studioState" value={{S.studioState}}>
-                        <button type="submit">확인</button>
-                    </form>
-                </div>
+                <p>대여일: {{S.fromDateYear}}년 {{S.fromDateMonth}}월 {{S.fromDateDay}}일 {{S.fromDateTime}}시</p>
+                <p>반납일: {{S.toDateYear}}년 {{S.toDateMonth}}월 {{S.toDateDay}}일 {{S.toDateTime}}시</p>
+                {% for studio in S.studio %}
+                <p>{{studio}}</p>
                 {% endfor %}
             </div>
             <div class="deleteModal modal_close" id="Smodal_{{S.pk}}">
@@ -106,11 +95,8 @@
                     </div>
                 </div>
             </div>
-
             {% endfor %}
-
                 <!-- 예약 현황  -->
-            </div>
             {% endif %}
         </div>
     </div>

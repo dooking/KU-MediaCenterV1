@@ -103,15 +103,14 @@
         </div>
     </div>
     <div class="check_flex">
-        <form action="">
-            <input type="checkbox" id="check" name="checkbox"  />
-        </form> 
+        <input type="checkbox" id="check" name="checkbox"  />
         <p class="check_ment">위 내용을 확인하였습니까?</p>
     </div>
-        <input type="submit" placeholder="대여하기" id="btncheck" value="Send" >
-            <a href="{% url 'borrow' %}"></a>
-        </input>
+        <div class="borrow none">
+            <a href="{% url 'borrow_step1' %}">장비 대여하기</a>
+        </div>
 </div>
 
+<script type="text/javascript" src="{% static '2-introduce/check_intro.js' %}"></script>
 {% endblock content %}
 <!-- css 에  -->
