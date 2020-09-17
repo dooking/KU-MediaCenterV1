@@ -278,6 +278,9 @@ button{
 
 .mystyle {
     display: none;
+
+
+
 }
 #arrow {
     font-size: 14px;
@@ -304,8 +307,7 @@ button{
 
 }
 
-#edit#etc{
-
+#etc{
     width: 20px;
     height: 20px;
     appearance: none;
@@ -314,7 +316,7 @@ button{
     background-repeat: no-repeat;
     background-size: auto 100%;
 }
-#edit:checked{
+#etc:checked{
     width: 20px;
     height: 20px;
     appearance: none;
@@ -324,3 +326,55 @@ button{
     background-size: auto 100%;
 
 }
+
+#카메라보조장치{
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    background-image: url('/static/images/unclicked.png');
+    background-position:  center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+#etc:checked{
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    background-image: url("/static/images/clicked.png");
+    background-position:  center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+
+}
+
+.edit{
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    background-image: url('/static/images/unclicked.png');
+    background-position:  center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+.edit:checked{
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    background-image: url("/static/images/clicked.png");
+    background-position:  center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+
+}
+.countSelect{
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    text-align: left;
+    color: #4f4f4f;
+}
+
+
