@@ -44,8 +44,8 @@ urlpatterns = [
     # 5-mypage
     path("mypage/", views.mypage, name="mypage"),
     path("lastReservation/", views.lastReservation, name="lastReservation"),
-    path("cancelEquip/", views.cancelEquip, name="cancelEquip"),
-    path("cancelStudio/", views.cancelStudio, name="cancelStudio"),
+    path("cancelEquip/<int:eb_pk>", views.cancelEquip, name="cancelEquip"),
+    path("cancelStudio/<int:sb_pk>", views.cancelStudio, name="cancelStudio"),
     path("accounts/", include("allauth.urls")),
     path("error/", views.error, name="error"),
     path("logout", views.logout, name="logout"),

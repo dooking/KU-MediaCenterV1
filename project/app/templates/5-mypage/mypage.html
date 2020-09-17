@@ -48,44 +48,33 @@
             <span>장비 예약 현황</span>
             {% for E in Equip_now %}
             <div>
-                <button class="js_equip_btn" id="Equip_btn_{{E.pk}}" onClick="openEquipModal(this.id);">삭제</button>
-
+                <button class="js_equip_btn" id="{{E.pk}}" onClick="openEquipModal(this);">삭제</button>
                 <p>대여일: {{E.fromDateYear}}년 {{E.fromDateMonth}}월 {{E.fromDateDay}}일 {{E.fromDateTime}}시</p>
                 <p>반납일: {{E.toDateYear}}년 {{E.toDateMonth}}월 {{E.toDateDay}}일 {{E.toDateTime}}시</p>
                 {% for equip in E.equips %}
                 <p>{{equip.name}} (수량: {{equip.count}})</p>
                 {% endfor %}
             </div>
-            <div class="deleteModal modal_close" id="Equip_modal_{{E.pk}}">
-                <p>예약을 취소하시겠습니까?</p>
-                <span>X</span>
-                <form action="{% url 'cancelEquip'%}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="pk" value={{E.pk}}>
-                    <input id="borrowState_{{E.pk}}" type="hidden" name="borrowState" value={{E.borrowState}}>
-                    <button type="submit">확인</button>
-                </form>
+            <div class="deleteModal modal_close" id="Emodal_{{E.pk}}">
+                <input type="hidden" id="borrowState_{{E.pk}}" value={{E.borrowState}}>
+                <div class="modal_content" id="Equip_modal_{{E.pk}}">
+                    <p>예약을 취소하시겠습니까?</p>
+                    <div class="choose">
+                        <div class="cancel" id="{{E.pk}}" onClick="cancelBtn(this);">
+                            <span>취소</span>
+                        </div>
+                        <div class="accept"">
+                            <a href="{% url 'cancelEquip' E.pk %}">확인</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- 변수 예시  -->
-            <!--유저 이름     username=김동현/컴퓨터학과       -->
-            <!--빌린 장비     equipment=['DSLR (Canon EOS-80D) : 1']      -->
-            <!--빌린 날짜     fromDate=20200829      -->
-            <!--빌린 시간     fromDateTime      -->
-            <!--반납 날짜     toDate=20200829      -->
-            <!--반납 시간     toDateTime      -->
-            <!--실제 반납 날짜     realDate=0      -->
-            <!--실제 반납 시간     realDateTime=0      -->
-            <!--소속     group=매체실 산하 방송국      -->
-            <!--목적     purpose=방송국 촬영     -->
-            <!--학생증여부     auth=학생증      -->
-            <!--비고     remark=dd      -->
-            <!--현재상태     borrowState=0      -->
             {% endfor %}
 
             <span>스튜디오 예약 현황</span>
             {% for S in Studio_now%}
             <div>
-                <button class="js_studio_btn" id="Studio_btn_{{S.pk}}" onClick="openStudioModal(this.id);">삭제</button>
+                <button class="js_studio_btn" id="{{S.pk}}" onClick="openStudioModal(this);">삭제</button>
 
                 <p>대여일: {{S.fromDateYear}}년 {{S.fromDateMonth}}월 {{S.fromDateDay}}일 {{S.fromDateTime}}시</p>
                 <p>반납일: {{S.toDateYear}}년 {{S.toDateMonth}}월 {{S.toDateDay}}일 {{S.toDateTime}}시</p>
@@ -93,16 +82,21 @@
                 <p>{{studio}}</p>
                 {% endfor %}
             </div>
-            <div class="deleteModal modal_close" id="Studio_modal_{{S.pk}}">
-                <p>예약을 취소하시겠습니까?</p>
-                <span>X</span>
-                <form action="{% url 'cancelStudio'%}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="pk" value={{S.pk}}>
-                    <input id="studioState_{{S.pk}}" type="hidden" name="studioState" value={{S.studioState}}>
-                    <button type="submit">확인</button>
-                </form>
+            <div class="deleteModal modal_close" id="Smodal_{{S.pk}}">
+                <input type="hidden" id="studioState_{{S.pk}}" value={{S.studioState}}>
+                <div class="modal_content" id="Studio_modal_{{S.pk}}">
+                    <p>예약을 취소하시겠습니까?</p>
+                    <div class="choose">
+                        <div class="cancel" id="{{S.pk}}" onClick="cancelBtn2(this);">
+                            <span>취소</span>
+                        </div>
+                        <div class="accept"">
+                            <a href="{% url 'cancelStudio' S.pk %}">확인</a>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             {% endfor %}
 
 

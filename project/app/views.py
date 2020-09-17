@@ -329,8 +329,6 @@ def lastReservation(request):
             (Q(studioState=2) | Q(studioState=-1)),
         )
     )
-    print(Equip_last)
-    print(Studio_last)
     return render(
         request,
         "5-mypage/lastReservation.html",
@@ -339,25 +337,19 @@ def lastReservation(request):
 
 
 # 장비 예약 취소
-def cancelEquip(request):
-    if request.method == "POST":
-        eb_pk = request.POST["pk"]
+def cancelEquip(request,eb_pk):
+    eb = EquipmentBorrow.objects.get(pk=eb_pk)
+    eb.delete()
 
-        eb = EquipmentBorrow.objects.get(pk=eb_pk)
-        eb.delete()
-
-        return redirect("mypage")
+    return redirect("mypage")
 
 
 # 스튜디오 예약 취소
-def cancelStudio(request):
-    if request.method == "POST":
-        sb_pk = request.POST["pk"]
+def cancelStudio(request,sb_pk):
+    sb = StudioBorrow.objects.get(pk=sb_pk)
+    sb.delete()
 
-        sb = StudioBorrow.objects.get(pk=sb_pk)
-        sb.delete()
-
-        return redirect("mypage")
+    return redirect("mypage")
 
 
 def error(request):

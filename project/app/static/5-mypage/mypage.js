@@ -1,36 +1,76 @@
-const openEquipModal = function (btnID) {
-    try {
-        const ID = btnID.slice(-1)
-        const modalID = `Equip_modal_${ID}`
+let EModalID = 0
+let SModalID = 0
 
-        const modal = document.getElementById(`${modalID}`)
-        const borrowState = modal.querySelector(`#borrowState_${ID}`).value
+const openEquipModal = function (event) {
+    try {        
+        EModalID = 0
+        const equipPK = event.id
+        const modal = document.getElementById(`Emodal_${equipPK}`)
+        const borrowState = modal.querySelector(`#borrowState_${equipPK}`).value
 
         if (borrowState != 0) {
             throw new Error("대여 중에는 예약 취소가 불가능합니다.")
         }
-
-        modal.classList.remove('modal_close')
-        modal.classList.add('modal_open')
+        EModalID = equipPK
+        modal.classList.toggle('modal_close')
     } catch (e) {
         alert(e.message)
     }
 }
 
-const openStudioModal = function (btnID) {
+const openStudioModal = function (event) {
     try {
-        const ID = btnID.slice(-1)
-        const modalID = `Studio_modal_${ID}`
-
-        const modal = document.getElementById(`${modalID}`)
-        const studioState = modal.querySelector(`#studioState_${ID}`).value
+        SModalID = 0
+        const studioPK = event.id
+        const modal = document.getElementById(`Smodal_${studioPK}`)
+        const studioState = modal.querySelector(`#studioState_${studioPK}`).value
 
         if (studioState != 0) {
             throw new Error("대여 중에는 예약 취소가 불가능합니다.")
         }
-        modal.classList.remove('modal_close')
-        modal.classList.add('modal_open')
+        SModalID = studioPK
+        modal.classList.toggle('modal_close')
     } catch (e) {
         alert(e.message)
     }
+}
+
+const cancelBtn = (event)=>{
+    try{
+        const ID = event.id
+        const modal = document.querySelector(`#Emodal_${ID}`)
+        if(ID === undefined || modal === undefined){
+            throw new Error("접근이 올바르지 않습니다")
+        }
+        modal.classList.toggle('modal_close')
+    }
+    catch(err){
+        alert(err.message)
+    }
+}
+
+const cancelBtn2 = (event)=>{
+    try{
+        const ID = event.id
+        const modal = document.querySelector(`#Smodal_${ID}`)
+        if(ID === undefined || modal === undefined){
+            throw new Error("접근이 올바르지 않습니다")
+        }
+        modal.classList.toggle('modal_close')
+    }
+    catch(err){
+        alert(err.message)
+    }
+}
+
+window.onclick = function(event) {
+    const Emodal = document.querySelector(`#Emodal_${EModalID}`)
+    const Smodal = document.querySelector(`#Smodal_${SModalID}`)
+    if(event.target == Emodal){
+        Emodal.classList.toggle('modal_close')
+    }
+    else if(event.target == Smodal){
+        Smodal.classList.toggle('modal_close')
+    }
+    
 }

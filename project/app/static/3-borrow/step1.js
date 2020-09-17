@@ -22,6 +22,8 @@ function radioHandler(cb){
 
     for(let i=0; i<borrowList.length; i++){
         if(borrowList[i].className === "camera"){
+            console.log("Cb.value : ", cb.value)
+            console.log("여기 : ", borrowList[i].textContent)
             if(cb.value === borrowList[i].textContent.slice(0,borrowList[i].textContent.length-3)){
                 check = 2
             }
