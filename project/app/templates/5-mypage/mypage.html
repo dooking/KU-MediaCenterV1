@@ -25,7 +25,7 @@
         <!-- 프로필 디테일 정보 -->
         <div class="profile_detail_div">
             <div class="go_borrow_list">
-                <a href="{% url 'lastReservation' %}">
+                <a class="go_text" href="{% url 'lastReservation' %}">
                     지난 예약 내역
                     <img class="arrow_icon_2" src="{% static 'images/arrow_icon.png' %}" alt="지난 예약 내역 보러가기">
                 </a>
@@ -37,16 +37,15 @@
 
         </div>
         <!-- 예약 현황  -->
-        <h3>나의 예약 현황</h3>
-        {% if Equip_now|length == 0 and Studio_now|length == 0 %}
-        <div>
-            <p>장비 대여 내역이 없습니다</p>
-            <a href="{% url 'borrow_step1' %}">장비 대여하기</a>
-        </div>
-        {% else %}
-        <div>
-            <span>장비 예약 현황</span>
-            {% for E in Equip_now %}
+        <div class="borrow_now_div">
+            
+            <h3 class="h3">나의 예약 현황</h3>
+            {% if Equip_now|length == 0 and Studio_now|length == 0 %}
+            <div class="no_reservation_div">
+                <p class="no_reservation">현재 장비 대여 내역이 없습니다.</p>
+                <!-- <a class="go_borrow" href="{% url 'borrow_step1' %}">장비 대여하기</a> -->
+            </div>
+            {% else %}
             <div>
                 <button class="js_equip_btn" id="{{E.pk}}" onClick="openEquipModal(this);">삭제</button>
                 <p>대여일: {{E.fromDateYear}}년 {{E.fromDateMonth}}월 {{E.fromDateDay}}일 {{E.fromDateTime}}시</p>
@@ -75,11 +74,22 @@
             {% for S in Studio_now%}
             <div>
                 <button class="js_studio_btn" id="{{S.pk}}" onClick="openStudioModal(this);">삭제</button>
-
-                <p>대여일: {{S.fromDateYear}}년 {{S.fromDateMonth}}월 {{S.fromDateDay}}일 {{S.fromDateTime}}시</p>
-                <p>반납일: {{S.toDateYear}}년 {{S.toDateMonth}}월 {{S.toDateDay}}일 {{S.toDateTime}}시</p>
-                {% for studio in S.studio %}
-                <p>{{studio}}</p>
+                    <p>대여일: {{S.fromDateYear}}년 {{S.fromDateMonth}}월 {{S.fromDateDay}}일 {{S.fromDateTime}}시</p>
+                    <p>반납일: {{S.toDateYear}}년 {{S.toDateMonth}}월 {{S.toDateDay}}일 {{S.toDateTime}}시</p>
+                    {% for studio in S.studio %}
+                    <p>{{studio}}</p>
+                    {% endfor %}
+                </div>
+                <div class="deleteModal modal_close" id="Studio_modal_{{S.pk}}">
+                    <p>예약을 취소하시겠습니까?</p>
+                    <span>X</span>
+                    <form action="{% url 'cancelStudio'%}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="pk" value={{S.pk}}>
+                        <input id="studioState_{{S.pk}}" type="hidden" name="studioState" value={{S.studioState}}>
+                        <button type="submit">확인</button>
+                    </form>
+                </div>
                 {% endfor %}
             </div>
             <div class="deleteModal modal_close" id="Smodal_{{S.pk}}">
@@ -99,10 +109,10 @@
 
             {% endfor %}
 
-
-            <!-- 예약 현황  -->
+                <!-- 예약 현황  -->
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
     </div>
 
 </div>
