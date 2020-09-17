@@ -32,9 +32,12 @@ urlpatterns = [
     # 0-Admin
     # 1-Startpage
     path("", views.main, name="main"),
+
     # 2-Introduce
     path("introduce/", views.introduce, name="introduce"),
-    path("check_intro/", views.check_intro, name="check_intro"),
+    path("check_intro/equip", views.check_intro_equip, name="check_intro_equip"),
+    path("check_intro/studio", views.check_intro_studio, name="check_intro_studio"),
+
     # 3-Borrow
     path("borrow/", views.borrow_step1, name="borrow_step1"),
     path("borrow/step2", views.borrow_step2, name="borrow_step2"),
@@ -46,8 +49,8 @@ urlpatterns = [
     # 5-mypage
     path("mypage/", views.mypage, name="mypage"),
     path("lastReservation/", views.lastReservation, name="lastReservation"),
-    path("cancelEquip/", views.cancelEquip, name="cancelEquip"),
-    path("cancelStudio/", views.cancelStudio, name="cancelStudio"),
+    path("cancelEquip/<int:eb_pk>", views.cancelEquip, name="cancelEquip"),
+    path("cancelStudio/<int:sb_pk>", views.cancelStudio, name="cancelStudio"),
     path("accounts/", include("allauth.urls")),
     path("error/", views.error, name="error"),
     path("logout", views.logout, name="logout"),

@@ -16,6 +16,7 @@ a{
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
+    color: black;
 }
 
 .arrow_icon{
@@ -139,13 +140,46 @@ p{
     margin-left: 5px;
 }
 .modal_open {
-    display: block;
+    display: flex;
 }
 
 .modal_close {
     display: none;
 }
 
+.deleteModal{
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 300px;
+}
+.modal_content{
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 1em;
+    box-shadow: 1px 1px 10px black;
+    width: 80%;
+}
+.modal_content > p {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+.choose{
+    display: flex;
+    justify-content: center;
+}
+.cancel{
+    margin-right:20px;
+    cursor: pointer;
 .h3{
     font-size: 20px;
     font-weight: bold;
@@ -166,12 +200,6 @@ p{
 
     
 }
-
-
-
-
-
-
 
 
 /* 대여내역없을때 */
