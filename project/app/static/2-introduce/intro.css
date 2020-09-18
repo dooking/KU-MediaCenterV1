@@ -65,7 +65,14 @@ span{
     color: #8d091d;
 
 }
+.check_div{
+    display: flex;
+    
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
+}
 .check_flex{
     display: flex;
     
@@ -122,4 +129,33 @@ button{
 }
 .block{
     display: block;
+}
+.borrow{
+    text-align: center;
+    width: 155px;
+    height: 50px;
+    border-radius: 25px;
+    border: none;
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
+    background-image: linear-gradient(to bottom, #aa1a30, #8d091d);
+    margin: 0 auto;
+    padding: 12px 0;
+
+}
+.go_borrow{
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+
+    text-decoration: none;
+
+}
+.go_borrow:hover{
+    text-decoration: none;
+    color: #ffffff;
+
 }
