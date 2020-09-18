@@ -34,7 +34,18 @@ a{
     color: #8d091d;
     margin-left: 30px;
 }
-
+.last_reservation_page_title{
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: left;
+    color: #8d091d;
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
 .page_contents{
     margin: 0 33px;
 }
@@ -180,6 +191,7 @@ p{
 .cancel{
     margin-right:20px;
     cursor: pointer;
+}
 .h3{
     font-size: 20px;
     font-weight: bold;
@@ -265,8 +277,12 @@ p{
     background-color: transparent;
     margin: 0;
     padding: 0;
-
-
+}
+.js_studio_btn{
+    border: transparent;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
 }
 .trash_img{
     width: 13.5px;
@@ -294,3 +310,4 @@ p{
     color: #222222;
     margin-top: 5px;
 }
+
