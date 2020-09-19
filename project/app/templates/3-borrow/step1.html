@@ -54,7 +54,7 @@
                                 <input type="hidden" class="equipmentCount" value="{{equipment.time1}}">
                                 <input type="hidden" class="equipmentCount2" value="{{equipment.time2}}">
                                 {% if otherObject.type == "카메라" %}
-                                    <input type="radio" id="edit" name="camera" id="camera" value = "{{equipment.name}}" onclick="radioHandler(this)">
+                                    <input type="radio" name="camera" id="camera" value = "{{equipment.name}}" onclick="radioHandler(this)">
                                     <p>{{equipment.name}}</p>
                                 {% elif otherObject.type == "기타 부속" %}
                                     <input type="checkbox" id="etc" value = "{{equipment.name}}" onclick="etcHandler(this)"/>

@@ -102,10 +102,12 @@ function checkStock(){
     return {'result':true}
 }
 function findStock(key,value,isCamera){
-    const checkstock = isCamera ? checkCount.get(value) : checkCount.get(key)
+    const Checkstock = isCamera ? checkCount.get(value) : checkCount.get(key)
     let check = true
     if(fromDate.value == returnDate.value){
-        checkstock.slice(SelectFromTime-9,SelectToTime-8).some(v=>{
+        console.log("hihi")
+        console.log(Checkstock)
+        Checkstock.slice(SelectFromTime-9,SelectToTime-8).some(v=>{
             const isMinus = isCamera ? parseInt(v)-1 : parseInt(v)-parseInt(value)
             if(isMinus < 0){
                 check = false
@@ -113,7 +115,7 @@ function findStock(key,value,isCamera){
         })
     }
     else{
-        checkstock.slice(SelectFromTime-9,SelectToTime+1).some(v=>{
+        Checkstock.slice(SelectFromTime-9,SelectToTime+1).some(v=>{
             const isMinus = isCamera ? v-1 : v-value
             if(isMinus < 0){
                 check = false

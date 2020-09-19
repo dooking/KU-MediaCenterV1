@@ -286,7 +286,7 @@ button{
     font-size: 14px;
 }
 
-#edit{
+#camera{
 
     width: 20px;
     height: 20px;
@@ -296,7 +296,7 @@ button{
     background-repeat: no-repeat;
     background-size: auto 100%;
 }
-#edit:checked{
+#camera:checked{
     width: 20px;
     height: 20px;
     appearance: none;
