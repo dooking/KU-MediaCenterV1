@@ -91,6 +91,7 @@ function checkStock() {
       resultBorrowString += key + " : " + value + "//";
       isCamera = false;
     }
+
     // 재고가 있는지 확인 (당일 반납 + 내일 반납)
     if (!findStock(key, value, isCamera)) {
       return { result: false, err: isCamera ? value : key };

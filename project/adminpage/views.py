@@ -284,6 +284,7 @@ def qrcheckBrrow(request, post_pk):
         currentEquipment.update(
             equipmentList=equipments, borrowState=1)
         return redirect('adminMain')
+    print(currentEquipment)
     return render(request, "qrcheckBorrow.html", {'currentEquipment': currentEquipment[0]})
 
 
