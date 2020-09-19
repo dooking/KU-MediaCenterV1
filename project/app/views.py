@@ -19,7 +19,7 @@ def handler403(request, exception):
 def handler404(request, exception):
     return render(None, 'error.html')
 def handler500(request):
-    return render(None, 'error.html')\
+    return render(None, 'error.html')
 
 # 0 - Adming
 # 1 - startpage
@@ -33,8 +33,11 @@ def main(request):
 def introduce(request):
     return render(request, "2-introduce/intro.html")
 
+@login_required(login_url = '/')
 def check_intro_equip(request):
     return render(request, "2-introduce/check_intro_equip.html")
+
+@login_required(login_url = '/')
 def check_intro_studio(request):
     return render(request, "2-introduce/check_intro_studio.html")
 
@@ -42,10 +45,11 @@ def check_intro_studio(request):
 
 
 @csrf_exempt
-
+@login_required(login_url = '/')
 def device_info(request):
     return render(request, "3-borrow/device_info.html")
 
+@login_required(login_url = '/')
 def borrow_step1(request):
     try:
         now = datetime.datetime.now()
@@ -128,7 +132,7 @@ def borrow_step1(request):
     except:
         return redirect("error")
 
-
+@login_required(login_url = '/')
 def borrow_step2(request):
     if request.method == "POST":
         print(request.POST)
@@ -152,7 +156,7 @@ def borrow_step2(request):
     else:
         return redirect("error")
 
-
+@login_required(login_url = '/')
 def borrow_finish(request):
     if request.method == "POST":
         EquipmentBorrow.objects.create(
@@ -173,10 +177,11 @@ def borrow_finish(request):
     else:
         return redirect("error")
 
+@login_required(login_url = '/')
 def studio_info(request):
     return render(request, "4-studio/studio_info.html")
 
-
+@login_required(login_url = '/')
 def studio_step1(request):
     now = datetime.datetime.now()
     nowDate = now.strftime("%Y-%m-%d").replace("-", "")
@@ -242,7 +247,7 @@ def studio_step1(request):
         },
     )
 
-
+@login_required(login_url = '/')
 def studio_step2(request):
     if request.method == "POST":
         borrowList = "".join(request.POST["resultBorrow"]).split("//")
@@ -265,7 +270,7 @@ def studio_step2(request):
     else:
         return redirect("error")
 
-
+@login_required(login_url = '/')
 def studio_finish(request):
     if request.method == "POST":
         borrowLists = (
@@ -302,6 +307,7 @@ def studio_finish(request):
 
 
 # 5 - mypage
+@login_required(login_url = '/')
 def mypage(request):
     Equip_now = makeListsEquip(
         EquipmentBorrow.objects.filter(
@@ -326,6 +332,7 @@ def mypage(request):
 
 
 # 지난예약내역
+@login_required(login_url = '/')
 def lastReservation(request):
     Equip_last = makeListsEquip(
         EquipmentBorrow.objects.filter(
@@ -348,6 +355,7 @@ def lastReservation(request):
 
 
 # 장비 예약 취소
+@login_required(login_url = '/')
 def cancelEquip(request,eb_pk):
     eb = EquipmentBorrow.objects.get(pk=eb_pk)
     eb.delete()
@@ -356,6 +364,7 @@ def cancelEquip(request,eb_pk):
 
 
 # 스튜디오 예약 취소
+@login_required(login_url = '/')
 def cancelStudio(request,sb_pk):
     sb = StudioBorrow.objects.get(pk=sb_pk)
     sb.delete()
@@ -373,6 +382,7 @@ def logout(request):
 
 
 # EquipmentBorrow --> list형태로
+@login_required(login_url = '/')
 def makeListsEquip(nowState):
     results = []
     if len(nowState) > 0:
@@ -406,6 +416,7 @@ def makeListsEquip(nowState):
 
 
 # StudioBorrow --> list형태로
+@login_required(login_url = '/')
 def makeListsStudio(nowState):
     results = []
     if len(nowState) > 0:

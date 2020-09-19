@@ -69,26 +69,29 @@ def main(request):
     # 대여 목록의 state를 0,1,2로 구분해놨고, 이를 필터링해
     # 주고 랜더링 해주면 됨
     # 각각의 cell에 update해주는 창 하나 만들기 확인 누르면 다시 랜더링 되는걸로
-    # TODO:자동으로 연체 되게 업데이트 해주는것 해야됨
-    equipLists = EquipmentBorrow.objects.filter(Q(borrowState=0)|Q(borrowState=1)).order_by('fromDate')
-    for equip in equipLists:
-        now = datetime.datetime.now()
-        nowDate = int(now.strftime("%Y-%m-%d").replace("-", ""))
-        nowTime = int(now.hour)
-        toDate,toDateTime = int(equip.toDate), int(equip.toDateTime)
-        if((toDate == nowDate and toDateTime < nowTime) or (toDate < nowDate)):
-            lateEquipment = EquipmentBorrow.objects.filter(pk=equip.pk)
-            lateEquipment.update(
-                borrowState = 2
-            )
-        
-    state0 = makeLists(EquipmentBorrow.objects.filter(borrowState=0))
-    state1 = makeLists(EquipmentBorrow.objects.filter(borrowState=1))
-    state2 = makeLists(EquipmentBorrow.objects.filter(borrowState=2))
-    return render(request, "main.html", {
-        "state0s": state0, "state1s": state1, "state2s": state2
-    })
 
+    if request.user.profile.isAuth != 0:
+        equipLists = EquipmentBorrow.objects.filter(Q(borrowState=0)|Q(borrowState=1)).order_by('fromDate')
+        for equip in equipLists:
+            now = datetime.datetime.now()
+            nowDate = int(now.strftime("%Y-%m-%d").replace("-", ""))
+            nowTime = int(now.hour)
+            toDate,toDateTime = int(equip.toDate), int(equip.toDateTime)
+            if((toDate == nowDate and toDateTime < nowTime) or (toDate < nowDate)):
+                lateEquipment = EquipmentBorrow.objects.filter(pk=equip.pk)
+                lateEquipment.update(
+                    borrowState = 2
+                )
+            
+        state0 = makeLists(EquipmentBorrow.objects.filter(borrowState=0))
+        state1 = makeLists(EquipmentBorrow.objects.filter(borrowState=1))
+        state2 = makeLists(EquipmentBorrow.objects.filter(borrowState=2))
+        return render(request, "main.html", {
+            "state0s": state0, "state1s": state1, "state2s": state2
+        })
+    else:
+        return render(request, "alert.html", {"msg": "권한이 없습니다."})
+    
 def main_studio(request):
     # 대여 목록의 state를 0,1,2로 구분해놨고, 이를 필터링해
     # 주고 랜더링 해주면 됨
@@ -193,14 +196,6 @@ def total_studio(request):
         )
     return render(request, "total_studio.html", {"borrows": totalBrrows ,"query":query})
 
-# def total_studio(request):
-#     # 모든 대여내역 다 보여주면 됨
-#     totalBrrows = StudioBorrow.objects.all().order_by('toDate')
-#     if(request.method == "POST"):
-#         query = "".join(request.POST['query'])
-#         filter_Brrows = filter_query(False, query,totalBrrows)
-#         return render(request, "total_studio.html", {"borrows": filter_Brrows})
-#     return render(request, "total_studio.html", {"borrows": totalBrrows})
 
 def filter_query(isEquip, query, totalBrrows):
     results = []

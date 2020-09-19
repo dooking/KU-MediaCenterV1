@@ -29,7 +29,7 @@ class Equipment(models.Model):
     remark = models.CharField(max_length=50, default="", blank=True)
 
     def __str__(self):
-        return self.equipmentName
+        # return self.equipmentName
         return f'equipmentName={self.equipmentName},serialNumber={self.serialNumber},equipType={self.equipType},equipSemiType={self.equipSemiType},isExist={self.isExist},borrowState={self.borrowState},remark={self.remark}'
 
 class EquipmentBorrow(models.Model):
