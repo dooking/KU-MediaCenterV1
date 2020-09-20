@@ -55,6 +55,8 @@ urlpatterns = [
          views.qrcheckReturn, name='qrcheckReturn'),
     path('qrcheck/late/<int:post_pk>',
          views.qrcheckReturn, name='qrcheckLate'),
+    path('studio/borrow/<int:studio_pk>', views.studioBorrow, name="studioBorrow"),
+    path('studio/return/<int:studio_pk>', views.studioReturn, name="studioReturn"),
 
 #     # calendar
 #     path('calendar', views.calendar, name='calendar'),
@@ -66,6 +68,4 @@ urlpatterns = [
     path('adminDeleteAuth/<int:user_pk>',
          views.adminDeleteAuth, name="adminDeleteAuth"),
 
-     # alert 빈페이지
-     # path('alert', views.alert, name='alert')
 ]
