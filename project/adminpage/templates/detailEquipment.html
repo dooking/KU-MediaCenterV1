@@ -18,7 +18,25 @@
         {% csrf_token %}
         <div class="equip-list">
           <span>장비 타입</span>
-          <input type="text" name="equipType" placeholder="{{Equipment.equipType}}" value="{{Equipment.equipType}}" required>
+          <select id="equipType" name="equipType" class="addForm-input">
+            {% if Equipment.equipType == "카메라" %}
+              <option value="{{Equipment.equipType}}" class="disabledType" disabled selected>카메라</option>
+            {% elif Equipment.equipType == "카메라 보조 장치" %}
+              <option value="{{Equipment.equipType}}" class="disabledType" disabled selected>카메라 보조 장치</option>
+            {% elif Equipment.equipType == "녹음 장비" %}
+              <option value="{{Equipment.equipType}}" class="disabledType" disabled selected>녹음 장비</option>
+            {% elif Equipment.equipType == "조명" %}
+              <option value="{{Equipment.equipType}}" class="disabledType" disabled selected>조명</option>
+            {% elif Equipment.equipType == "기타 부속" %}
+              <option value="{{Equipment.equipType}}" class="disabledType" disabled selected>기타 부속</option>
+            {% endif %}
+            <option value="카메라">카메라</option>
+            <option value="카메라 보조 장치">카메라 보조 장치</option>
+            <option value="녹음 장비">녹음 장비</option>
+            <option value="조명">조명</option>
+            <option value="기타 부속">기타 부속</option>
+          </select>
+        </label>
         </div>
         <div class="equip-list">
           <span>세부 타입</span>
