@@ -237,8 +237,10 @@ def equipment(request):
 
     try:
         equipments = Equipment.objects.all()
+        paginator = Paginator(equipments, 8) 
+        page = int(request.GET.get('page', 1)) 
+        totalEquips = paginator.get_page(page)
         if(request.method == "POST"):
-            print(request.POST)
             equipType = "".join(request.POST['equipType'])
             equipSemiType = "".join(request.POST['equipSemiType'])
             equipmentName = "".join(request.POST['equipmentName'])
@@ -246,7 +248,6 @@ def equipment(request):
             borrowState = "".join(request.POST['borrowState'])
             remark = "".join(request.POST['remark'])
             equipPK = "".join(request.POST['equipPK'])
-            print(equipType,equipSemiType,equipmentName,borrowState,equipPK)
             editEquip = Equipment.objects.filter(pk=equipPK)
             editEquip.update(
                 equipType = equipType,
@@ -256,7 +257,7 @@ def equipment(request):
                 borrowState = borrowState,
                 remark = remark
             )
-        return render(request, "equipment.html", {"equipments": equipments})
+        return render(request, "equipment.html", {"equipments": totalEquips})
     except:
         return redirect("error")
 

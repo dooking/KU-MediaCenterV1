@@ -112,10 +112,12 @@ function numberHandler(cb) {
 }
 
 function etcHandler(cb) {
-  const countSelect = document.querySelector(".countSelect");
   const borrowClass = document.querySelector(".borrow_list");
   const borrowList = document.querySelectorAll("li");
   const addItem = document.createElement("li");
+  const pk = cb.value;
+  const countSelect = document.querySelector(`.select${pk}`);
+
   let index = 0;
 
   for (let i = 0; i < borrowList.length; i++) {

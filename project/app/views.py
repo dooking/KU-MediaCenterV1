@@ -390,8 +390,10 @@ def makeListsEquip(nowState):
 
             equips = []
             equip_list = state.equipment[1:-1].replace("'", "").split(",")
+            print(equip_list)
             for e in equip_list:
                 info = {}
+                print("eeeeeeeeeeee",e)
                 info["name"] = e.split(":")[0].strip()
                 info["count"] = e.split(":")[1].strip()
 

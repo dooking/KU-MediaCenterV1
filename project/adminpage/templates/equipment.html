@@ -38,11 +38,11 @@
         <td colspan="2">{{equipment.equipType}}</td>
         <td colspan="3">{{equipment.equipmentName}}</td>
         <td colspan="1">{{equipment.serialNumber}}</td>
-        {% if equipment.borrowState == 0 and equipment.isExist == True %}
+        {% if equipment.equipmentstate == 0 and equipment.isExist == True %}
         <td colspan="2">
           <p class="equipState0">활성 상태</p>
         </td>
-        {% elif equipment.borrowState == 1 %}
+        {% elif equipment.equipmentstate == 1 %}
         <td colspan="2">
           <p class="equipState1">비활성 상태</p>
         </td>
@@ -63,6 +63,53 @@
       {% endfor %}
     </tbody>
   </table>
+  {% if equipments.has_other_pages %}
+  <ul class="pagination">
+    {% if equipments.has_previous %} {% if query %}
+    <li>
+      <a href="?page={{ equipments.previous_page_number }}&query={{query}}"
+        >&laquo; prev</a
+      >
+    </li>
+    {% else %}
+    <li><a href="?page={{ equipments.previous_page_number }}">&laquo; prev</a></li>
+    {% endif %} {% else %}
+    <li class="disabled"><span>&laquo; prev</span></li>
+    {% endif %}
+    <span></span>
+    {% for i in equipments.paginator.page_range %}
+    <span></span>
+    {% if equipments.number == i %}
+    <li class="active">
+      <span>{{ i }} <span class="sr-only"></span></span>
+    </li>
+    {% else %}
+    <span></span>
+    {% if query %}
+    <li><a href="?page={{ i }}&query={{query}}">{{ i }}</a></li>
+    {% else %}
+    <li><a href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+    <span></span>
+    {% endif %}
+    <span></span>
+    {% endfor %}
+    <span></span>
+    {% if equipments.has_next %}
+    <span></span>
+    {% if query %}
+    <li>
+      <a href="?page={{ equipments.next_page_number }}&query={{query}}"
+        >&raquo; next</a
+      >
+    </li>
+    {% else %}
+    <li><a href="?page={{ equipments.next_page_number }}">&raquo; next</a></li>
+    {% endif %} {% else %}
+    <li class="disabled"><span>&raquo; next</span></li>
+    {% endif %}
+  </ul>
+  {% endif%}
 </div>
 
 {% endblock content%}

@@ -57,9 +57,9 @@
                                     <input type="radio" name="camera" id="camera" value = "{{equipment.name}}" onclick="radioHandler(this)">
                                     <p>{{equipment.name}}</p>
                                 {% elif otherObject.type == "기타 부속" %}
-                                    <input type="checkbox" id="etc" value = "{{equipment.name}}" onclick="etcHandler(this)"/>
+                                    <input type="checkbox" id="etc" value = "{{forloop.counter}}" onclick="etcHandler(this)"/>
                                     <p>{{equipment.name}}</p>
-                                    <select class="countSelect mystyle" name="countEquipment" id="{{equipment.name}}" onclick="numberHandler(this)" />
+                                    <select class="countSelect mystyle select{{forloop.counter}}" name="countEquipment" id="{{equipment.name}}" onclick="numberHandler(this)" />
                                         <option value="0">0개</option>
                                         <option value="1">1개</option>
                                         <option value="2">2개</option>
