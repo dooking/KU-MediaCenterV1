@@ -117,8 +117,8 @@
             />
           </a>
         </div>
-        <div></div>
-        {% if user.profile.isAuth != 0 %}
+
+        {% if user.profile.isAuth > 0 %}
         <a id="admin" href="{% url 'adminMain' %}">
           <span id="admin">
             관리자
@@ -126,6 +126,8 @@
             페이지
           </span>
         </a>
+        {% else %}
+        <div></div>
         {% endif %}
       </div>
     </div>
