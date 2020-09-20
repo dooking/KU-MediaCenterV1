@@ -51,6 +51,7 @@ class EquipmentBorrow(models.Model):
     remark = models.CharField(max_length=50, default="")
     # 신청취소 -1 신청중 0 대여중 1 연체 2 반납완료 3
     borrowState = models.IntegerField(default=0)
+    alba = models.CharField(max_length=50, null=True, default="")
 
     def __str__(self):
         return f'username={self.username},equipment={self.equipment},fromDate={self.fromDate},fromDateTime={self.fromDateTime},toDate={self.toDate},toDateTime={self.toDateTime},realDate={self.realDate},realDateTime={self.realDateTime},group={self.group},purpose={self.purpose},auth={self.auth},remark={self.remark},borrowState={self.borrowState}'
@@ -87,6 +88,7 @@ class StudioBorrow(models.Model):
     remark = models.CharField(max_length=50, default="")
     # 신청취소 -1 신청중 0 대여중 1 반납완료 2 연체 3
     studioState = models.IntegerField(default=0)
+    alba = models.CharField(max_length=50, null=True, default="")
 
     def __str__(self):
         return f'username={self.username},studio={self.studio},fromDate={self.fromDate},fromDateTime={self.fromDateTime},toDate={self.toDate},toDateTime={self.toDateTime},realDate={self.realDate},realDateTime={self.realDateTime},group={self.group},purpose={self.purpose},auth={self.auth},remark={self.remark},studioState={self.studioState}'

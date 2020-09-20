@@ -4,12 +4,6 @@ from django.shortcuts import render, redirect
 from django.db.models import Q
 # Create your views here.
 
-# TODO: 예약 현황 관리 -> 상태별로 띄워주는 것으로 구현
-# TODO: 전체 반납 내역 관리 -> 누가 이걸 작성했는지도 알아야됨
-# TODO: 장비 모델 추가 및 삭제 (고장 포함) (장비 모델 crud)
-# TODO: 슈퍼 사용자가 근장한테 권한 주는 페이지
-# TODO: QRcode 입력해서 대여 장비의 상태 바꾸기
-
 from django.http import HttpResponse
 from .models import CalendarEvent
 from project.util import events_to_json, calendar_options
@@ -66,10 +60,6 @@ def all_events(request):
 
 
 def main(request):
-    # 대여 목록의 state를 0,1,2로 구분해놨고, 이를 필터링해
-    # 주고 랜더링 해주면 됨
-    # 각각의 cell에 update해주는 창 하나 만들기 확인 누르면 다시 랜더링 되는걸로
-
     if request.user.profile.isAuth != 0:
         equipLists = EquipmentBorrow.objects.filter(Q(borrowState=0)|Q(borrowState=1)).order_by('fromDate')
         for equip in equipLists:
@@ -93,10 +83,6 @@ def main(request):
         return render(request, "alert.html", {"msg": "권한이 없습니다."})
     
 def main_studio(request):
-    # 대여 목록의 state를 0,1,2로 구분해놨고, 이를 필터링해
-    # 주고 랜더링 해주면 됨
-    # 각각의 cell에 update해주는 창 하나 만들기 확인 누르면 다시 랜더링 되는걸로
-    # TODO:자동으로 연체 되게 업데이트 해주는것 해야됨
     studioLists = StudioBorrow.objects.filter(Q(studioState=0)|Q(studioState=1))
     for studio in studioLists:
         now = datetime.datetime.now()
@@ -122,12 +108,6 @@ def makeLists(nowState):
     if len(nowState) > 0:
         for state in nowState:
             temp = {}
-            # equipLists = []
-            # for i in state.equipment.replace("[", " ").replace("]", " ").replace("'", " ").split(","):
-            #     equipments = {}
-            #     equipments["equip"] = i.strip().split(":")[0].strip()
-            #     equipments["count"] = i.strip().split(":")[1].strip()
-            #     equipLists.append(equipments)
             temp["pk"] = state.pk
             temp["username"] = state.username.name
             temp["major"] = state.username.major
@@ -145,7 +125,6 @@ def makeLists(nowState):
 
 
 def total(request):
-    # 모든 대여내역 다 보여주면 됨
     totalBrrows_all = EquipmentBorrow.objects.all().order_by('toDate')
     query = request.GET.get('query')
     if(query):
@@ -171,7 +150,6 @@ def total(request):
     return render(request, "total.html", {"borrows": totalBrrows,"query":query})
 
 def total_studio(request):
-    # 모든 대여내역 다 보여주면 됨
     totalBrrows_all = StudioBorrow.objects.all().order_by('toDate')
     query = request.GET.get('query')
     if(query):
@@ -213,10 +191,6 @@ def filter_query(isEquip, query, totalBrrows):
     return results
 
 def equipment(request):
-    # 장비 목록 다 보여주면 됨
-    # 장비 추가는 따로 탭을 만들거고
-    # 장비 삭제 및 사용 불가 처리는 여기서 할 수 있도록
-    # 함수는 따로 뺴야됨
     equipments = Equipment.objects.all()
     if(request.method == "POST"):
         print(request.POST)
@@ -240,10 +214,6 @@ def equipment(request):
     return render(request, "equipment.html", {"equipments": equipments})
 
 def studio(request):
-    # 장비 목록 다 보여주면 됨
-    # 장비 추가는 따로 탭을 만들거고
-    # 장비 삭제 및 사용 불가 처리는 여기서 할 수 있도록
-    # 함수는 따로 뺴야됨
     studios = Studio.objects.all()
     if(request.method == "POST"):
         print(request.POST)
@@ -271,7 +241,6 @@ def equipment_qr(request, equipment_pk):
 def qrcheckBrrow(request, post_pk):
     currentEquipment = EquipmentBorrow.objects.filter(pk=post_pk)
     if request.method == "POST":
-        #카메라^DSLR^DSLR (Canon EOS-80A)^1  @@카메라^DSLR^DSLR (Canon EOS-80A)^1@@카메라^DSLR^DSLR (Canon EOS-80A)^1
         equipments = request.POST['equipments']
         for equipment in equipments.split("@@"):
             [eName, eNumber, eType, eSemiType] = equipment.split("^")
@@ -282,6 +251,7 @@ def qrcheckBrrow(request, post_pk):
                 borrowState=1
             )
         currentEquipment.update(
+            alba = request.user,
             equipmentList=equipments, borrowState=1)
         return redirect('adminMain')
     return render(request, "qrcheckBorrow.html", {'currentEquipment': currentEquipment[0]})
@@ -298,6 +268,7 @@ def qrcheckReturn(request, post_pk):
                 Q(equipType=eType), Q(serialNumber=eNumber))
             now = datetime.datetime.now()
             EquipmentState.update(
+                alba = request.user,
                 borrowState=0
             )
         realDate = int(now.strftime("%Y-%m-%d").replace("-", ""))
@@ -322,6 +293,7 @@ def qrcheckLate(request, post_pk):
                 borrowState=0
             )
         currentEquipment.update(
+            alba = request.user,
             equipmentList=equipments, borrowState=3)
         return redirect('adminMain')
     return render(request, "qrcheckReturn.html", {'currentEquipment': currentEquipment[0]})
@@ -428,8 +400,11 @@ def repairStudio(request, studio_pk):
 
 
 def adminAuth(request):
-    users = Profile.objects.all()
-    return render(request, "adminAuth.html", {"users": users})
+    if request.user.profile.isAuth != 2:
+        return render(request, 'alert.html', {"msg": "권한이 없습니다."})
+    else:
+        users = Profile.objects.all()
+        return render(request, "adminAuth.html", {"users": users})
 
 
 def adminAddAuth(request, user_pk):
