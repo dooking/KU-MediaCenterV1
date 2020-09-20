@@ -19,7 +19,9 @@
         <a href="{% url 'adminMain' %}">DAILY</a>
         <a href="{% url 'total' %}">LIST</a>
         <a href="{% url 'equipment' %}">MANAGE</a>
+        {% if user.profile.isAuth == 2 %}
         <a href="{% url 'adminAuth' %}">AUTH</a>
+        {% endif %}
       </div>
     </header>
     <div id="wrapper">{% block content %} {% endblock content %}</div>

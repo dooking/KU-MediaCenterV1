@@ -382,7 +382,6 @@ def logout(request):
 
 
 # EquipmentBorrow --> list형태로
-@login_required(login_url = '/')
 def makeListsEquip(nowState):
     results = []
     if len(nowState) > 0:
@@ -416,7 +415,6 @@ def makeListsEquip(nowState):
 
 
 # StudioBorrow --> list형태로
-@login_required(login_url = '/')
 def makeListsStudio(nowState):
     results = []
     if len(nowState) > 0:
