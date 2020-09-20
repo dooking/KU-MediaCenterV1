@@ -19,6 +19,7 @@
       <th colspan="2">기간</th>
       <th colspan="1">제출 신분증</th>
       <th colspan="1">이용 목적</th>
+      <th colspan="1">승인 근장</th>
       <th colspan="1">비고</th>
       <th colspan="1">관리하기</th>
     </tr>
@@ -41,6 +42,7 @@
       </td>
       <td colspan="1">{{ borrow.auth }}</td>
       <td colspan="1">{{ borrow.purpose }}</td>
+      <td colspan="1">{{ borrow.alba }}</td>
       <td colspan="1">{{ borrow.remark }}</td>
       <td colspan="1">
         <a href="{% url 'detailTotal' borrow.pk %}">
@@ -71,17 +73,29 @@
     <li><a href="?page={{ borrows.previous_page_number }}">&laquo; prev</a></li>
     {% endif %} {% else %}
     <li class="disabled"><span>&laquo; prev</span></li>
-    {% endif %} {% for i in borrows.paginator.page_range %} {% if borrows.number
-    == i %}
+    {% endif %}
+    <span></span>
+    {% for i in borrows.paginator.page_range %}
+    <span></span>
+    {% if borrows.number == i %}
     <li class="active">
       <span>{{ i }} <span class="sr-only">(current)</span></span>
     </li>
-    {% else %} {% if query %}
+    {% else %}
+    <span></span>
+    {% if query %}
     <li><a href="?page={{ i }}&query={{query}}">{{ i }}</a></li>
     {% else %}
     <li><a href="?page={{ i }}">{{ i }}</a></li>
-    {% endif %} {% endif %} {% endfor %} {% if borrows.has_next %} {% if query
-    %}
+    {% endif %}
+    <span></span>
+    {% endif %}
+    <span></span>
+    {% endfor %}
+    <span></span>
+    {% if borrows.has_next %}
+    <span></span>
+    {% if query %}
     <li>
       <a href="?page={{ borrows.next_page_number }}&query={{query}}"
         >&raquo; next</a

@@ -232,6 +232,21 @@ def studio(request):
         )
     return render(request, "studio.html", {"studios": studios})
 
+def studioBorrow(request, studio_pk):
+    try:
+        studio = StudioBorrow.objects.filter(pk=studio_pk)
+        studio.update(studioState=1, alba = request.user.profile.name)
+        return render(request, 'studio_alert.html', {"msg":"정상적으로 대여 처리 하였습니다."})
+    except:
+        return render(request, 'studio_alert.html', {"msg":"정상적으로 대여 처리 하지 못했습니다."})
+
+def studioReturn(request, studio_pk):
+    try:
+        studio = StudioBorrow.objects.filter(pk=studio_pk)
+        studio.update(studioState=3, alba = request.user.profile.name)
+        return render(request, 'studio_alert.html', {"msg":"정상적으로 반납 처리 하였습니다."})
+    except:
+        return render(request, 'studio_alert.html', {"msg":"정상적으로 반납 처리 하지 못했습니다."})
 
 def equipment_qr(request, equipment_pk):
     currentEquipment = Equipment.objects.get(pk=equipment_pk)
@@ -251,7 +266,7 @@ def qrcheckBrrow(request, post_pk):
                 borrowState=1
             )
         currentEquipment.update(
-            alba = request.user,
+            alba = request.user.profile.name,
             equipmentList=equipments, borrowState=1)
         return redirect('adminMain')
     print(currentEquipment)
@@ -269,7 +284,7 @@ def qrcheckReturn(request, post_pk):
                 Q(equipType=eType), Q(serialNumber=eNumber))
             now = datetime.datetime.now()
             EquipmentState.update(
-                alba = request.user,
+                alba = request.user.profile.name,
                 borrowState=0
             )
         realDate = int(now.strftime("%Y-%m-%d").replace("-", ""))
@@ -294,7 +309,7 @@ def qrcheckLate(request, post_pk):
                 borrowState=0
             )
         currentEquipment.update(
-            alba = request.user,
+            alba = request.user.profile.name,
             equipmentList=equipments, borrowState=3)
         return redirect('adminMain')
     return render(request, "qrcheckReturn.html", {'currentEquipment': currentEquipment[0]})
